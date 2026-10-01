@@ -137,7 +137,7 @@ export default function EmiCalculator() {
                 ))}
               </Pie>
               <Tooltip 
-                formatter={(value: number) => formatCurrency(value)}
+                formatter={(value: any) => formatCurrency(value)}
                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)' }}
               />
               <Legend verticalAlign="bottom" height={36} iconType="circle" />

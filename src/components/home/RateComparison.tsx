@@ -26,7 +26,7 @@ export default function RateComparison() {
               {tableData.map((bank, i) => (
                 <tr key={bank.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                   <td className="p-4 font-medium text-brand-deep">{bank.name}</td>
-                  <td className="p-4 text-green-600 font-bold">{bank.rate}</td>
+                  <td className="p-4 text-green-600 font-bold">{bank.interestRate}</td>
                   <td className="p-4 text-gray-600">{bank.processingFee}</td>
                   <td className="p-4 text-gray-600">{bank.maxTenure}</td>
                 </tr>
