@@ -1,0 +1,52 @@
+[
+  {
+    "id": "hdfc",
+    "name": "HDFC Bank",
+    "logo": "HDFC",
+    "interestRate": "8.35%",
+    "processingFee": "₹3,000 + GST",
+    "maxTenure": "30 Years",
+    "maxAmount": "Up to ₹10 Cr",
+    "tags": ["Fast Processing", "Lowest Rate"]
+  },
+  {
+    "id": "sbi",
+    "name": "SBI Home Loans",
+    "logo": "SBI",
+    "interestRate": "8.40%",
+    "processingFee": "Nil (Offer)",
+    "maxTenure": "30 Years",
+    "maxAmount": "No Limit",
+    "tags": ["Zero Processing Fee", "Trusted"]
+  },
+  {
+    "id": "icici",
+    "name": "ICICI Bank",
+    "logo": "ICICI",
+    "interestRate": "8.45%",
+    "processingFee": "0.5% of Loan Amount",
+    "maxTenure": "30 Years",
+    "maxAmount": "Up to ₹5 Cr",
+    "tags": ["Digital Sanction", "Pre-approved Offers"]
+  },
+  {
+    "id": "axis",
+    "name": "Axis Bank",
+    "logo": "Axis",
+    "interestRate": "8.55%",
+    "processingFee": "₹10,000 Flat",
+    "maxTenure": "30 Years",
+    "maxAmount": "Up to ₹5 Cr",
+    "tags": ["Flexible EMIs", "Quick Disbursal"]
+  },
+  {
+    "id": "bajaj",
+    "name": "Bajaj Finserv",
+    "logo": "Bajaj",
+    "interestRate": "8.60%",
+    "processingFee": "Up to 1%",
+    "maxTenure": "20 Years",
+    "maxAmount": "Up to ₹3.5 Cr",
+    "tags": ["Minimal Docs", "High Approval Rate"]
+  }
+]

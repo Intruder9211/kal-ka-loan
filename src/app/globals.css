@@ -1,26 +1,138 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+@theme {
+  --color-brand-deep: #1a3b32;
+  --color-brand-mint: #75e87a;
+  --color-brand-light: #f4f7f6;
+  --color-brand-dark: #0f231e;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a3b32;
+    --foreground: #ffffff;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+input[type=range]::-webkit-slider-thumb {
+  transition: transform 0.2s ease-out;
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+@layer utilities {
+  .btn-interactive {
+    @apply transition-all duration-300 ease-out active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-mint focus-visible:ring-offset-2;
+  }
+  
+  @media (hover: hover) and (pointer: fine) {
+    .btn-interactive:hover {
+      @apply -translate-y-[2px] shadow-lg shadow-brand-deep/10;
+    }
+    
+    .btn-interactive:hover .icon-slide {
+      @apply translate-x-1;
+    }
+    
+    .card-interactive:hover {
+      @apply -translate-y-1 shadow-xl border-brand-mint/50;
+    }
+    
+    .card-interactive:hover .card-icon {
+      @apply text-brand-mint bg-brand-mint/10 scale-110;
+    }
+    
+    .link-underline {
+      @apply relative inline-block;
+    }
+    
+    .link-underline::after {
+      content: '';
+      @apply absolute w-full h-[2px] bg-brand-mint bottom-0 left-0 origin-bottom-right scale-x-0 transition-transform duration-300 ease-out;
+    }
+    
+    .link-underline:hover::after {
+      @apply origin-bottom-left scale-x-100;
+    }
+  }
+
+  .card-interactive {
+    @apply transition-all duration-300 ease-out border border-gray-100;
+  }
+  
+  .card-icon {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .icon-slide {
+    @apply transition-transform duration-300 ease-out;
+  }
+  
+  .animate-fade-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+  
+  .stagger-1 { animation-delay: 100ms; }
+  .stagger-2 { animation-delay: 200ms; }
+  .stagger-3 { animation-delay: 300ms; }
+  .stagger-4 { animation-delay: 400ms; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Page Transition SVG Animation */
+.rupee-draw-svg path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawRupee 1s ease-in-out forwards;
+}
+
+/* Stagger the drawing slightly for each path line to make it look like continuous writing */
+.rupee-draw-svg path:nth-child(1) { animation-delay: 0s; }
+.rupee-draw-svg path:nth-child(2) { animation-delay: 0.1s; }
+.rupee-draw-svg path:nth-child(3) { animation-delay: 0.2s; }
+.rupee-draw-svg path:nth-child(4) { animation-delay: 0.3s; }
+.rupee-draw-svg path:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes drawRupee {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+html.skip-loader #kalkaloan-site-loader { display: none !important; }
