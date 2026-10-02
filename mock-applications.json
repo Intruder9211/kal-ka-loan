@@ -1,0 +1,35 @@
+{
+  "APP-1001": {
+    "id": "APP-1001",
+    "customer": "John Doe",
+    "product": "Home Loan",
+    "amount": "₹50,00,000",
+    "status": "UNDER_REVIEW",
+    "date": "2023-10-01",
+    "phone": "9876543210",
+    "pan": "ABCDE1234F",
+    "income": "₹75,000"
+  },
+  "APP-1002": {
+    "id": "APP-1002",
+    "customer": "Jane Smith",
+    "product": "Personal Loan",
+    "amount": "₹5,00,000",
+    "status": "DOCUMENTS_REQUIRED",
+    "date": "2023-10-02",
+    "phone": "9876543211",
+    "pan": "FGHIJ5678K",
+    "income": "₹45,000"
+  },
+  "APP-1003": {
+    "id": "APP-1003",
+    "customer": "Rahul Kumar",
+    "product": "Business Loan",
+    "amount": "₹25,00,000",
+    "status": "APPROVED",
+    "date": "2023-09-28",
+    "phone": "9876543212",
+    "pan": "LMNOP9012Q",
+    "income": "₹1,20,000"
+  }
+}

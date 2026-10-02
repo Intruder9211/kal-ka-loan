@@ -2,36 +2,13 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 
-// Mock database
-const articles: Record<string, any> = {
-  "how-to-increase-cibil-score": {
-    title: "How to increase your CIBIL Score for a Home Loan",
-    category: "Credit Score",
-    readTime: "5 min read",
-    date: "Oct 12, 2026",
-    author: "Rahul Verma",
-    content: `
-      <h2>Understanding the Importance of CIBIL</h2>
-      <p>Your CIBIL score is a three-digit number ranging from 300 to 900 that reflects your creditworthiness. When you apply for a home loan, this is the very first thing banks look at. A score above 750 is considered excellent and can unlock the lowest interest rates starting at 8.35%.</p>
-      
-      <h2>1. Pay Your Dues on Time</h2>
-      <p>The biggest factor affecting your score is your repayment history. Late payments on credit cards or EMIs will severely dent your score. Set up auto-debit facilities to ensure you never miss a deadline.</p>
+export const dynamic = "force-dynamic";
 
-      <h2>2. Maintain a Healthy Credit Utilization Ratio (CUR)</h2>
-      <p>Your CUR should ideally be below 30%. This means if your total credit limit is ₹1,00,000, you shouldn't be spending more than ₹30,000 at any given time. High utilization signals to banks that you are credit-hungry.</p>
-
-      <h2>3. Don't Close Old Credit Cards</h2>
-      <p>The length of your credit history matters. Older credit accounts provide a longer, more stable track record. Even if you don't use an old card often, keep it active to maintain a long credit history.</p>
-
-      <h2>Conclusion</h2>
-      <p>Improving your CIBIL score doesn't happen overnight, but by following these disciplined financial habits for 3-6 months, you can significantly boost your score and save lakhs on your home loan interest.</p>
-    `
-  }
-};
-
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const article = articles[params.slug];
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const article = await prisma.article.findUnique({ where: { slug: resolvedParams.slug } });
   if (!article) return { title: "Article Not Found" };
   
   return {
@@ -40,25 +17,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const article = articles[params.slug];
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const data = await prisma.article.findUnique({ where: { slug: resolvedParams.slug } });
   
-  // If we don't have the article in our mock DB, show a generic beautiful placeholder
-  const data = article || {
-    title: "The Ultimate Guide to Securing a Home Loan in India",
-    category: "Home Loan Tips",
-    readTime: "4 min read",
-    date: "Oct 10, 2026",
-    author: "Editorial Team",
-    content: `
-      <h2>Why Home Loans are Essential</h2>
-      <p>Buying a house is a significant financial milestone for most Indians. Given the high property prices in major cities, home loans bridge the gap between your savings and your dream home.</p>
-      <h2>Steps to Ensure Quick Approval</h2>
-      <p>Always maintain a good CIBIL score, keep your income documents ready, and avoid taking multiple unsecured loans before applying for a home loan.</p>
-      <h2>Conclusion</h2>
-      <p>Research, compare, and consult with experts like Kal Ka Loan to ensure you get the best deal.</p>
-    `
-  };
+  if (!data) {
+    notFound();
+  }
 
   return (
     <div className="flex-1 bg-white">
@@ -84,6 +49,14 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </div>
+      
+      {data.imageUrl && (
+        <div className="container mx-auto px-4 max-w-5xl -mt-12 relative z-20">
+          <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-white h-[400px]">
+            <img src={data.imageUrl} alt={data.title} className="w-full h-full object-cover" />
+          </div>
+        </div>
+      )}
 
       {/* Blog Content */}
       <div className="container mx-auto px-4 py-16 max-w-3xl">

@@ -44,9 +44,18 @@ export default function EmiCalculator() {
         <div className="space-y-4">
           <div className="flex justify-between items-end">
             <label className="font-medium text-sm text-gray-700">Loan Amount</label>
-            <span className="text-xl font-bold text-brand-deep bg-white px-3 py-1 rounded-md shadow-sm border border-gray-100">
-              {formatCurrency(principal)}
-            </span>
+            <div className="relative flex items-center">
+              <span className="absolute left-3 font-medium text-gray-500">₹</span>
+              <input 
+                type="text" 
+                value={principal ? principal.toLocaleString('en-IN') : ''}
+                onChange={(e) => {
+                  const val = Number(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(val)) setPrincipal(val);
+                }}
+                className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-44 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+              />
+            </div>
           </div>
           <input 
             type="range" 
@@ -67,9 +76,16 @@ export default function EmiCalculator() {
         <div className="space-y-4">
           <div className="flex justify-between items-end">
             <label className="font-medium text-sm text-gray-700">Interest Rate (p.a.)</label>
-            <span className="text-xl font-bold text-brand-deep bg-white px-3 py-1 rounded-md shadow-sm border border-gray-100">
-              {rate}%
-            </span>
+            <div className="relative flex items-center">
+              <input 
+                type="number" 
+                step="0.1"
+                value={rate}
+                onChange={(e) => setRate(Number(e.target.value))}
+                className="text-xl font-bold text-brand-deep bg-white pl-3 pr-8 py-1.5 rounded-md shadow-sm border border-gray-200 w-28 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+              />
+              <span className="absolute right-3 font-medium text-gray-500">%</span>
+            </div>
           </div>
           <input 
             type="range" 
@@ -90,9 +106,15 @@ export default function EmiCalculator() {
         <div className="space-y-4">
           <div className="flex justify-between items-end">
             <label className="font-medium text-sm text-gray-700">Loan Tenure</label>
-            <span className="text-xl font-bold text-brand-deep bg-white px-3 py-1 rounded-md shadow-sm border border-gray-100">
-              {tenureYears} Years
-            </span>
+            <div className="relative flex items-center">
+              <input 
+                type="number" 
+                value={tenureYears}
+                onChange={(e) => setTenureYears(Number(e.target.value))}
+                className="text-xl font-bold text-brand-deep bg-white pl-3 pr-14 py-1.5 rounded-md shadow-sm border border-gray-200 w-32 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+              />
+              <span className="absolute right-3 font-medium text-gray-500">Yrs</span>
+            </div>
           </div>
           <input 
             type="range" 

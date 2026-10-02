@@ -1,0 +1,16 @@
+{
+  "singhmohit101103@gmail.com": {
+    "id": "test-id",
+    "name": "Mohit",
+    "email": "singhmohit101103@gmail.com",
+    "password": "$2b$12$3KGM5g2lactpw6t/K28rKOM9UCAVHbZBswNLOstszdHo724AZ8jgm",
+    "role": "CLIENT"
+  },
+  "admin@kalkaloan.com": {
+    "id": "admin-id",
+    "name": "Super Admin",
+    "email": "admin@kalkaloan.com",
+    "password": "$2b$12$bOXPfIuH6v9JaBCzIWqvMeWCW/6II86hqyjLuu19rKjy.w1LzRjCy",
+    "role": "SUPER_ADMIN"
+  }
+}

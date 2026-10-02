@@ -9,6 +9,8 @@ import PageTransition from "@/components/layout/PageTransition";
 import SiteLoader from "@/components/layout/SiteLoader";
 import Chatbot from "@/components/ui/Chatbot";
 import SocialSidebar from "@/components/layout/SocialSidebar";
+import { auth } from "@/auth";
+import { PublicWrapper } from "@/components/layout/PublicWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,28 +27,39 @@ export const metadata: Metadata = {
   description: "Compare offers from multiple banks, check eligibility, and get your home loan sanctioned fast. Aaj apply karo, kal paisa.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-brand-light text-brand-deep">
         <SiteLoader />
         <PageTransition />
-        <Header />
+        
+        {/* We use a PublicWrapper to hide public components (Header, Footer) on Dashboard and Admin routes */}
+        <PublicWrapper session={session}>
+          <Header session={session} />
+        </PublicWrapper>
+        
         <main className="flex-1 flex flex-col pb-16 md:pb-0">
           {children}
         </main>
-        <Footer />
-        <StickyMobileCTA />
-        <LeadModal />
-        <Chatbot />
-        <SocialSidebar />
+        
+        <PublicWrapper session={session}>
+          <Footer />
+          <StickyMobileCTA />
+          <LeadModal />
+          <Chatbot />
+          <SocialSidebar />
+        </PublicWrapper>
       </body>
     </html>
   );

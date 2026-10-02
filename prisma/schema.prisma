@@ -1,0 +1,254 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  ADMIN
+  SUPER_ADMIN
+  STAFF
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  DOCUMENTS_REQUIRED
+  VERIFIED
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum LoanStatus {
+  ACTIVE
+  CLOSED
+  DEFAULTED
+}
+
+enum DocumentStatus {
+  PENDING
+  SUBMITTED
+  VERIFIED
+  REJECTED
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  customerProfile CustomerProfile?
+  auditLogs       AuditLog[]       @relation("ActorLogs")
+}
+
+model CustomerProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone     String?
+  address   String?
+  city      String?
+  state     String?
+  zipCode   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  applications Application[]
+  loans        Loan[]
+  documents    Document[]
+  notifications Notification[]
+}
+
+model LoanProduct {
+  id               String        @id @default(cuid())
+  name             String
+  slug             String        @unique
+  description      String?
+  shortDescription String?
+  image            String?
+  icon             String?
+  minAmount        Float?
+  maxAmount        Float?
+  minTenure        Int? // in months
+  maxTenure        Int? // in months
+  interestRate     Float?
+  processingFee    Float?
+  eligibility      String?
+  requiredDocs     String?
+  features         String?
+  status           PublishStatus @default(DRAFT)
+  displayOrder     Int           @default(0)
+  seoTitle         String?
+  seoDescription   String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  applications Application[]
+}
+
+model Lender {
+  id            String   @id @default(cuid())
+  name          String
+  logo          String?
+  description   String?
+  interestRate  Float?
+  processingFee Float?
+  loanTypes     String?
+  eligibility   String?
+  websiteUrl    String?
+  status        Boolean  @default(true)
+  displayOrder  Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  loans Loan[]
+}
+
+model Application {
+  id                String            @id @default(cuid())
+  customerId        String
+  customer          CustomerProfile   @relation(fields: [customerId], references: [id])
+  loanProductId     String
+  loanProduct       LoanProduct       @relation(fields: [loanProductId], references: [id])
+  requestedAmount   Float
+  status            ApplicationStatus @default(DRAFT)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  documents Document[]
+  loans     Loan[]
+}
+
+model Loan {
+  id                String          @id @default(cuid())
+  loanNumber        String          @unique
+  customerId        String
+  customer          CustomerProfile @relation(fields: [customerId], references: [id])
+  applicationId     String
+  application       Application     @relation(fields: [applicationId], references: [id])
+  lenderId          String?
+  lender            Lender?         @relation(fields: [lenderId], references: [id])
+  principal         Float
+  interestRate      Float
+  tenure            Int
+  outstandingAmount Float
+  emi               Float
+  nextPaymentDate   DateTime?
+  status            LoanStatus      @default(ACTIVE)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  payments           Payment[]
+  repaymentSchedules RepaymentSchedule[]
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  loanId        String
+  loan          Loan     @relation(fields: [loanId], references: [id])
+  amount        Float
+  date          DateTime @default(now())
+  paymentMethod String
+  transactionId String?
+  status        String
+  receiptUrl    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model RepaymentSchedule {
+  id            String   @id @default(cuid())
+  loanId        String
+  loan          Loan     @relation(fields: [loanId], references: [id])
+  dueDate       DateTime
+  emiAmount     Float
+  principalPart Float
+  interestPart  Float
+  balance       Float
+  status        String   @default("PENDING")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Document {
+  id            String         @id @default(cuid())
+  customerId    String
+  customer      CustomerProfile @relation(fields: [customerId], references: [id])
+  applicationId String?
+  application   Application?   @relation(fields: [applicationId], references: [id])
+  name          String
+  type          String
+  url           String
+  status        DocumentStatus @default(PENDING)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Notification {
+  id         String          @id @default(cuid())
+  customerId String
+  customer   CustomerProfile @relation(fields: [customerId], references: [id])
+  title      String
+  message    String
+  isRead     Boolean         @default(false)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String
+  actor      User     @relation("ActorLogs", fields: [actorId], references: [id])
+  action     String
+  entityType String
+  entityId   String?
+  oldValue   String?
+  newValue   String?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+}
+
+model Article {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  desc      String
+  content   String
+  category  String   @default("Blog")
+  author    String   @default("Admin User")
+  date      String
+  readTime  String   @default("5 min read")
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

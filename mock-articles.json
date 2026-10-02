@@ -1,0 +1,38 @@
+{
+  "how-to-increase-cibil-score": {
+    "id": "how-to-increase-cibil-score",
+    "slug": "how-to-increase-cibil-score",
+    "title": "How to increase your CIBIL Score for a Home Loan",
+    "category": "Credit Score",
+    "readTime": "5 min read",
+    "desc": "Learn actionable tips to boost your credit score and unlock the lowest home loan interest rates.",
+    "date": "Oct 12, 2026",
+    "author": "Rahul Verma",
+    "imageUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+    "content": "Detailed content goes here..."
+  },
+  "fixed-vs-floating-interest-rate": {
+    "id": "fixed-vs-floating-interest-rate",
+    "slug": "fixed-vs-floating-interest-rate",
+    "title": "Fixed vs Floating Interest Rate: Which is better?",
+    "category": "Home Loan Tips",
+    "readTime": "4 min read",
+    "desc": "Confused between fixed and floating rates? We break down the pros and cons to help you decide.",
+    "date": "Oct 10, 2026",
+    "author": "Priya Sharma",
+    "imageUrl": "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800&q=80",
+    "content": "Detailed content goes here..."
+  },
+  "balance-transfer-checklist": {
+    "id": "balance-transfer-checklist",
+    "slug": "balance-transfer-checklist",
+    "title": "Checklist for Home Loan Balance Transfer",
+    "category": "Balance Transfer",
+    "readTime": "6 min read",
+    "desc": "Everything you need to know before transferring your existing home loan to a new bank.",
+    "date": "Oct 05, 2026",
+    "author": "Amit Desai",
+    "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+    "content": "Detailed content goes here..."
+  }
+}

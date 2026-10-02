@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone } from "lucide-react";
+import { Menu, Phone, User, LayoutDashboard, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { signOut } from "next-auth/react";
 
-export default function Header() {
+export default function Header({ session }: { session?: any }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -53,13 +54,36 @@ export default function Header() {
             Calculators
           </Link>
           
-          <a
-            href="tel:+917503388930"
-            className="btn-interactive flex items-center gap-2 rounded-full bg-brand-mint px-5 py-2.5 text-brand-deep font-bold hover:bg-white"
-          >
-            <Phone size={16} />
-            <span>Apply Now</span>
-          </a>
+          <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
+            {session ? (
+              <>
+                <Link 
+                  href="/dashboard"
+                  className="flex items-center gap-2 text-brand-mint hover:text-white transition-colors"
+                >
+                  <LayoutDashboard size={18} />
+                  Dashboard
+                </Link>
+                <div className="flex items-center gap-2 ml-2">
+                  <div className="h-8 w-8 bg-white/10 rounded-full flex items-center justify-center text-brand-mint">
+                    {session.user?.name?.charAt(0) || <User size={16} />}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-white hover:text-brand-mint transition-colors">
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="btn-interactive flex items-center gap-2 rounded-full bg-brand-mint px-5 py-2.5 text-brand-deep font-bold hover:bg-white"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
+          </div>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -76,7 +100,7 @@ export default function Header() {
       <div 
         className={cn(
           "md:hidden absolute top-full left-0 w-full bg-brand-deep/95 backdrop-blur-md border-b border-brand-mint/20 overflow-hidden transition-all duration-300 ease-in-out",
-          mobileMenuOpen ? "max-h-64 border-b py-4" : "max-h-0 border-b-0 py-0"
+          mobileMenuOpen ? "max-h-[400px] border-b py-4" : "max-h-0 border-b-0 py-0"
         )}
       >
         <nav className="flex flex-col px-4 space-y-4 text-white">
@@ -89,12 +113,39 @@ export default function Header() {
           <Link href="/calculators" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
             Calculators
           </Link>
-          <a
-            href="tel:+917503388930"
-            className="flex items-center gap-2 text-brand-mint font-bold pt-2 border-t border-white/10"
-          >
-            <Phone size={16} /> Apply Now
-          </a>
+          
+          <div className="pt-4 border-t border-white/10 flex flex-col gap-4">
+            {session ? (
+              <>
+                <Link 
+                  href="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 text-brand-mint font-bold"
+                >
+                  <LayoutDashboard size={18} /> Go to Dashboard
+                </Link>
+                <button 
+                  onClick={() => { signOut(); setMobileMenuOpen(false); }}
+                  className="flex items-center gap-2 text-white/70 hover:text-white text-left"
+                >
+                  <LogOut size={18} /> Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-brand-mint transition-colors">
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-full bg-brand-mint px-5 py-2.5 text-brand-deep font-bold"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
+          </div>
         </nav>
       </div>
     </header>
