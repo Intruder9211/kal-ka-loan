@@ -7,7 +7,7 @@ import { Save, X } from "lucide-react"
 export default function ProfileEditor({ 
   user 
 }: { 
-  user: { name?: string | null, email?: string | null, phone?: string | null } 
+  user: { name?: string | null, email?: string | null, phone?: string | null, image?: string | null } 
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [state, dispatch, isPending] = useActionState(updateProfile, undefined)

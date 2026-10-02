@@ -1,5 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card" // Wait, does ui/card exist? No. I should build native ones.
-
 // Instead of assuming shadcn exists, I will write the HTML directly for the dashboard.
 import { ArrowRight, CheckCircle2, Clock, Upload } from "lucide-react"
 import Link from "next/link"

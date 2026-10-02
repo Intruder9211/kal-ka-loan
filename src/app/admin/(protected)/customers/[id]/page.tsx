@@ -66,7 +66,7 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
               <Phone className="h-5 w-5 text-slate-400 mt-0.5" />
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">Phone Number</div>
-                <div className="font-medium text-slate-900 mt-0.5">{customer.phone || "Not provided"}</div>
+                <div className="font-medium text-slate-900 mt-0.5">{(customer as any).phone || "Not provided"}</div>
               </div>
             </div>
             <div className="flex items-start gap-3">

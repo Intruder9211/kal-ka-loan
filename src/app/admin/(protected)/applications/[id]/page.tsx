@@ -6,11 +6,25 @@ import { StatusUpdater } from "@/components/admin/StatusUpdater"
 
 export default async function ApplicationDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
-  const application = await prisma.application.findUnique({ where: { id: resolvedParams.id } })
+  const application = await prisma.application.findUnique({ 
+    where: { id: resolvedParams.id },
+    include: {
+      customer: { include: { user: true } },
+      loanProduct: true
+    }
+  })
   
   if (!application) {
     notFound()
   }
+
+  const mockCustomerName = application.customer?.user?.name || "Unknown Customer";
+  const mockPhone = application.customer?.phone || "N/A";
+  const mockPan = "ABCDE1234F"; // Mock PAN since it's not in schema yet
+  const mockIncome = "₹75,000"; // Mock Income
+  const mockProduct = application.loanProduct?.name || "Loan Product";
+  const mockAmount = `₹${application.requestedAmount.toLocaleString('en-IN')}`;
+  const mockDate = application.createdAt.toLocaleDateString();
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -23,7 +37,7 @@ export default async function ApplicationDetailPage({ params }: { params: Promis
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
             Application {application.id}
           </h2>
-          <p className="text-sm text-slate-500 mt-1">Submitted on {application.date}</p>
+          <p className="text-sm text-slate-500 mt-1">Submitted on {application.createdAt.toLocaleDateString()}</p>
         </div>
         <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
           <span className="text-sm font-medium text-slate-700">Current Status:</span>
@@ -44,19 +58,19 @@ export default async function ApplicationDetailPage({ params }: { params: Promis
             <div className="p-6 grid grid-cols-2 gap-6">
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Full Name</div>
-                <div className="font-medium text-slate-900">{application.customer}</div>
+                <div className="font-medium text-slate-900">{mockCustomerName}</div>
               </div>
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Phone Number</div>
-                <div className="font-medium text-slate-900">{application.phone || "N/A"}</div>
+                <div className="font-medium text-slate-900">{mockPhone}</div>
               </div>
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">PAN Number</div>
-                <div className="font-medium text-slate-900 font-mono">{application.pan || "N/A"}</div>
+                <div className="font-medium text-slate-900 font-mono">{mockPan}</div>
               </div>
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Monthly Income</div>
-                <div className="font-medium text-slate-900">{application.income || "N/A"}</div>
+                <div className="font-medium text-slate-900">{mockIncome}</div>
               </div>
             </div>
           </div>
@@ -69,11 +83,11 @@ export default async function ApplicationDetailPage({ params }: { params: Promis
             <div className="p-6 grid grid-cols-2 gap-6">
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Product Type</div>
-                <div className="font-medium text-slate-900">{application.product}</div>
+                <div className="font-medium text-slate-900">{mockProduct}</div>
               </div>
               <div>
                 <div className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Requested Amount</div>
-                <div className="font-bold text-blue-600 text-lg">{application.amount}</div>
+                <div className="font-bold text-blue-600 text-lg">{mockAmount}</div>
               </div>
             </div>
           </div>
@@ -92,7 +106,7 @@ export default async function ApplicationDetailPage({ params }: { params: Promis
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">PAN Card Copy</div>
-                    <div className="text-xs text-slate-500 font-medium">Uploaded on {application.date} &bull; PDF</div>
+                    <div className="text-xs text-slate-500 font-medium">Uploaded on {mockDate} &bull; PDF</div>
                   </div>
                 </div>
                 <div className="flex gap-3">
@@ -112,7 +126,7 @@ export default async function ApplicationDetailPage({ params }: { params: Promis
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">Income Proof (ITR)</div>
-                    <div className="text-xs text-slate-500 font-medium">Uploaded on {application.date} &bull; PDF</div>
+                    <div className="text-xs text-slate-500 font-medium">Uploaded on {mockDate} &bull; PDF</div>
                   </div>
                 </div>
                 <div className="flex gap-3">
@@ -141,7 +155,7 @@ export default async function ApplicationDetailPage({ params }: { params: Promis
               <div className="relative">
                 <div className="absolute -left-[31px] bg-emerald-500 h-4 w-4 rounded-full border-4 border-white shadow-sm" />
                 <div className="font-medium text-slate-900 text-sm">Application Submitted</div>
-                <div className="text-xs text-slate-500 mt-1">{application.date} - Client generated request</div>
+                <div className="text-xs text-slate-500 mt-1">{mockDate} - Client generated request</div>
               </div>
               <div className="relative">
                 <div className={`absolute -left-[31px] h-4 w-4 rounded-full border-4 border-white shadow-sm ${application.status !== 'SUBMITTED' ? 'bg-emerald-500' : 'bg-slate-300'}`} />

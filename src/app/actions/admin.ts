@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/auth"
 
+import { ApplicationStatus } from "@prisma/client"
+
 export async function updateApplicationStatus(id: string, newStatus: string) {
   const session = await auth()
   
@@ -14,7 +16,7 @@ export async function updateApplicationStatus(id: string, newStatus: string) {
   try {
     await prisma.application.update({
       where: { id },
-      data: { status: newStatus }
+      data: { status: newStatus as ApplicationStatus }
     })
     
     // In a real application, we would also create an audit log here
