@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Globe, Save, Layout, MessageSquare, Image as ImageIcon, AlertCircle } from "lucide-react"
 
 export default function WebsiteAdminPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [activeTab, setActiveTab] = useState("general")
+  const [logoUrl, setLogoUrl] = useState("/logo.png")
+  const logoInputRef = useRef<HTMLInputElement>(null)
 
   const handleSave = () => {
     setIsSaving(true)
@@ -14,6 +16,32 @@ export default function WebsiteAdminPage() {
       alert("Website content saved successfully!")
     }, 1000)
   }
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload-logo", {
+        method: "POST",
+        body: formData,
+      });
+      
+      if (res.ok) {
+        alert("Logo updated! It has been changed across the entire site.");
+        // Force refresh of the image by appending a timestamp
+        setLogoUrl(`/logo.png?t=${Date.now()}`);
+      } else {
+        alert("Failed to update logo");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error uploading logo");
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -81,7 +109,7 @@ export default function WebsiteAdminPage() {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
-                  <input type="text" defaultValue="Kal Ka Loan" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="text" defaultValue="Money Viora" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
                 </div>
                 
                 <div>
@@ -93,9 +121,19 @@ export default function WebsiteAdminPage() {
                   <label className="block text-sm font-medium text-slate-700 mb-1">Website Logo</label>
                   <div className="mt-1 flex items-center gap-4">
                     <div className="h-16 w-48 bg-slate-100 border border-slate-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-                      <img src="/logo.png" alt="Current Logo" className="object-contain h-10" />
+                      <img src={logoUrl} alt="Current Logo" className="object-contain h-10" />
                     </div>
-                    <button className="px-3 py-2 bg-white text-slate-700 border border-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      ref={logoInputRef} 
+                      onChange={handleLogoUpload} 
+                    />
+                    <button 
+                      onClick={() => logoInputRef.current?.click()}
+                      className="px-3 py-2 bg-white text-slate-700 border border-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors"
+                    >
                       Change Logo
                     </button>
                   </div>
@@ -154,11 +192,11 @@ export default function WebsiteAdminPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Support Email</label>
-                  <input type="email" defaultValue="support@kalkaloan.com" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="email" defaultValue="support@moneyviora.com" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Sales Email</label>
-                  <input type="email" defaultValue="sales@kalkaloan.com" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="email" defaultValue="sales@moneyviora.com" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Phone Number (Toll Free)</label>
@@ -185,11 +223,11 @@ export default function WebsiteAdminPage() {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Global Meta Title</label>
-                  <input type="text" defaultValue="Kal Ka Loan | Fast, transparent, hassle-free home loans" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
+                  <input type="text" defaultValue="Money Viora | Fast, transparent, hassle-free home loans" className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Global Meta Description</label>
-                  <textarea rows={3} defaultValue="Get instant home loans with Kal Ka Loan. Check eligibility in 2 minutes and get disbursed in 48 hours with minimal documentation." className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                  <textarea rows={3} defaultValue="Get instant home loans with Money Viora. Check eligibility in 2 minutes and get disbursed in 48 hours with minimal documentation." className="w-full text-sm border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-blue-500 focus:border-blue-500"></textarea>
                 </div>
               </div>
             </div>

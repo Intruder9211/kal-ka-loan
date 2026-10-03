@@ -226,7 +226,7 @@ export default function SettingsAdminPage() {
                       AWS S3 Bucket (Document Storage)
                       <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-100 px-2 py-0.5 rounded">Pending Setup</span>
                     </label>
-                    <input type="text" placeholder="e.g., kalkaloan-prod-documents" className="w-full text-sm font-mono border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-slate-500 focus:border-slate-500 bg-white" />
+                    <input type="text" placeholder="e.g., moneyviora-prod-documents" className="w-full text-sm font-mono border border-slate-300 rounded-lg p-2.5 text-slate-900 focus:ring-slate-500 focus:border-slate-500 bg-white" />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1.5">Stripe / Razorpay Secret Key</label>

@@ -14,7 +14,7 @@ export default function ThankYouPage() {
         </h1>
         
         <p className="text-xl text-gray-600 mb-8 max-w-lg mx-auto">
-          Thank you for choosing Kal Ka Loan. One of our loan experts will call you shortly to discuss your personalized offers.
+          Thank you for choosing Money Viora. One of our loan experts will call you shortly to discuss your personalized offers.
         </p>
         
         <div className="bg-brand-light rounded-2xl p-6 text-left mb-10 border border-gray-100">

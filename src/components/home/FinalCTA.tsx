@@ -22,13 +22,13 @@ export default function FinalCTA() {
           </Link>
           <div className="flex gap-4 justify-center">
             <a 
-              href="tel:+917503388930"
+              href="tel:+917303061282"
               className="btn-interactive w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 border border-white/20"
             >
               <Phone size={24} />
             </a>
             <a 
-              href="https://wa.me/917503388930"
+              href="https://wa.me/917303061282"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-interactive w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-[#25D366] hover:bg-white/20 border border-white/20"

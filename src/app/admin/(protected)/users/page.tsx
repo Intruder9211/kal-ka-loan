@@ -6,9 +6,9 @@ import { Users, Shield, Plus, Edit2, Trash2, Search, MoreVertical, CheckCircle2,
 // Mock internal users data
 const initialUsers = [
   { id: "u1", name: "Super Admin", email: "admin@example.com", role: "SUPER_ADMIN", status: "Active", lastLogin: "Today, 10:42 AM" },
-  { id: "u2", name: "Rahul Verma", email: "rahul.v@kalkaloan.com", role: "ADMIN", status: "Active", lastLogin: "Yesterday, 4:15 PM" },
-  { id: "u3", name: "Priya Sharma", email: "priya.s@kalkaloan.com", role: "LOAN_OFFICER", status: "Active", lastLogin: "Oct 1, 2026" },
-  { id: "u4", name: "Amit Desai", email: "amit.d@kalkaloan.com", role: "SUPPORT", status: "Inactive", lastLogin: "Sep 28, 2026" }
+  { id: "u2", name: "Rahul Verma", email: "rahul.v@moneyviora.com", role: "ADMIN", status: "Active", lastLogin: "Yesterday, 4:15 PM" },
+  { id: "u3", name: "Priya Sharma", email: "priya.s@moneyviora.com", role: "LOAN_OFFICER", status: "Active", lastLogin: "Oct 1, 2026" },
+  { id: "u4", name: "Amit Desai", email: "amit.d@moneyviora.com", role: "SUPPORT", status: "Inactive", lastLogin: "Sep 28, 2026" }
 ]
 
 export default function UsersAdminPage() {

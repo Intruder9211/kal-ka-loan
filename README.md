@@ -1,6 +1,6 @@
-# Kal Ka Loan 🏦
+# Money Viora 🏦
 
-Kal Ka Loan is a modern, full-stack loan management system built with Next.js. It features a comprehensive customer dashboard for applying and tracking loans, alongside a powerful administrative portal for staff to manage customers, process applications, and oversee loan lifecycles.
+Money Viora is a modern, full-stack loan management system built with Next.js. It features a comprehensive customer dashboard for applying and tracking loans, alongside a powerful administrative portal for staff to manage customers, process applications, and oversee loan lifecycles.
 
 ## 🌟 Key Features
 

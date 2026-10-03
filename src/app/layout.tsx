@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kal Ka Loan | Fast, transparent, hassle-free home loans",
+  title: "Money Viora | Fast, transparent, hassle-free home loans",
   description: "Compare offers from multiple banks, check eligibility, and get your home loan sanctioned fast. Aaj apply karo, kal paisa.",
 };
 

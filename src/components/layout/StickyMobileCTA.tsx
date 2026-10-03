@@ -5,7 +5,7 @@ export default function StickyMobileCTA() {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-50 px-2 py-2 flex justify-between items-center pb-safe">
       <a 
-        href="tel:+917503388930" 
+        href="tel:+917303061282" 
         className="flex flex-col items-center justify-center flex-1 py-1 text-gray-600 hover:text-brand-deep transition-colors"
       >
         <Phone size={20} className="mb-1" />
@@ -13,7 +13,7 @@ export default function StickyMobileCTA() {
       </a>
       
       <a 
-        href="https://wa.me/917503388930?text=Hi%20Kal%20Ka%20Loan!%20I%20want%20to%20check%20my%20eligibility." 
+        href="https://wa.me/917303061282?text=Hi%20Kal%20Ka%20Loan!%20I%20want%20to%20check%20my%20eligibility." 
         target="_blank"
         rel="noopener noreferrer"
         className="flex flex-col items-center justify-center flex-1 py-1 text-[#25D366] hover:text-[#1DA851] transition-colors"

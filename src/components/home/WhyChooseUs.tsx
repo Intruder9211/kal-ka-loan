@@ -14,7 +14,7 @@ export default function WhyChooseUs() {
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-12 animate-fade-up">
-          <h2 className="text-3xl md:text-4xl font-bold text-brand-deep mb-4">Why Choose Kal Ka Loan?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-brand-deep mb-4">Why Choose Money Viora?</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">We make the complex home loan process simple, fast, and completely transparent.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

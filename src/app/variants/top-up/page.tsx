@@ -5,7 +5,7 @@ import MultiStepLeadForm from "@/components/forms/MultiStepLeadForm";
 import EmiCalculator from "@/components/calculators/EmiCalculator";
 
 export const metadata: Metadata = {
-  title: "Top-Up Home Loan | Kal Ka Loan",
+  title: "Top-Up Home Loan | Money Viora",
   description: "Get additional funds on your existing home loan at low interest rates.",
 };
 

@@ -6,10 +6,10 @@ export default function Footer() {
     <footer className="bg-brand-dark text-white pt-12 pb-24 md:pb-12 border-t border-brand-mint/10">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="space-y-4">
-          <div className="relative w-48 h-12 overflow-hidden mb-2">
+          <div className="relative w-60 h-16 overflow-hidden mb-2">
             <Image 
-              src="/logo.png" 
-              alt="Kal Ka Loan Logo" 
+              src="/logo_white.png" 
+              alt="Money Viora Logo" 
               fill 
               className="object-contain object-left"
             />
@@ -41,8 +41,8 @@ export default function Footer() {
         <div>
           <h4 className="font-bold mb-4 text-brand-mint">Contact</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li>Email: support@kalkaloan.com</li>
-            <li>Phone: +91 75033 88930</li>
+            <li>Email: support@moneyviora.com</li>
+            <li>Phone: +91 73030 61282</li>
             <li>HQ: New Delhi, India</li>
           </ul>
         </div>
@@ -50,9 +50,9 @@ export default function Footer() {
       
       <div className="container mx-auto px-4 mt-12 pt-8 border-t border-gray-800 text-xs text-gray-500 text-center">
         <p className="mb-2">
-          <strong>Disclaimer:</strong> Kal Ka Loan is a loan distribution/referral platform. Final approval, interest rates, and terms are decided entirely by the lending partner.
+          <strong>Disclaimer:</strong> Money Viora is a loan distribution/referral platform. Final approval, interest rates, and terms are decided entirely by the lending partner.
         </p>
-        <p>&copy; {new Date().getFullYear()} Kal Ka Loan. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Money Viora. All rights reserved.</p>
       </div>
     </footer>
   );

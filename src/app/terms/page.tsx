@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Kal Ka Loan",
-  description: "Terms and conditions for using Kal Ka Loan services.",
+  title: "Terms of Service | Money Viora",
+  description: "Terms and conditions for using Money Viora services.",
 };
 
 export default function TermsOfServicePage() {
@@ -15,14 +15,14 @@ export default function TermsOfServicePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-brand-deep mb-4">1. Acceptance of Terms</h2>
           <p className="text-gray-600 mb-4">
-            By accessing and using the Kal Ka Loan website, you accept and agree to be bound by the terms and provision of this agreement.
+            By accessing and using the Money Viora website, you accept and agree to be bound by the terms and provision of this agreement.
           </p>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-brand-deep mb-4">2. Description of Service</h2>
           <p className="text-gray-600 mb-4">
-            Kal Ka Loan is a loan distribution and aggregator platform. We do not lend money directly. We connect prospective borrowers with banks and NBFCs. Final loan approval, interest rates, and terms are strictly at the discretion of the lending partner.
+            Money Viora is a loan distribution and aggregator platform. We do not lend money directly. We connect prospective borrowers with banks and NBFCs. Final loan approval, interest rates, and terms are strictly at the discretion of the lending partner.
           </p>
         </section>
 
@@ -36,7 +36,7 @@ export default function TermsOfServicePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-brand-deep mb-4">4. Limitation of Liability</h2>
           <p className="text-gray-600 mb-4">
-            Kal Ka Loan shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use our services, or resulting from any loans obtained through our lending partners.
+            Money Viora shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use our services, or resulting from any loans obtained through our lending partners.
           </p>
         </section>
 

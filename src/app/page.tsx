@@ -28,63 +28,65 @@ export default function Home() {
           priority
           className="object-cover object-center opacity-80"
         />
-        <div className="absolute inset-0 bg-brand-deep/50 md:bg-transparent md:bg-gradient-to-r md:from-brand-deep/90 md:via-brand-deep/60 md:to-brand-deep/20"></div>
-        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-12">
+        <div className="absolute inset-0 bg-brand-deep/60 md:bg-transparent md:bg-gradient-to-r md:from-brand-deep/95 md:via-brand-deep/80 md:to-brand-deep/30"></div>
+        <div className="container mx-auto px-4 relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           
           {/* Hero Content */}
-          <div className="flex-1 space-y-8 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-mint text-sm font-medium animate-fade-up">
+          <div className="flex-1 space-y-6 text-center lg:text-left max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/30 text-brand-mint text-sm font-semibold tracking-wide animate-fade-up backdrop-blur-sm shadow-lg shadow-brand-mint/5">
               <CheckCircle2 size={16} />
-              <span>Lowest Interest Rates in Market</span>
+              <span>India's Most Transparent Loan Platform</span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight animate-fade-up stagger-1">
-              Fast, transparent, hassle-free <span className="text-brand-mint">home loans.</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] animate-fade-up stagger-1">
+              The smartest way to get a <span className="text-brand-mint">home loan.</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-300 max-w-2xl animate-fade-up stagger-2">
-              Compare offers from top banks, check eligibility instantly, and get your loan sanctioned. 
-              <br className="hidden md:block"/> <strong className="text-white">Aaj apply karo, kal paisa.</strong>
+            <p className="text-lg sm:text-xl text-slate-200 animate-fade-up stagger-2 font-medium leading-relaxed">
+              Compare offers from 30+ top banks, calculate your exact eligibility, and secure the lowest interest rate without the hidden fees.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-up stagger-3">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4 animate-fade-up stagger-3">
               <Link 
-                href="/home-loan" 
-                className="btn-interactive group inline-flex items-center justify-center gap-2 bg-brand-mint text-brand-deep font-bold px-8 py-4 rounded-full hover:bg-white"
+                href="/affordability" 
+                className="btn-interactive group inline-flex items-center justify-center gap-2 bg-brand-mint text-brand-deep font-bold px-8 py-4 rounded-xl hover:bg-white shadow-[0_0_30px_rgba(7,153,116,0.3)] transition-all"
               >
-                Apply Now <ChevronRight size={20} className="icon-slide" />
+                Check Affordability <ChevronRight size={20} className="icon-slide" />
               </Link>
               <Link 
-                href="/compare" 
-                className="btn-interactive inline-flex items-center justify-center gap-2 bg-transparent text-white border-2 border-white/20 font-bold px-8 py-4 rounded-full hover:bg-white/10"
+                href="/calculators" 
+                className="btn-interactive inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/20 font-bold px-8 py-4 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all"
               >
-                Compare Banks
+                Compare Rates
               </Link>
             </div>
             
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6 text-sm text-gray-300 animate-fade-up stagger-4">
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                <IndianRupee size={16} className="text-brand-mint" />
-                <span>Zero Hidden Fees</span>
+            <div className="pt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 text-sm text-slate-300 animate-fade-up stagger-4">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-brand-mint/20 rounded-md"><IndianRupee size={16} className="text-brand-mint" /></div>
+                <span className="font-medium">Zero Hidden Fees</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                <HomeIcon size={16} className="text-brand-mint" />
-                <span><span className="font-bold tabular-nums">10,000+</span> Indian Homes Funded</span>
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-brand-mint/20 rounded-md"><HomeIcon size={16} className="text-brand-mint" /></div>
+                <span className="font-medium">10,000+ Homes Funded</span>
               </div>
             </div>
           </div>
           
           {/* Quick Lead Form Component */}
-          <div className="flex-1 w-full max-w-md animate-fade-up stagger-2">
+          <div className="w-full lg:w-[450px] animate-fade-up stagger-3 shrink-0">
             <MultiStepLeadForm />
           </div>
           
         </div>
       </section>
 
-      {/* Section 2: EMI Calculator */}
-      <section className="py-20 bg-gray-50 border-y border-gray-100">
-        <div className="container mx-auto px-4 max-w-6xl">
+      {/* Step 2: Choose their loan requirement */}
+      <LoanTypes />
+
+      {/* Step 3: Calculate / check eligibility */}
+      <section className="py-20 bg-gray-50 border-y border-gray-100 relative">
+        <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <div className="text-center mb-12 animate-fade-up">
             <h2 className="text-3xl md:text-4xl font-bold text-brand-deep mb-4">Calculate Your EMI Instantly</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -94,42 +96,25 @@ export default function Home() {
           <EmiCalculator />
         </div>
       </section>
-      
-      {/* Section 3: Trust Bar */}
-      <TrustBar />
 
-      {/* Section 4: Why Choose Us */}
-      <WhyChooseUs />
-
-      {/* Section 5: How It Works */}
-      <HowItWorks />
-
-      {/* Section 6: Loan Types */}
-      <LoanTypes />
-
-      {/* Section 7: Partner Banks */}
-      <PartnerBanksSection />
-
-      {/* Section 8: Eligibility & Docs */}
-      <EligibilityDocs />
-
-      {/* Section 9: Rate Comparison */}
+      {/* Step 4: Compare options */}
       <RateComparison />
 
-      {/* Section 10: Testimonials */}
+      {/* Step 5: Understand the process */}
+      <HowItWorks />
+
+      {/* Step 6: Build Trust (Partners, Why Us, Eligibility, Reviews, Cities, FAQ) */}
+      <TrustBar />
+      <WhyChooseUs />
+      <PartnerBanksSection />
+      <EligibilityDocs />
       <Testimonials />
-
-      {/* Section 11: Popular Cities */}
       <PopularCities />
-
-      {/* Section 12: FAQ */}
       <FAQ />
-
-      {/* Section 13: Final CTA */}
-      <FinalCTA />
-
-      {/* Section 14: Blog Guides */}
       <BlogGuides />
+
+      {/* Step 7: Take action */}
+      <FinalCTA />
 
     </>
   );

@@ -177,9 +177,25 @@ export default function EmiCalculator() {
             <p className="font-bold text-gray-800 text-lg">{formatCurrency(totalInterest)}</p>
           </div>
           <div className="col-span-2 pt-2">
-            <p className="text-xs text-gray-500 mb-1 font-medium uppercase tracking-wider">Total Amount Payable</p>
-            <p className="font-bold text-brand-deep text-xl">{formatCurrency(totalPayment)}</p>
+            <p className="text-xs text-slate-500 mb-1 font-medium uppercase tracking-wider">Total Amount Payable</p>
+            <p className="font-bold text-brand-deep text-2xl">{formatCurrency(totalPayment)}</p>
           </div>
+        </div>
+
+        {/* Contextual CTAs (Point 7) */}
+        <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+          <a 
+            href="/home-loan" 
+            className="flex-1 bg-brand-mint text-brand-deep font-bold py-3.5 px-4 rounded-xl text-center hover:bg-opacity-90 transition-all shadow-[0_4px_14px_rgba(7,153,116,0.2)] flex items-center justify-center gap-2"
+          >
+            Apply for this EMI
+          </a>
+          <a 
+            href="/affordability" 
+            className="flex-1 bg-slate-50 text-slate-700 font-bold py-3.5 px-4 rounded-xl text-center border border-slate-200 hover:bg-slate-100 transition-all flex items-center justify-center gap-2"
+          >
+            Check Eligibility
+          </a>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!article) return { title: "Article Not Found" };
   
   return {
-    title: `${article.title} | Kal Ka Loan Blog`,
+    title: `${article.title} | Money Viora Blog`,
     description: article.desc || article.title,
   };
 }

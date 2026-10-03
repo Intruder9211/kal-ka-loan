@@ -252,3 +252,17 @@ model Faq {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Lead {
+  id            String   @id @default(cuid())
+  name          String
+  mobile        String
+  email         String
+  employment    String?
+  monthlyIncome Float?
+  loanAmount    Float?
+  city          String?
+  status        String   @default("NEW")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

@@ -31,10 +31,10 @@ export default function Header({ session }: { session?: any }) {
       <div className="container mx-auto flex h-14 items-center justify-between px-4 text-white">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group relative">
-          <div className="relative w-48 h-12 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
+          <div className="relative w-60 h-16 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
             <Image 
-              src="/logo.png" 
-              alt="Kal Ka Loan Logo" 
+              src="/logo_white.png" 
+              alt="Money Viora Logo" 
               fill 
               className="object-contain object-left"
               priority

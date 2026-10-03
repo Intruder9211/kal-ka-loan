@@ -57,26 +57,59 @@ export default function MultiStepLeadForm() {
 
   const onSubmit = async (data: FormData) => {
     if (!showOtp) {
-      // Trigger OTP flow mock
-      setShowOtp(true);
-      return;
-    }
-
-    // OTP verification mock
-    if (otp !== "1234") {
-      alert("Invalid OTP! Try 1234");
+      setIsSubmitting(true);
+      try {
+        const res = await fetch('/api/otp/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: data.phone }),
+        });
+        
+        if (res.ok) {
+          setShowOtp(true);
+        } else {
+          const result = await res.json();
+          alert(result.error || "Failed to send OTP. Please try again.");
+        }
+      } catch (error) {
+        alert("Something went wrong while sending OTP.");
+      } finally {
+        setIsSubmitting(false);
+      }
       return;
     }
 
     setIsSubmitting(true);
     
     try {
+      // 1. Verify OTP first
+      const verifyRes = await fetch('/api/otp/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: data.phone, otp: otp }),
+      });
+
+      if (!verifyRes.ok) {
+        const verifyResult = await verifyRes.json();
+        alert(verifyResult.error || "Invalid OTP! Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 2. If OTP is verified, submit the lead
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.fullName,
+          mobile: data.phone,
+          email: "Not provided via multi-step form", // Required by schema but not in form
+          employment: data.employmentType,
+          loanAmount: data.loanAmount,
+          city: data.city,
+        }),
       });
 
       if (response.ok) {
@@ -93,94 +126,112 @@ export default function MultiStepLeadForm() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 text-brand-deep w-full max-w-lg mx-auto border border-gray-100">
+    <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-6 md:p-8 text-slate-800 w-full max-w-lg mx-auto border border-slate-100 relative overflow-hidden">
       
-      {/* Progress Bar */}
-      <div className="flex gap-2 mb-8">
-        {[1, 2, 3].map((i) => (
-          <div 
-            key={i} 
-            className={`h-2 flex-1 rounded-full transition-colors ${i <= step ? 'bg-brand-mint' : 'bg-gray-100'}`} 
-          />
-        ))}
+      {/* Top Banner (Trust Signal) */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-mint via-brand-deep to-brand-mint"></div>
+      
+      {/* Progress Bar & Header */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex gap-1.5 flex-1 max-w-[150px]">
+            {[1, 2, 3].map((i) => (
+              <div 
+                key={i} 
+                className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${i <= step ? 'bg-brand-mint' : 'bg-slate-100'}`} 
+              />
+            ))}
+          </div>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Step {step} of 3</span>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-2xl font-extrabold text-slate-900 leading-tight">
+              {step === 1 && "Let's get started"}
+              {step === 2 && "Loan Requirements"}
+              {step === 3 && "Secure Verification"}
+            </h3>
+            <p className="text-sm text-slate-500 mt-1 font-medium">
+              {step === 1 && "Tell us a bit about yourself."}
+              {step === 2 && "What kind of funding do you need?"}
+              {step === 3 && "We'll send a 4-digit OTP to verify."}
+            </p>
+          </div>
+          {step > 1 && !isSubmitting && (
+            <button type="button" onClick={prevStep} className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-brand-deep hover:bg-slate-100 transition-colors">
+              <ArrowLeft size={18} />
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="mb-6 flex items-center justify-between">
-        <h3 className="text-2xl font-bold">
-          {step === 1 && "Personal Details"}
-          {step === 2 && "Loan Details"}
-          {step === 3 && "Verification"}
-        </h3>
-        {step > 1 && !isSubmitting && (
-          <button type="button" onClick={prevStep} className="text-gray-400 hover:text-brand-deep p-2">
-            <ArrowLeft size={20} />
-          </button>
-        )}
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         
         {/* STEP 1: Personal Info */}
         {step === 1 && (
-          <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Full Name</label>
+          <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Full Name</label>
               <input 
                 {...register("fullName")}
                 type="text" 
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none" 
-                placeholder="Enter your full name" 
+                className="w-full px-5 py-3.5 rounded-xl border-2 border-transparent bg-slate-50 focus:bg-white focus:border-brand-mint focus:ring-0 outline-none transition-all font-medium text-slate-900 placeholder:text-slate-400" 
+                placeholder="As per your PAN card" 
               />
-              {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
+              {errors.fullName && <p className="text-red-500 text-xs mt-1 pl-1 font-medium">{errors.fullName.message}</p>}
             </div>
             
-            <div>
-              <label className="block text-sm font-medium mb-1">City</label>
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Current City</label>
               <input 
                 {...register("city")}
                 type="text" 
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none" 
-                placeholder="e.g. Mumbai, Delhi" 
+                className="w-full px-5 py-3.5 rounded-xl border-2 border-transparent bg-slate-50 focus:bg-white focus:border-brand-mint focus:ring-0 outline-none transition-all font-medium text-slate-900 placeholder:text-slate-400" 
+                placeholder="Where are you looking to buy?" 
               />
-              {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>}
+              {errors.city && <p className="text-red-500 text-xs mt-1 pl-1 font-medium">{errors.city.message}</p>}
             </div>
 
             <button 
               type="button" 
               onClick={nextStep}
-              className="btn-interactive w-full bg-brand-deep text-white font-bold py-4 rounded-lg mt-6 hover:bg-opacity-90 flex items-center justify-center gap-2 group"
+              className="w-full bg-brand-deep text-white font-bold py-4 rounded-xl mt-4 hover:bg-brand-mint hover:text-brand-deep transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_4px_14px_rgba(0,0,0,0.1)]"
             >
-              Next Step <ChevronRight size={18} className="icon-slide" />
+              Continue to Loan Details <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         )}
 
         {/* STEP 2: Loan Details */}
         {step === 2 && (
-          <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <div>
-              <label className="block text-sm font-medium mb-1">Loan Amount Required</label>
-              <input 
-                {...register("loanAmount")}
-                type="text" 
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none" 
-                placeholder="₹ 50,00,000" 
-              />
-              {errors.loanAmount && <p className="text-red-500 text-xs mt-1">{errors.loanAmount.message}</p>}
+          <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Required Loan Amount</label>
+              <div className="relative">
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+                <input 
+                  {...register("loanAmount")}
+                  type="text" 
+                  className="w-full pl-9 pr-5 py-3.5 rounded-xl border-2 border-transparent bg-slate-50 focus:bg-white focus:border-brand-mint focus:ring-0 outline-none transition-all font-bold text-slate-900 text-lg placeholder:text-slate-400" 
+                  placeholder="50,00,000" 
+                />
+              </div>
+              {errors.loanAmount && <p className="text-red-500 text-xs mt-1 pl-1 font-medium">{errors.loanAmount.message}</p>}
             </div>
             
-            <div>
-              <label className="block text-sm font-medium mb-1">Employment Type</label>
-              <div className="grid grid-cols-3 gap-2">
+            <div className="space-y-2">
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Employment Type</label>
+              <div className="grid grid-cols-3 gap-3">
                 {["salaried", "self-employed", "business"].map((type) => (
-                  <label key={type} className="cursor-pointer">
+                  <label key={type} className="cursor-pointer group">
                     <input 
                       {...register("employmentType")} 
                       type="radio" 
                       value={type} 
                       className="peer sr-only" 
                     />
-                    <div className="px-2 py-3 text-center text-xs font-medium rounded-lg border border-gray-200 peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:text-white capitalize transition-colors">
+                    <div className="px-1 py-3 text-center text-xs font-bold rounded-xl border-2 border-slate-100 bg-white text-slate-500 peer-checked:border-brand-deep peer-checked:bg-brand-deep peer-checked:text-white capitalize transition-all hover:border-slate-200 shadow-sm">
                       {type.replace("-", " ")}
                     </div>
                   </label>
@@ -191,73 +242,78 @@ export default function MultiStepLeadForm() {
             <button 
               type="button" 
               onClick={nextStep}
-              className="btn-interactive w-full bg-brand-deep text-white font-bold py-4 rounded-lg mt-6 hover:bg-opacity-90 flex items-center justify-center gap-2 group"
+              className="w-full bg-brand-deep text-white font-bold py-4 rounded-xl mt-4 hover:bg-brand-mint hover:text-brand-deep transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_4px_14px_rgba(0,0,0,0.1)]"
             >
-              Continue <ChevronRight size={18} className="icon-slide" />
+              Check My Eligibility <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         )}
 
         {/* STEP 3: Phone & OTP */}
         {step === 3 && (
-          <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
+          <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
             
-            <div className={`${showOtp ? 'opacity-50 pointer-events-none' : ''} transition-opacity`}>
-              <label className="block text-sm font-medium mb-1">Mobile Number</label>
-              <div className="flex">
-                <span className="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500">+91</span>
+            <div className={`space-y-1.5 ${showOtp ? 'opacity-50 pointer-events-none' : ''} transition-opacity`}>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Mobile Number</label>
+              <div className="flex rounded-xl overflow-hidden border-2 border-transparent focus-within:border-brand-mint focus-within:bg-white bg-slate-50 transition-all">
+                <span className="flex items-center justify-center px-4 font-bold text-slate-400 bg-slate-100 border-r border-slate-200/50">+91</span>
                 <input 
                   {...register("phone")}
                   type="tel" 
                   maxLength={10}
-                  className="w-full px-4 py-3 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none" 
-                  placeholder="75033 88930" 
+                  className="w-full px-4 py-3.5 bg-transparent outline-none font-bold text-slate-900 tracking-wider placeholder:tracking-normal placeholder:font-medium placeholder:text-slate-400" 
+                  placeholder="99999 99999" 
                 />
               </div>
-              {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+              {errors.phone && <p className="text-red-500 text-xs mt-1 pl-1 font-medium">{errors.phone.message}</p>}
             </div>
 
             {showOtp && (
-              <div className="animate-in fade-in slide-in-from-top-2">
-                <label className="block text-sm font-medium mb-1">Enter OTP (Try 1234)</label>
+              <div className="animate-in zoom-in-95 fade-in duration-300 space-y-1.5 mt-2">
+                <label className="block text-xs font-bold text-brand-mint uppercase tracking-wider pl-1 text-center">Enter 4-Digit OTP</label>
                 <input 
                   type="text" 
                   maxLength={4}
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-center text-xl tracking-[1em]" 
+                  className="w-full px-4 py-4 rounded-xl border-2 border-brand-mint bg-brand-mint/5 focus:bg-white focus:ring-0 outline-none text-center text-3xl font-black text-brand-deep tracking-[1em]" 
                   placeholder="----" 
                 />
               </div>
             )}
 
-            <div className="flex items-start gap-2 mt-4">
-              <input 
-                {...register("consent")}
-                type="checkbox" 
-                id="consent"
-                className="mt-1"
-              />
-              <label htmlFor="consent" className="text-xs text-gray-500">
-                I hereby consent to receive calls / SMS / WhatsApp from Kal Ka Loan and its partners. 
-                I also agree to the Terms of Service & Privacy Policy.
+            <div className="flex items-start gap-3 mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <div className="pt-0.5">
+                <input 
+                  {...register("consent")}
+                  type="checkbox" 
+                  id="consent"
+                  className="w-4 h-4 rounded border-slate-300 text-brand-mint focus:ring-brand-mint"
+                />
+              </div>
+              <label htmlFor="consent" className="text-xs text-slate-500 leading-relaxed font-medium">
+                I consent to receive updates via SMS/WhatsApp and agree to the <a href="#" className="text-brand-deep underline">Terms of Service</a> & <a href="#" className="text-brand-deep underline">Privacy Policy</a>.
               </label>
             </div>
-            {errors.consent && <p className="text-red-500 text-xs">{errors.consent.message}</p>}
+            {errors.consent && <p className="text-red-500 text-xs pl-1 font-medium">{errors.consent.message}</p>}
 
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className="btn-interactive w-full bg-brand-deep text-white font-bold py-4 rounded-lg mt-6 hover:bg-opacity-90 flex items-center justify-center gap-2 disabled:opacity-70 group"
+              className={`w-full font-bold py-4 rounded-xl mt-4 transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,0,0,0.1)] ${showOtp ? 'bg-brand-mint text-brand-deep hover:bg-opacity-90' : 'bg-brand-deep text-white hover:bg-brand-mint hover:text-brand-deep'} disabled:opacity-70 disabled:cursor-not-allowed group`}
             >
               {isSubmitting ? (
                 <> <Loader2 size={18} className="animate-spin" /> Processing... </>
               ) : showOtp ? (
-                <> Verify & Submit <CheckCircle size={18} /> </>
+                <> Verify & See Results <CheckCircle size={18} /> </>
               ) : (
-                <> Send OTP <ChevronRight size={18} className="icon-slide" /> </>
+                <> Send Verification Code <ChevronRight size={18} className={showOtp ? "" : "group-hover:translate-x-1 transition-transform"} /> </>
               )}
             </button>
+            
+            <p className="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 mt-4">
+              <CheckCircle size={12} className="text-brand-mint" /> Bank-Grade 256-bit Encryption
+            </p>
           </div>
         )}
       </form>

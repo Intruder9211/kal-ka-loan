@@ -3,9 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2, IndianRupee, ArrowRightLeft, TrendingDown, PiggyBank, Calculator } from "lucide-react";
 import MultiStepLeadForm from "@/components/forms/MultiStepLeadForm";
+import BalanceTransferCalculator from "@/components/calculators/BalanceTransferCalculator";
 
 export const metadata: Metadata = {
-  title: "Home Loan Balance Transfer | Lower Your EMI | Kal Ka Loan",
+  title: "Home Loan Balance Transfer | Lower Your EMI | Money Viora",
   description: "Transfer your existing home loan to a new lender with a lower interest rate. Save lakhs in interest and reduce your monthly EMI.",
 };
 
@@ -57,6 +58,11 @@ export default function BalanceTransferPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Calculator Section */}
+      <div className="container mx-auto px-4 py-16 text-center max-w-5xl">
+        <BalanceTransferCalculator />
       </div>
 
       {/* Content Section */}

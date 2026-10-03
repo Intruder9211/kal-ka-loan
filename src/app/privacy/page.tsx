@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Kal Ka Loan",
-  description: "Privacy policy and data protection guidelines for Kal Ka Loan users.",
+  title: "Privacy Policy | Money Viora",
+  description: "Privacy policy and data protection guidelines for Money Viora users.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-brand-deep mb-4">1. Introduction</h2>
           <p className="text-gray-600 mb-4">
-            At Kal Ka Loan, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our loan distribution services.
+            At Money Viora, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our loan distribution services.
           </p>
         </section>
 
@@ -53,7 +53,7 @@ export default function PrivacyPolicyPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-brand-deep mb-4">5. Contact Us</h2>
           <p className="text-gray-600 mb-4">
-            If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us at: <a href="mailto:privacy@kalkaloan.com" className="text-brand-mint font-bold hover:underline">privacy@kalkaloan.com</a>
+            If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us at: <a href="mailto:privacy@moneyviora.com" className="text-brand-mint font-bold hover:underline">privacy@moneyviora.com</a>
           </p>
         </section>
       </div>

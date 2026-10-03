@@ -113,7 +113,7 @@ export default function Chatbot() {
               <Bot size={24} />
             </div>
             <div>
-              <h3 className="font-bold">Kal Ka Loan AI</h3>
+              <h3 className="font-bold">Money Viora AI</h3>
               <p className="text-xs text-brand-mint">Powered by Gemini</p>
             </div>
           </div>

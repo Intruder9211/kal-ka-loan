@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "Blog & Guides | Kal Ka Loan",
+  title: "Blog & Guides | Money Viora",
   description: "Expert advice, tips, and guides on home loans, credit scores, and real estate in India.",
 };
 

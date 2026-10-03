@@ -4,7 +4,7 @@ import MultiStepLeadForm from "@/components/forms/MultiStepLeadForm";
 import EmiCalculator from "@/components/calculators/EmiCalculator";
 
 export const metadata: Metadata = {
-  title: "Plot & Construction Loan | Kal Ka Loan",
+  title: "Plot & Construction Loan | Money Viora",
   description: "Finance the purchase of a plot and the construction of your dream home.",
 };
 

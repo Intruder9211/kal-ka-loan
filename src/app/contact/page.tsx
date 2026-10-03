@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Kal Ka Loan",
-  description: "Get in touch with Kal Ka Loan experts for your home loan queries.",
+  title: "Contact Us | Money Viora",
+  description: "Get in touch with Money Viora experts for your home loan queries.",
 };
 
 export default function ContactPage() {
@@ -34,7 +34,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-800">Phone</h4>
-                  <p className="text-gray-600">+91 75033 88930</p>
+                  <p className="text-gray-600">+91 73030 61282</p>
                   <p className="text-xs text-gray-400 mt-1">Mon-Sat, 9am to 7pm</p>
                 </div>
               </div>
@@ -45,7 +45,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-800">Email</h4>
-                  <p className="text-gray-600">support@kalkaloan.com</p>
+                  <p className="text-gray-600">support@moneyviora.com</p>
                   <p className="text-xs text-gray-400 mt-1">We typically reply within 24 hours</p>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Script from "next/script";
 
 export default function SiteLoader() {
   const [progress, setProgress] = useState(0);
@@ -11,7 +12,7 @@ export default function SiteLoader() {
 
   useEffect(() => {
     try {
-      const played = sessionStorage.getItem("kalkaloan_initial_loader");
+      const played = sessionStorage.getItem("moneyviora_initial_loader");
       if (played === "true") {
         setHasPlayed(true);
         setIsVisible(false);
@@ -49,7 +50,7 @@ export default function SiteLoader() {
           setTimeout(() => {
             setIsVisible(false);
             try {
-              sessionStorage.setItem("kalkaloan_initial_loader", "true");
+              sessionStorage.setItem("moneyviora_initial_loader", "true");
               // Dispatch event so PageTransition knows initial load is done
               window.dispatchEvent(new Event("initial_load_complete"));
             } catch (e) {}
@@ -77,17 +78,19 @@ export default function SiteLoader() {
 
   return (
     <>
-      <script
+      <Script
+        id="skip-loader-script"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-            if (sessionStorage.getItem('kalkaloan_initial_loader') === 'true') {
+            if (sessionStorage.getItem('moneyviora_initial_loader') === 'true') {
               document.documentElement.classList.add('skip-loader');
             }
           `,
         }}
       />
       <div 
-        id="kalkaloan-site-loader"
+        id="moneyviora-site-loader"
         className={`fixed inset-0 z-[10000] bg-brand-dark flex flex-col items-center justify-center transition-opacity duration-300 ease-in-out ${isFadingOut ? 'opacity-0' : 'opacity-100'}`}
         aria-hidden="true"
       >
@@ -110,7 +113,7 @@ export default function SiteLoader() {
         >
           <Image 
             src="/logo.png" 
-            alt="Kal Ka Loan Logo" 
+            alt="Money Viora Logo" 
             fill 
             className="object-contain object-center"
             priority

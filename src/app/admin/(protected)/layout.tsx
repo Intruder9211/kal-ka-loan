@@ -38,7 +38,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           <div className="relative w-40 h-10 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
             <Image 
               src="/logo.png" 
-              alt="Kal Ka Loan Logo" 
+              alt="Money Viora Logo" 
               fill 
               className="object-contain object-left brightness-0 invert opacity-90"
               priority
@@ -57,6 +57,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           <Link href="/admin/customers" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
             <Users className="h-5 w-5 text-slate-400" />
             Customers
+          </Link>
+          <Link href="/admin/leads" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+            <Users className="h-5 w-5 text-slate-400" />
+            Website Leads
           </Link>
           
           <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-3 mt-6">Operations</div>

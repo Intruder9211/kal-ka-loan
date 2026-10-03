@@ -1,8 +1,8 @@
-import EmiCalculator from "@/components/calculators/EmiCalculator";
+import CalculatorsAccordion from "@/components/calculators/CalculatorsAccordion";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Home Loan EMI Calculator | Kal Ka Loan",
+  title: "Home Loan EMI Calculator | Money Viora",
   description: "Calculate your home loan EMI instantly. Use our sliders to adjust principal, interest rate, and tenure.",
 };
 
@@ -22,9 +22,9 @@ export default function CalculatorsPage() {
         </div>
       </div>
 
-      {/* Calculator Container */}
+      {/* Calculators Accordion Container */}
       <div className="container mx-auto px-4 py-12 -mt-10 relative z-20">
-        <EmiCalculator />
+        <CalculatorsAccordion />
       </div>
 
       {/* SEO Content */}

@@ -6,11 +6,11 @@ import { ClipboardList, Search, Filter, Download, User, ShieldAlert, FileText, S
 // Mock audit logs
 const initialLogs = [
   { id: "al-101", timestamp: "2026-10-02 12:45:32", user: "Super Admin", email: "admin@example.com", action: "Updated Application Status", target: "APP-1001", details: "Changed status from UNDER_REVIEW to APPROVED", type: "application", ip: "192.168.1.45" },
-  { id: "al-102", timestamp: "2026-10-02 12:30:15", user: "Rahul Verma", email: "rahul.v@kalkaloan.com", action: "Viewed Document", target: "APP-1002", details: "Viewed Income Proof (ITR)", type: "document", ip: "10.0.0.12" },
+  { id: "al-102", timestamp: "2026-10-02 12:30:15", user: "Rahul Verma", email: "rahul.v@moneyviora.com", action: "Viewed Document", target: "APP-1002", details: "Viewed Income Proof (ITR)", type: "document", ip: "10.0.0.12" },
   { id: "al-103", timestamp: "2026-10-02 11:15:00", user: "Super Admin", email: "admin@example.com", action: "Modified System Settings", target: "Global Preferences", details: "Updated Auto-assign new applications toggle", type: "system", ip: "192.168.1.45" },
-  { id: "al-104", timestamp: "2026-10-02 10:05:22", user: "Priya Sharma", email: "priya.s@kalkaloan.com", action: "User Login", target: "Authentication", details: "Successful login via Email/Password", type: "auth", ip: "172.16.0.5" },
-  { id: "al-105", timestamp: "2026-10-01 16:45:10", user: "Amit Desai", email: "amit.d@kalkaloan.com", action: "Exported Data", target: "Customers List", details: "Exported 142 records to CSV", type: "system", ip: "10.0.0.18" },
-  { id: "al-106", timestamp: "2026-10-01 14:20:05", user: "System", email: "system@kalkaloan.com", action: "Automated Credit Pull", target: "APP-1003", details: "Fetched CIBIL score via API", type: "api", ip: "localhost" },
+  { id: "al-104", timestamp: "2026-10-02 10:05:22", user: "Priya Sharma", email: "priya.s@moneyviora.com", action: "User Login", target: "Authentication", details: "Successful login via Email/Password", type: "auth", ip: "172.16.0.5" },
+  { id: "al-105", timestamp: "2026-10-01 16:45:10", user: "Amit Desai", email: "amit.d@moneyviora.com", action: "Exported Data", target: "Customers List", details: "Exported 142 records to CSV", type: "system", ip: "10.0.0.18" },
+  { id: "al-106", timestamp: "2026-10-01 14:20:05", user: "System", email: "system@moneyviora.com", action: "Automated Credit Pull", target: "APP-1003", details: "Fetched CIBIL score via API", type: "api", ip: "localhost" },
   { id: "al-107", timestamp: "2026-10-01 09:12:45", user: "Super Admin", email: "admin@example.com", action: "Failed Login Attempt", target: "Authentication", details: "Invalid password provided", type: "auth", ip: "203.0.113.42" },
 ]
 

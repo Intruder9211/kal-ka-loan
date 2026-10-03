@@ -8,14 +8,38 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Mock API call
-    setTimeout(() => {
+    
+    try {
+      const formData = new FormData(e.currentTarget);
+      const data = {
+        name: formData.get('name'),
+        mobile: formData.get('mobile'),
+        email: formData.get('email'),
+        employment: formData.get('employment'),
+        monthlyIncome: formData.get('monthlyIncome'),
+        loanAmount: formData.get('loanAmount'),
+        city: formData.get('city'),
+      };
+
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        setIsSuccess(true);
+      } else {
+        alert('Failed to submit application. Please try again.');
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 1500);
+    }
   };
 
   if (isSuccess) {
@@ -45,7 +69,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
         <div className="relative w-40 h-10 mx-auto mb-4">
           <Image 
             src="/logo.png" 
-            alt="Kal Ka Loan Logo" 
+            alt="Money Viora Logo" 
             fill 
             className="object-contain"
           />
@@ -61,14 +85,14 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Full Name</label>
             <div className="relative">
               <User size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Amit Kumar" />
+              <input required name="name" type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Amit Kumar" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Mobile No.</label>
             <div className="relative">
               <Phone size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required type="tel" pattern="[0-9]{10}" maxLength={10} className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="10-digit number" />
+              <input required name="mobile" type="tel" pattern="[0-9]{10}" maxLength={10} className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="10-digit number" />
             </div>
           </div>
         </div>
@@ -78,7 +102,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
           <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Email Address</label>
           <div className="relative">
             <Mail size={16} className="absolute left-3 top-3 text-gray-400" />
-            <input required type="email" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="amit@example.com" />
+            <input required name="email" type="email" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="amit@example.com" />
           </div>
         </div>
 
@@ -88,7 +112,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Employment</label>
             <div className="relative">
               <Briefcase size={16} className="absolute left-3 top-3 text-gray-400" />
-              <select required defaultValue="" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 bg-white appearance-none">
+              <select required name="employment" defaultValue="" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 bg-white appearance-none">
                 <option value="" disabled>Select Type</option>
                 <option value="salaried">Salaried</option>
                 <option value="self_employed">Self Employed</option>
@@ -99,7 +123,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Net Monthly Inc.</label>
             <div className="relative">
               <IndianRupee size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required type="number" min="15000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 50000" />
+              <input required name="monthlyIncome" type="number" min="15000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 50000" />
             </div>
           </div>
         </div>
@@ -110,14 +134,14 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Loan Amount</label>
             <div className="relative">
               <Building size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required type="number" min="500000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 2500000" />
+              <input required name="loanAmount" type="number" min="500000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 2500000" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">City</label>
             <div className="relative">
               <MapPin size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Delhi" />
+              <input required name="city" type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Delhi" />
             </div>
           </div>
         </div>

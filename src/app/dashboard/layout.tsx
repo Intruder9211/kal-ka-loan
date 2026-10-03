@@ -22,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
           <div className="relative w-40 h-10 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
             <Image 
               src="/logo.png" 
-              alt="Kal Ka Loan Logo" 
+              alt="Money Viora Logo" 
               fill 
               className="object-contain object-left"
               priority

@@ -5,7 +5,7 @@ import LenderCard, { Lender } from "@/components/ui/LenderCard";
 import CompareList from "@/components/compare/CompareList";
 
 export const metadata: Metadata = {
-  title: "Compare Home Loan Offers & Interest Rates | Kal Ka Loan",
+  title: "Compare Home Loan Offers & Interest Rates | Money Viora",
   description: "Compare home loan interest rates, processing fees, and eligibility across top banks and NBFCs in India like HDFC, SBI, ICICI, and Axis.",
 };
 

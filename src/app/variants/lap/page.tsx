@@ -4,7 +4,7 @@ import MultiStepLeadForm from "@/components/forms/MultiStepLeadForm";
 import EmiCalculator from "@/components/calculators/EmiCalculator";
 
 export const metadata: Metadata = {
-  title: "Loan Against Property (LAP) | Kal Ka Loan",
+  title: "Loan Against Property (LAP) | Money Viora",
   description: "Unlock the value of your property with a Loan Against Property.",
 };
 
