@@ -52,9 +52,10 @@ export default function Header({ session }: { session?: any }) {
             Compare Lenders
           </Link>
           
-          <div className="group/nav relative py-4">
-            <Link href="/calculators" className="link-underline flex items-center gap-1">
-              Calculators <ChevronDown size={14} className="group-hover/nav:rotate-180 transition-transform" />
+          <div className="group/nav relative py-4 flex items-center">
+            <Link href="/calculators" className="link-underline flex items-center gap-1.5 cursor-pointer">
+              <span>Calculators</span> 
+              <ChevronDown size={14} className="group-hover/nav:rotate-180 transition-transform inline-block" />
             </Link>
             
             {/* Mega Menu */}

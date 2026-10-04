@@ -41,7 +41,15 @@ export default function CalculatorsAccordion() {
   useEffect(() => {
     if (tab && CALCULATORS.some(c => c.id === tab)) {
       setActiveAccordion(tab);
-      // Optional: scroll into view
+      
+      // Auto-scroll to the calculator with a slight delay to ensure render
+      setTimeout(() => {
+        const element = document.getElementById(`calc-${tab}`);
+        if (element) {
+          const y = element.getBoundingClientRect().top + window.scrollY - 100; // 100px offset for fixed header
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
     }
   }, [tab]);
 
@@ -54,8 +62,9 @@ export default function CalculatorsAccordion() {
         return (
           <div 
             key={calc.id} 
+            id={`calc-${calc.id}`}
             className={cn(
-              "bg-white rounded-xl border transition-all duration-300 overflow-hidden",
+              "bg-white rounded-xl border transition-all duration-300 overflow-hidden scroll-mt-24",
               isActive ? "border-brand-mint shadow-md" : "border-gray-200 hover:border-brand-mint/50"
             )}
           >

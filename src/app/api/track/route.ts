@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 export async function POST() {
   try {
     // Basic session tracking using a cookie to avoid counting the same user multiple times per day
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const hasVisited = cookieStore.get('has_visited_today');
 
     if (!hasVisited) {

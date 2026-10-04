@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 enum Role {
@@ -271,4 +272,6 @@ model SiteAnalytics {
   id        String   @id @default("main")
   visits    Int      @default(0)
   updatedAt DateTime @updatedAt
+
+  @@map("site_analytics")
 }
