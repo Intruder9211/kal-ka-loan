@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import EmiCalculator from "./EmiCalculator";
 import AdvancedEmiComparison from "./AdvancedEmiComparison";
 import { 
@@ -17,7 +18,7 @@ import {
 import { ChevronDown, Calculator, IndianRupee, Percent, Clock, Home, ArrowRightLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const CALCULATORS = [
+export const CALCULATORS = [
   { id: "emi", title: "EMI Calculator", icon: Calculator, description: "Calculate your monthly EMI and view the amortization schedule." },
   { id: "eligibility", title: "Loan Eligibility Calculator", icon: IndianRupee, description: "Check how much loan you are eligible for based on your income." },
   { id: "affordability", title: "Home Loan Affordability Calculator", icon: Home, description: "Determine the maximum property value you can afford." },
@@ -32,7 +33,17 @@ const CALCULATORS = [
 ];
 
 export default function CalculatorsAccordion() {
+  const searchParams = useSearchParams();
+  const tab = searchParams?.get("tab");
+  
   const [activeAccordion, setActiveAccordion] = useState<string>("emi");
+
+  useEffect(() => {
+    if (tab && CALCULATORS.some(c => c.id === tab)) {
+      setActiveAccordion(tab);
+      // Optional: scroll into view
+    }
+  }, [tab]);
 
   return (
     <div className="max-w-5xl mx-auto space-y-4">

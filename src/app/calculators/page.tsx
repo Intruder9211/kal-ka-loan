@@ -1,4 +1,5 @@
 import CalculatorsAccordion from "@/components/calculators/CalculatorsAccordion";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -24,7 +25,9 @@ export default function CalculatorsPage() {
 
       {/* Calculators Accordion Container */}
       <div className="container mx-auto px-4 py-12 -mt-10 relative z-20">
-        <CalculatorsAccordion />
+        <Suspense fallback={<div>Loading calculators...</div>}>
+          <CalculatorsAccordion />
+        </Suspense>
       </div>
 
       {/* SEO Content */}

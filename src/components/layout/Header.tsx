@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, User, LayoutDashboard, LogOut } from "lucide-react";
+import { Menu, Phone, User, LayoutDashboard, LogOut, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
+import { CALCULATORS } from "@/components/calculators/CalculatorsAccordion";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 
@@ -50,9 +51,35 @@ export default function Header({ session }: { session?: any }) {
           <Link href="/compare" className="link-underline pb-1">
             Compare Lenders
           </Link>
-          <Link href="/calculators" className="link-underline pb-1">
-            Calculators
-          </Link>
+          
+          <div className="group/nav relative py-4">
+            <Link href="/calculators" className="link-underline flex items-center gap-1">
+              Calculators <ChevronDown size={14} className="group-hover/nav:rotate-180 transition-transform" />
+            </Link>
+            
+            {/* Mega Menu */}
+            <div className="absolute top-[100%] left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border border-gray-100 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 p-6 grid grid-cols-4 gap-4 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+              {CALCULATORS.map((calc) => {
+                const Icon = calc.icon;
+                return (
+                  <Link 
+                    key={calc.id}
+                    href={`/calculators?tab=${calc.id}`}
+                    className="flex flex-col gap-2 p-4 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group/item"
+                  >
+                    <div className="h-10 w-10 bg-brand-mint/10 text-brand-mint rounded-lg flex items-center justify-center group-hover/item:scale-110 transition-transform">
+                      <Icon size={20} />
+                    </div>
+                    <div>
+                      <h4 className="text-slate-900 font-bold text-sm leading-tight group-hover/item:text-brand-mint transition-colors">{calc.title.replace('Calculator', '').trim()}</h4>
+                      <p className="text-slate-500 text-xs mt-1 line-clamp-2">{calc.description}</p>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+
           <Link href="/affordability" className="link-underline pb-1">
             Affordability
           </Link>
