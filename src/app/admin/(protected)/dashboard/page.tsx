@@ -7,6 +7,10 @@ export const dynamic = "force-dynamic"
 export default async function AdminDashboardOverview() {
   const applications = await prisma.application.findMany() || []
   
+  // Fetch Site Analytics
+  const siteAnalytics = await prisma.siteAnalytics.findUnique({ where: { id: "main" } })
+  const totalVisitors = siteAnalytics?.visits || 0
+  
   // Calculate dynamic stats based on applications DB
   const totalApps = applications.length
   const pendingApps = applications.filter((app: any) => app.status === "UNDER_REVIEW").length
@@ -54,8 +58,23 @@ export default async function AdminDashboardOverview() {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
         {/* Metric Cards */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow group">
+          <div className="flex items-center justify-between pb-4">
+            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Visitors</h3>
+            <div className="h-10 w-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:scale-110 transition-transform">
+              <Users className="h-5 w-5" />
+            </div>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <div className="text-4xl font-extrabold text-slate-900">{totalVisitors > 0 ? totalVisitors : 0}</div>
+          </div>
+          <div className="flex items-center gap-1 mt-3 text-sm font-medium text-slate-500 bg-slate-50 w-fit px-2 py-0.5 rounded-md">
+            All time traffic
+          </div>
+        </div>
+
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow group">
           <div className="flex items-center justify-between pb-4">
             <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Customers</h3>

@@ -9,6 +9,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import SiteLoader from "@/components/layout/SiteLoader";
 import Chatbot from "@/components/ui/Chatbot";
 import SocialSidebar from "@/components/layout/SocialSidebar";
+import VisitorTracker from "@/components/analytics/VisitorTracker";
 import { auth } from "@/auth";
 import { PublicWrapper } from "@/components/layout/PublicWrapper";
 
@@ -41,6 +42,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-brand-light text-brand-deep">
+        <VisitorTracker />
         <SiteLoader />
         <PageTransition />
         
