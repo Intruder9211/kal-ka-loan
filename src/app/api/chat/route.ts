@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize the Gemini API
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
 export async function POST(req: Request) {
   try {
     if (!process.env.GEMINI_API_KEY) {
@@ -12,12 +9,15 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     }
+    
+    // Initialize inside the handler to ensure env vars are fully loaded in Next.js dev mode
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     const body = await req.json();
     const { message, history } = body;
 
     const systemInstruction = `
-      You are Kal, the official AI assistant for 'Money Viora', an Indian home loan aggregation platform.
+      You are Rapid, the official AI assistant for 'Money Viora', an Indian home loan aggregation platform.
       Your job is to answer user questions about home loans, interest rates, eligibility, and EMI calculations.
       - Always be extremely polite, concise, and helpful.
       - If asked to calculate EMI, perform the math formula: EMI = P * r * (1+r)^n / ((1+r)^n - 1) where P is principal, r is monthly interest rate (yearly rate/12/100), and n is tenure in months. Provide the exact numeric value in Indian Rupees.
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Gemini API Error:", error);
     return NextResponse.json(
-      { error: "Sorry, I am having trouble connecting to my brain right now. Please try again later!" },
+      { error: "Sorry, I am having trouble connecting to my brain right now. " + (error?.message || error) },
       { status: 500 }
     );
   }

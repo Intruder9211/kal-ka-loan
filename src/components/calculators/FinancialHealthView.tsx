@@ -3,6 +3,29 @@
 import { useState } from "react";
 import { IndianRupee, TrendingUp, AlertTriangle, CheckCircle2, ShieldCheck } from "lucide-react";
 
+// Helper for Input
+const InputSlider = ({ label, value, setter, min, max, step }: any) => (
+  <div className="space-y-4">
+    <div className="flex justify-between items-end">
+      <label className="font-medium text-sm text-slate-700">{label}</label>
+      <div className="relative flex items-center">
+        <span className="absolute left-3 font-medium text-gray-500">₹</span>
+        <input 
+          type="text" 
+          suppressHydrationWarning
+          value={value ? Number(value).toLocaleString('en-IN') : ''}
+          onChange={(e) => {
+            const val = Number(e.target.value.replace(/,/g, ''));
+            if (!isNaN(val)) setter(val);
+          }}
+          className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+        />
+      </div>
+    </div>
+    <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => setter(Number(e.target.value))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint" />
+  </div>
+);
+
 export default function FinancialHealthView() {
   // Inputs
   const [income, setIncome] = useState(120000);
@@ -23,9 +46,9 @@ export default function FinancialHealthView() {
   const leftoverCash = income - totalDesiredCommitment;
 
   // Affordability Ranges (Max EMI based on different FOIR thresholds)
-  const comfortableEmi = (income * 0.40) - existingEmis; // 40% FOIR
-  const stretchedEmi = (income * 0.55) - existingEmis;   // 55% FOIR
-  const maxEmi = (income * 0.65) - existingEmis;         // 65% FOIR (Absolute Limit)
+  const comfortableEmi = (income * 0.50) - existingEmis; // 50% FOIR
+  const stretchedEmi = (income * 0.60) - existingEmis;   // 60% FOIR
+  const maxEmi = (income * 0.70) - existingEmis;         // 70% FOIR (Absolute Limit)
 
   const calcLoanFromEmi = (emiAmt: number) => {
     if (emiAmt <= 0) return 0;
@@ -63,27 +86,6 @@ export default function FinancialHealthView() {
     HealthIcon = CheckCircle2;
   }
 
-  // Helper for Input
-  const InputSlider = ({ label, value, setter, min, max, step }: any) => (
-    <div className="space-y-4">
-      <div className="flex justify-between items-end">
-        <label className="font-medium text-sm text-slate-700">{label}</label>
-        <div className="relative flex items-center">
-          <span className="absolute left-3 font-medium text-gray-500">₹</span>
-          <input 
-            type="text" 
-            value={value ? Number(value).toLocaleString('en-IN') : ''}
-            onChange={(e) => {
-              const val = Number(e.target.value.replace(/,/g, ''));
-              if (!isNaN(val)) setter(val);
-            }}
-            className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
-          />
-        </div>
-      </div>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => setter(Number(e.target.value))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint" />
-    </div>
-  );
 
   return (
     <div className="grid lg:grid-cols-12 gap-8 items-start">
@@ -149,7 +151,7 @@ export default function FinancialHealthView() {
               <div className="flex justify-between items-center relative z-10">
                 <div>
                   <h4 className="font-bold text-green-800">Comfortable Zone</h4>
-                  <p className="text-xs text-green-600 font-medium mt-0.5">Recommended (Leaves 60% for expenses)</p>
+                  <p className="text-xs text-green-600 font-medium mt-0.5">Recommended (Leaves 50% for expenses)</p>
                 </div>
                 <div className="text-right">
                   <p className="text-xl font-bold text-green-700">₹{Math.round(comfortableLoan).toLocaleString('en-IN')}</p>
@@ -177,7 +179,7 @@ export default function FinancialHealthView() {
               <div className="flex justify-between items-center relative z-10">
                 <div>
                   <h4 className="font-bold text-red-800">Absolute Limit</h4>
-                  <p className="text-xs text-red-600 font-medium mt-0.5">Requires bank exception (65% FOIR)</p>
+                  <p className="text-xs text-red-600 font-medium mt-0.5">Requires bank exception (70% FOIR)</p>
                 </div>
                 <div className="text-right">
                   <p className="text-xl font-bold text-red-700">₹{Math.round(maxLoan).toLocaleString('en-IN')}</p>

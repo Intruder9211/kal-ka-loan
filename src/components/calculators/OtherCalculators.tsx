@@ -12,6 +12,7 @@ const InputGroup = ({ label, value, onChange, min, max, step, icon: Icon, suffix
         {Icon === IndianRupee && <span className="absolute left-3 font-medium text-gray-500">₹</span>}
         <input 
           type="text" 
+          suppressHydrationWarning
           value={value ? Number(value).toLocaleString('en-IN') : ''}
           onChange={(e) => {
             const val = Number(e.target.value.replace(/,/g, ''));

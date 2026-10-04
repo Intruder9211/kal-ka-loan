@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, Bot, User, Calculator } from "lucide-react";
+import { MessageSquare, X, Send, User, Calculator } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type Message = {
@@ -17,7 +18,7 @@ export default function Chatbot() {
     {
       id: "1",
       sender: "bot",
-      text: "Hi there! 👋 I'm Kal, your intelligent Home Loan AI powered by Gemini. Ask me any question or tell me to calculate an EMI!",
+      text: "Hi there! 👋 I'm Rapid, your intelligent Home Loan AI powered by moneyviora. Ask me any question or tell me to calculate an EMI!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -109,12 +110,12 @@ export default function Chatbot() {
         {/* Header */}
         <div className="bg-brand-deep p-4 flex items-center justify-between text-white">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-brand-mint/20 rounded-full flex items-center justify-center text-brand-mint">
-              <Bot size={24} />
+            <div className="w-10 h-10 bg-brand-mint/20 rounded-full flex items-center justify-center">
+              <Image src="/logo_white.png" alt="Money Viora" width={24} height={24} className="object-contain" />
             </div>
             <div>
-              <h3 className="font-bold">Money Viora AI</h3>
-              <p className="text-xs text-brand-mint">Powered by Gemini</p>
+              <h3 className="font-bold">Money Viora</h3>
+              <p className="text-xs text-brand-mint">Powered by moneyviora</p>
             </div>
           </div>
           <button 
@@ -137,7 +138,7 @@ export default function Chatbot() {
             >
               <div 
                 className={cn(
-                  "p-3 rounded-2xl text-sm leading-relaxed",
+                  "p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap",
                   msg.sender === "user" 
                     ? "bg-brand-mint text-brand-deep rounded-br-none" 
                     : "bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm"

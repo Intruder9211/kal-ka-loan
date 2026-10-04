@@ -53,6 +53,9 @@ export default function Header({ session }: { session?: any }) {
           <Link href="/calculators" className="link-underline pb-1">
             Calculators
           </Link>
+          <Link href="/affordability" className="link-underline pb-1">
+            Affordability
+          </Link>
           
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
             {session ? (
@@ -112,6 +115,9 @@ export default function Header({ session }: { session?: any }) {
           </Link>
           <Link href="/calculators" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
             Calculators
+          </Link>
+          <Link href="/affordability" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
+            Affordability
           </Link>
           
           <div className="pt-4 border-t border-white/10 flex flex-col gap-4">

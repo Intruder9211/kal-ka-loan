@@ -14,7 +14,8 @@ export default function LeadModal() {
     // Global click interceptor for #apply links
     const handleGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const anchor = target.closest("a");
+      // Safely call closest in case target is a text node or similar
+      const anchor = typeof target.closest === 'function' ? target.closest("a") : null;
       
       // Check if it's an anchor with an href ending in #apply
       if (anchor && (anchor.href || "").endsWith("#apply")) {
