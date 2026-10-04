@@ -65,21 +65,21 @@ export default function TopUpLoanPage() {
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto text-brand-deep mb-4 shadow-sm">
               <Banknote size={24} />
             </div>
-            <h3 className="font-bold mb-2">Lower Rates</h3>
+            <h3 className="font-bold mb-2 text-brand-deep">Lower Rates</h3>
             <p className="text-sm text-gray-600">Cheaper than personal loans or credit cards.</p>
           </div>
           <div className="bg-brand-light p-6 rounded-xl">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto text-brand-deep mb-4 shadow-sm">
               <Wallet size={24} />
             </div>
-            <h3 className="font-bold mb-2">Easy Processing</h3>
+            <h3 className="font-bold mb-2 text-brand-deep">Easy Processing</h3>
             <p className="text-sm text-gray-600">Minimal documentation since you're an existing customer.</p>
           </div>
           <div className="bg-brand-light p-6 rounded-xl">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto text-brand-deep mb-4 shadow-sm">
               <CheckCircle2 size={24} />
             </div>
-            <h3 className="font-bold mb-2">Tax Benefits</h3>
+            <h3 className="font-bold mb-2 text-brand-deep">Tax Benefits</h3>
             <p className="text-sm text-gray-600">Available if used for home renovation/construction.</p>
           </div>
         </div>
