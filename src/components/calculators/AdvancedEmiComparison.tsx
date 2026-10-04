@@ -32,24 +32,45 @@ export default function AdvancedEmiComparison() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Loan Amount: ₹{(loanAmount / 100000).toFixed(2)} Lakhs
-          </label>
+        <div className="space-y-4">
+          <div className="flex justify-between items-end">
+            <label className="font-medium text-sm text-gray-700">Loan Amount</label>
+            <div className="relative flex items-center">
+              <span className="absolute left-3 font-medium text-gray-500">₹</span>
+              <input 
+                type="text" 
+                value={loanAmount ? loanAmount.toLocaleString('en-IN') : ''}
+                onChange={(e) => {
+                  const val = Number(e.target.value.replace(/,/g, ''));
+                  if (!isNaN(val)) setLoanAmount(val);
+                }}
+                className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-44 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+              />
+            </div>
+          </div>
           <input 
             type="range" min="1000000" max="50000000" step="100000" 
             value={loanAmount} onChange={(e) => setLoanAmount(Number(e.target.value))}
-            className="w-full accent-brand-mint"
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tenure: {tenureYears} Years
-          </label>
+        <div className="space-y-4">
+          <div className="flex justify-between items-end">
+            <label className="font-medium text-sm text-gray-700">Tenure</label>
+            <div className="relative flex items-center">
+              <input 
+                type="number" 
+                value={tenureYears}
+                onChange={(e) => setTenureYears(Number(e.target.value))}
+                className="text-xl font-bold text-brand-deep bg-white pl-3 pr-14 py-1.5 rounded-md shadow-sm border border-gray-200 w-32 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+              />
+              <span className="absolute right-3 font-medium text-gray-500">Yrs</span>
+            </div>
+          </div>
           <input 
             type="range" min="5" max="30" step="1" 
             value={tenureYears} onChange={(e) => setTenureYears(Number(e.target.value))}
-            className="w-full accent-brand-mint"
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint"
           />
         </div>
       </div>

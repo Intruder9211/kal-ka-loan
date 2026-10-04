@@ -5,13 +5,23 @@ import { IndianRupee } from "lucide-react";
 
 // --- Shared UI Components ---
 const InputGroup = ({ label, value, onChange, min, max, step, icon: Icon, suffix }: any) => (
-  <div className="space-y-2">
-    <label className="text-sm font-semibold text-gray-700 flex justify-between">
-      {label}
-      <span className="text-brand-deep font-bold">
-        {Icon === IndianRupee && '₹'} {Number(value).toLocaleString('en-IN')} {suffix}
-      </span>
-    </label>
+  <div className="space-y-4">
+    <div className="flex justify-between items-end">
+      <label className="font-medium text-sm text-gray-700">{label}</label>
+      <div className="relative flex items-center">
+        {Icon === IndianRupee && <span className="absolute left-3 font-medium text-gray-500">₹</span>}
+        <input 
+          type="text" 
+          value={value ? Number(value).toLocaleString('en-IN') : ''}
+          onChange={(e) => {
+            const val = Number(e.target.value.replace(/,/g, ''));
+            if (!isNaN(val)) onChange(val);
+          }}
+          className={`text-xl font-bold text-brand-deep bg-white ${Icon === IndianRupee ? 'pl-7' : 'pl-3'} ${suffix ? 'pr-12' : 'pr-3'} py-1.5 rounded-md shadow-sm border border-gray-200 w-40 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all`}
+        />
+        {suffix && <span className="absolute right-3 font-medium text-gray-500">{suffix}</span>}
+      </div>
+    </div>
     <div className="relative">
       <input
         type="range"
@@ -41,6 +51,7 @@ export function EligibilityCalculator() {
   const [obligations, setObligations] = useState(10000);
   const [rate, setRate] = useState(8.5);
   const [tenure, setTenure] = useState(20);
+  const [creditScore, setCreditScore] = useState("excellent");
 
   // Math: 50% FOIR (Fixed Obligation to Income Ratio)
   const maxEmi = (income * 0.5) - obligations;
@@ -48,11 +59,34 @@ export function EligibilityCalculator() {
   const n = tenure * 12;
   const eligibleLoan = maxEmi > 0 ? (maxEmi * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n)) : 0;
 
+  const handleCreditScoreChange = (score: string) => {
+    setCreditScore(score);
+    if (score === "excellent") setRate(8.5);
+    else if (score === "good") setRate(9.5);
+    else if (score === "fair") setRate(10.5);
+    else if (score === "critical") setRate(12.0);
+  };
+
   return (
     <div className="grid md:grid-cols-2 gap-8 p-4">
       <div className="space-y-6">
         <InputGroup label="Net Monthly Income" value={income} onChange={setIncome} min={25000} max={500000} step={5000} icon={IndianRupee} />
         <InputGroup label="Existing Monthly EMIs" value={obligations} onChange={setObligations} min={0} max={200000} step={1000} icon={IndianRupee} />
+        
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-gray-700 block">Credit Score Profile</label>
+          <select 
+            value={creditScore} 
+            onChange={(e) => handleCreditScoreChange(e.target.value)}
+            className="w-full bg-white border border-gray-200 rounded-lg p-2.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-mint"
+          >
+            <option value="excellent">Excellent (750+)</option>
+            <option value="good">Good (700-749)</option>
+            <option value="fair">Fair (650-699)</option>
+            <option value="critical">Critical (Below 650)</option>
+          </select>
+        </div>
+
         <InputGroup label="Interest Rate" value={rate} onChange={setRate} min={7} max={15} step={0.1} suffix="%" />
         <InputGroup label="Tenure" value={tenure} onChange={setTenure} min={5} max={30} step={1} suffix="Yrs" />
       </div>

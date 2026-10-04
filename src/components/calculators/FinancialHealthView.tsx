@@ -65,12 +65,23 @@ export default function FinancialHealthView() {
 
   // Helper for Input
   const InputSlider = ({ label, value, setter, min, max, step }: any) => (
-    <div className="space-y-2">
-      <div className="flex justify-between text-sm">
-        <span className="font-medium text-slate-700">{label}</span>
-        <span className="font-bold text-slate-900">₹{value.toLocaleString('en-IN')}</span>
+    <div className="space-y-4">
+      <div className="flex justify-between items-end">
+        <label className="font-medium text-sm text-slate-700">{label}</label>
+        <div className="relative flex items-center">
+          <span className="absolute left-3 font-medium text-gray-500">₹</span>
+          <input 
+            type="text" 
+            value={value ? Number(value).toLocaleString('en-IN') : ''}
+            onChange={(e) => {
+              const val = Number(e.target.value.replace(/,/g, ''));
+              if (!isNaN(val)) setter(val);
+            }}
+            className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+          />
+        </div>
       </div>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => setter(Number(e.target.value))} className="w-full accent-brand-mint" />
+      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => setter(Number(e.target.value))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint" />
     </div>
   );
 
@@ -89,12 +100,20 @@ export default function FinancialHealthView() {
         <InputSlider label="Down Payment Available" value={downPayment} setter={setDownPayment} min={100000} max={20000000} step={100000} />
         <InputSlider label="Desired Loan Amount" value={desiredLoan} setter={setDesiredLoan} min={1000000} max={50000000} step={100000} />
         
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="font-medium text-slate-700">Preferred Tenure (Years)</span>
-            <span className="font-bold text-slate-900">{tenure} Years</span>
+        <div className="space-y-4">
+          <div className="flex justify-between items-end">
+            <label className="font-medium text-sm text-slate-700">Preferred Tenure (Years)</label>
+            <div className="relative flex items-center">
+              <input 
+                type="number" 
+                value={tenure}
+                onChange={(e) => setTenure(Number(e.target.value))}
+                className="text-xl font-bold text-brand-deep bg-white pl-3 pr-14 py-1.5 rounded-md shadow-sm border border-gray-200 w-32 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+              />
+              <span className="absolute right-3 font-medium text-gray-500">Yrs</span>
+            </div>
           </div>
-          <input type="range" min={5} max={30} step={1} value={tenure} onChange={(e) => setTenure(Number(e.target.value))} className="w-full accent-brand-mint" />
+          <input type="range" min={5} max={30} step={1} value={tenure} onChange={(e) => setTenure(Number(e.target.value))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint" />
         </div>
       </div>
 
