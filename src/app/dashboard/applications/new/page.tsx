@@ -30,12 +30,30 @@ export default function NewApplicationPage() {
 
     setIsSubmitting(true)
     
-    // Simulate network delay for upload
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Move to success step (Step 5)
-    setStep(5)
-    setIsSubmitting(false)
+    // Call server action
+    try {
+      const formData = new FormData(e.currentTarget as HTMLFormElement)
+      
+      // Append files from state since their inputs are unmounted when selected
+      if (panFile) formData.append("pan-upload", panFile)
+      if (incomeFile) formData.append("income-upload", incomeFile)
+
+      const { submitApplication } = await import("@/app/actions/application")
+      const result = await submitApplication(formData)
+      
+      if (result.error) {
+        alert(result.error)
+        setIsSubmitting(false)
+        return
+      }
+      
+      // Move to success step (Step 5)
+      setStep(5)
+    } catch (e) {
+      alert("Error submitting application")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
   
   // Success Screen
@@ -130,89 +148,83 @@ export default function NewApplicationPage() {
         <form onSubmit={handleSubmit} className="p-8">
           
           {/* Step 1 Content */}
-          {step === 1 && (
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-slate-900">Personal Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
-                  <input type="date" required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">PAN Number</label>
-                  <input type="text" placeholder="ABCDE1234F" required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm uppercase" />
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Current Residential Address</label>
-                  <textarea rows={3} required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"></textarea>
-                </div>
+          <div className={`space-y-6 ${step === 1 ? 'block' : 'hidden'}`}>
+            <h3 className="text-lg font-semibold text-slate-900">Personal Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
+                <input type="date" name="dob" required={step === 1} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">PAN Number</label>
+                <input type="text" name="panNumber" placeholder="ABCDE1234F" required={step === 1} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm uppercase" />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Current Residential Address</label>
+                <textarea name="address" rows={3} required={step === 1} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"></textarea>
               </div>
             </div>
-          )}
+          </div>
 
           {/* Step 2 Content */}
-          {step === 2 && (
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-slate-900">Loan Requirements</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Loan Amount Required (₹)</label>
-                  <input type="number" min="100000" placeholder="5000000" required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Property City</label>
-                  <select required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
-                    <option value="">Select a city</option>
-                    <option value="Delhi">Delhi NCR</option>
-                    <option value="Mumbai">Mumbai</option>
-                    <option value="Bangalore">Bangalore</option>
-                    <option value="Pune">Pune</option>
-                  </select>
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Property Status</label>
-                  <div className="grid grid-cols-2 gap-4 mt-2">
-                    <label className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
-                      <input type="radio" name="prop_status" value="ready" required className="h-4 w-4 text-blue-600 focus:ring-blue-600" />
-                      <span className="text-sm font-medium text-slate-900">Ready to Move</span>
-                    </label>
-                    <label className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
-                      <input type="radio" name="prop_status" value="under_construction" required className="h-4 w-4 text-blue-600 focus:ring-blue-600" />
-                      <span className="text-sm font-medium text-slate-900">Under Construction</span>
-                    </label>
-                  </div>
+          <div className={`space-y-6 ${step === 2 ? 'block' : 'hidden'}`}>
+            <h3 className="text-lg font-semibold text-slate-900">Loan Requirements</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Loan Amount Required (₹)</label>
+                <input type="number" name="amount" min="100000" placeholder="5000000" required={step === 2} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Property City</label>
+                <select name="propertyCity" required={step === 2} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+                  <option value="">Select a city</option>
+                  <option value="Delhi NCR">Delhi NCR</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Bangalore">Bangalore</option>
+                  <option value="Pune">Pune</option>
+                </select>
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Property Status</label>
+                <div className="grid grid-cols-2 gap-4 mt-2">
+                  <label className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="propertyStatus" value="Ready to Move" required={step === 2} className="h-4 w-4 text-blue-600 focus:ring-blue-600" />
+                    <span className="text-sm font-medium text-slate-900">Ready to Move</span>
+                  </label>
+                  <label className="flex items-center gap-3 p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="propertyStatus" value="Under Construction" required={step === 2} className="h-4 w-4 text-blue-600 focus:ring-blue-600" />
+                    <span className="text-sm font-medium text-slate-900">Under Construction</span>
+                  </label>
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
           {/* Step 3 Content */}
-          {step === 3 && (
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-slate-900">Employment & Income</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Employment Type</label>
-                  <select required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
-                    <option value="">Select type</option>
-                    <option value="salaried">Salaried</option>
-                    <option value="self_employed">Self Employed / Business</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Monthly Net Income (₹)</label>
-                  <input type="number" min="10000" placeholder="75000" required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Current Employer / Business Name</label>
-                  <input type="text" placeholder="Company Name" required className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
-                </div>
+          <div className={`space-y-6 ${step === 3 ? 'block' : 'hidden'}`}>
+            <h3 className="text-lg font-semibold text-slate-900">Employment & Income</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Employment Type</label>
+                <select name="employmentType" required={step === 3} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+                  <option value="">Select type</option>
+                  <option value="Salaried">Salaried</option>
+                  <option value="Self Employed / Business">Self Employed / Business</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Monthly Net Income (₹)</label>
+                <input type="number" name="monthlyIncome" min="10000" placeholder="75000" required={step === 3} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Current Employer / Business Name</label>
+                <input type="text" name="employerName" placeholder="Company Name" required={step === 3} className="block w-full rounded-lg border-0 py-2.5 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm" />
               </div>
             </div>
-          )}
+          </div>
 
           {/* Step 4 Content */}
-          {step === 4 && (
+          <div className={`space-y-6 ${step === 4 ? 'block' : 'hidden'}`}>
             <div className="space-y-6">
               <h3 className="text-lg font-semibold text-slate-900">Document Upload</h3>
               <p className="text-sm text-slate-500">Please upload clear copies of the following documents to expedite your application.</p>
@@ -242,7 +254,6 @@ export default function NewApplicationPage() {
                                 id="pan-upload" 
                                 name="pan-upload" 
                                 type="file" 
-                                required 
                                 className="sr-only" 
                                 accept=".pdf,.png,.jpg,.jpeg" 
                                 onChange={(e) => setPanFile(e.target.files?.[0] || null)}
@@ -280,7 +291,6 @@ export default function NewApplicationPage() {
                                 id="income-upload" 
                                 name="income-upload" 
                                 type="file" 
-                                required 
                                 className="sr-only" 
                                 accept=".pdf,.png,.jpg,.jpeg" 
                                 onChange={(e) => setIncomeFile(e.target.files?.[0] || null)}
@@ -295,7 +305,7 @@ export default function NewApplicationPage() {
                 </div>
               </div>
             </div>
-          )}
+          </div>
 
           <div className="pt-8 mt-8 border-t border-slate-200 flex items-center justify-between">
             <button 

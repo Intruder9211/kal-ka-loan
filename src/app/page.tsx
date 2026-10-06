@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CheckCircle2, ChevronRight, IndianRupee, Home as HomeIcon } from "lucide-react";
-import MultiStepLeadForm from "@/components/forms/MultiStepLeadForm";
+import PersonalizedLoanFinder from "@/components/home/PersonalizedLoanFinder";
 import EmiCalculator from "@/components/calculators/EmiCalculator";
 import TrustBar from "@/components/home/TrustBar";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
@@ -73,9 +73,13 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Quick Lead Form Component */}
-          <div className="w-full lg:w-[450px] animate-fade-up stagger-3 shrink-0">
-            <MultiStepLeadForm />
+          {/* Personalized Loan Finder Component */}
+          <div className="w-full lg:w-[450px] animate-fade-up stagger-3 shrink-0 h-[500px] relative">
+            {/* Glowing Orbs */}
+            <div className="absolute top-10 -left-10 w-48 h-48 bg-brand-mint/40 rounded-full mix-blend-screen filter blur-[60px] animate-pulse"></div>
+            <div className="absolute -bottom-10 -right-10 w-56 h-56 bg-brand-deep/50 rounded-full mix-blend-screen filter blur-[80px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+            
+            <PersonalizedLoanFinder />
           </div>
           
         </div>

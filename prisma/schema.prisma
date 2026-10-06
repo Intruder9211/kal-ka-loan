@@ -64,16 +64,21 @@ model User {
 }
 
 model CustomerProfile {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  phone     String?
-  address   String?
-  city      String?
-  state     String?
-  zipCode   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone          String?
+  address        String?
+  city           String?
+  state          String?
+  zipCode        String?
+  dob            String?
+  panNumber      String?
+  employmentType String?
+  monthlyIncome  Float?
+  employerName   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   applications Application[]
   loans        Loan[]
@@ -133,6 +138,8 @@ model Application {
   loanProductId     String
   loanProduct       LoanProduct       @relation(fields: [loanProductId], references: [id])
   requestedAmount   Float
+  propertyCity      String?
+  propertyStatus    String?
   status            ApplicationStatus @default(DRAFT)
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt

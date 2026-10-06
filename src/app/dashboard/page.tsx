@@ -3,8 +3,15 @@ import Link from "next/link"
 import PersonalizedRecommendations from "@/components/dashboard/PersonalizedRecommendations"
 import LoanReadinessScore from "@/components/dashboard/LoanReadinessScore"
 import SmartApplicationTimeline from "@/components/dashboard/SmartApplicationTimeline"
+import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 
-export default function DashboardOverview() {
+export default async function DashboardOverview() {
+  const session = await auth()
+  const applicationsCount = session?.user?.id ? await prisma.application.count({
+    where: { customer: { userId: session.user.id } }
+  }) : 0
+
   return (
     <div className="space-y-8 pb-12">
       
@@ -34,7 +41,7 @@ export default function DashboardOverview() {
               <Clock className="h-4 w-4 text-slate-400 group-hover:text-brand-mint transition-colors" />
             </div>
           </div>
-          <div className="text-4xl font-black text-slate-900 mb-1">1</div>
+          <div className="text-4xl font-black text-slate-900 mb-1">{applicationsCount}</div>
           <p className="text-sm font-medium text-amber-500 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Under Review</p>
         </div>
 
