@@ -191,7 +191,7 @@ export default function InstantCallbackBar() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 bg-brand-mint text-brand-deep font-bold rounded-xl mt-4 hover:bg-[#62dc96] transition-all shadow-md disabled:opacity-70"
+                    className="w-full py-3.5 bg-brand-mint text-brand-deep font-bold rounded-xl mt-4 hover:opacity-90 transition-all shadow-md disabled:opacity-70"
                   >
                     {isSubmitting ? "Confirming..." : "Schedule My Doorstep Visit"}
                   </button>

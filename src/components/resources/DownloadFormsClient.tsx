@@ -189,7 +189,7 @@ Applicant Signature: _________________________
         </div>
 
         {/* Home Buyer's Guide Interactive Section */}
-        <div className="mt-16 bg-gradient-to-br from-brand-deep via-[#0d2a23] to-[#061e18] rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+        <div className="mt-16 bg-gradient-to-br from-brand-deep via-[var(--brand-gradient-via)] to-[var(--brand-gradient-to)] rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
           <div className="relative z-10 max-w-2xl">
             <span className="text-xs font-bold text-brand-mint uppercase tracking-widest block mb-2">
               Free Education &bull; Step-By-Step

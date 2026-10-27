@@ -34,8 +34,8 @@ export default function EmiCalculator() {
   }, [principal, rate, tenureYears]);
 
   const chartData = [
-    { name: "Principal", value: principal, color: "#75e87a" }, // brand-mint
-    { name: "Total Interest", value: totalInterest, color: "#1a3b32" } // brand-deep
+    { name: "Principal", value: principal, color: "var(--brand-mint, #75e87a)" },
+    { name: "Total Interest", value: totalInterest, color: "var(--brand-deep, #1a3b32)" }
   ];
 
   const schedule = useMemo(() => {

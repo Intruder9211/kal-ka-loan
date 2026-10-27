@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-deep: #1a3b32;
-  --color-brand-mint: #75e87a;
-  --color-brand-light: #f4f7f6;
-  --color-brand-dark: #0f231e;
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-mint: var(--brand-mint);
+  --color-brand-light: var(--brand-light);
+  --color-brand-dark: var(--brand-dark);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -14,13 +14,105 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Default Theme: Forest Emerald Green */
+  --brand-deep: #1a3b32;
+  --brand-mint: #75e87a;
+  --brand-light: #f4f7f6;
+  --brand-dark: #0f231e;
+  --brand-gradient-via: #0d2a23;
+  --brand-gradient-to: #061e18;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1a3b32;
-    --foreground: #ffffff;
-  }
+/* 1. Forest Green (Default) */
+:root[data-theme="forest-green"],
+html[data-theme="forest-green"],
+body[data-theme="forest-green"],
+[data-theme="forest-green"] {
+  --brand-deep: #1a3b32 !important;
+  --brand-mint: #75e87a !important;
+  --brand-light: #f4f7f6 !important;
+  --brand-dark: #0f231e !important;
+  --brand-gradient-via: #0d2a23 !important;
+  --brand-gradient-to: #061e18 !important;
+}
+
+/* 2. Navy Blue Theme */
+:root[data-theme="navy-blue"],
+html[data-theme="navy-blue"],
+body[data-theme="navy-blue"],
+[data-theme="navy-blue"] {
+  --brand-deep: #0a192f !important;
+  --brand-mint: #38bdf8 !important;
+  --brand-light: #f0f7ff !important;
+  --brand-dark: #050d1a !important;
+  --brand-gradient-via: #0e2444 !important;
+  --brand-gradient-to: #040912 !important;
+}
+
+/* 3. Sunset Orange Theme */
+:root[data-theme="sunset-orange"],
+html[data-theme="sunset-orange"],
+body[data-theme="sunset-orange"],
+[data-theme="sunset-orange"] {
+  --brand-deep: #2e150a !important;
+  --brand-mint: #fb923c !important;
+  --brand-light: #fff7ed !important;
+  --brand-dark: #1c0c05 !important;
+  --brand-gradient-via: #3d1c0e !important;
+  --brand-gradient-to: #120703 !important;
+}
+
+/* 4. Royal Purple Theme */
+:root[data-theme="royal-purple"],
+html[data-theme="royal-purple"],
+body[data-theme="royal-purple"],
+[data-theme="royal-purple"] {
+  --brand-deep: #24123b !important;
+  --brand-mint: #c084fc !important;
+  --brand-light: #faf5ff !important;
+  --brand-dark: #150923 !important;
+  --brand-gradient-via: #341a54 !important;
+  --brand-gradient-to: #0e0517 !important;
+}
+
+/* 5. Obsidian Black / Gold Theme */
+:root[data-theme="slate-black"],
+html[data-theme="slate-black"],
+body[data-theme="slate-black"],
+[data-theme="slate-black"] {
+  --brand-deep: #0f1115 !important;
+  --brand-mint: #facc15 !important;
+  --brand-light: #f8fafc !important;
+  --brand-dark: #050607 !important;
+  --brand-gradient-via: #1a1e24 !important;
+  --brand-gradient-to: #07080a !important;
+}
+
+/* 6. Ruby Crimson Theme */
+:root[data-theme="ruby-red"],
+html[data-theme="ruby-red"],
+body[data-theme="ruby-red"],
+[data-theme="ruby-red"] {
+  --brand-deep: #3b111a !important;
+  --brand-mint: #fb7185 !important;
+  --brand-light: #fff1f2 !important;
+  --brand-dark: #22090f !important;
+  --brand-gradient-via: #4f1723 !important;
+  --brand-gradient-to: #150407 !important;
+}
+
+/* 7. Ocean Teal Theme */
+:root[data-theme="ocean-teal"],
+html[data-theme="ocean-teal"],
+body[data-theme="ocean-teal"],
+[data-theme="ocean-teal"] {
+  --brand-deep: #0c2b33 !important;
+  --brand-mint: #2dd4bf !important;
+  --brand-light: #f0fdfa !important;
+  --brand-dark: #06191e !important;
+  --brand-gradient-via: #113c47 !important;
+  --brand-gradient-to: #030d10 !important;
 }
 
 body {
@@ -143,3 +235,41 @@ input[type=range]:active::-webkit-slider-thumb {
   }
 }
 html.skip-loader #moneyviora-site-loader { display: none !important; }
+
+/* Direct theme utility classes to guarantee 100% cascade regardless of Tailwind build cache */
+.bg-brand-deep { background-color: var(--brand-deep) !important; }
+.text-brand-deep { color: var(--brand-deep) !important; }
+.border-brand-deep { border-color: var(--brand-deep) !important; }
+
+.bg-brand-mint { background-color: var(--brand-mint) !important; }
+.text-brand-mint { color: var(--brand-mint) !important; }
+.border-brand-mint { border-color: var(--brand-mint) !important; }
+
+.bg-brand-light { background-color: var(--brand-light) !important; }
+.text-brand-light { color: var(--brand-light) !important; }
+.border-brand-light { border-color: var(--brand-light) !important; }
+
+.bg-brand-dark { background-color: var(--brand-dark) !important; }
+.text-brand-dark { color: var(--brand-dark) !important; }
+
+/* Transparent / Opacity helpers */
+.bg-brand-mint\/10 { background-color: color-mix(in srgb, var(--brand-mint) 10%, transparent) !important; }
+.bg-brand-mint\/15 { background-color: color-mix(in srgb, var(--brand-mint) 15%, transparent) !important; }
+.bg-brand-mint\/20 { background-color: color-mix(in srgb, var(--brand-mint) 20%, transparent) !important; }
+.bg-brand-mint\/30 { background-color: color-mix(in srgb, var(--brand-mint) 30%, transparent) !important; }
+.bg-brand-mint\/40 { background-color: color-mix(in srgb, var(--brand-mint) 40%, transparent) !important; }
+.border-brand-mint\/20 { border-color: color-mix(in srgb, var(--brand-mint) 20%, transparent) !important; }
+.border-brand-mint\/30 { border-color: color-mix(in srgb, var(--brand-mint) 30%, transparent) !important; }
+.border-brand-mint\/40 { border-color: color-mix(in srgb, var(--brand-mint) 40%, transparent) !important; }
+.border-brand-mint\/50 { border-color: color-mix(in srgb, var(--brand-mint) 50%, transparent) !important; }
+
+.bg-brand-deep\/95 { background-color: color-mix(in srgb, var(--brand-deep) 95%, transparent) !important; }
+.bg-brand-deep\/90 { background-color: color-mix(in srgb, var(--brand-deep) 90%, transparent) !important; }
+.bg-brand-deep\/80 { background-color: color-mix(in srgb, var(--brand-deep) 80%, transparent) !important; }
+.bg-brand-deep\/75 { background-color: color-mix(in srgb, var(--brand-deep) 75%, transparent) !important; }
+.bg-brand-deep\/60 { background-color: color-mix(in srgb, var(--brand-deep) 60%, transparent) !important; }
+.bg-brand-deep\/50 { background-color: color-mix(in srgb, var(--brand-deep) 50%, transparent) !important; }
+.bg-brand-deep\/30 { background-color: color-mix(in srgb, var(--brand-deep) 30%, transparent) !important; }
+.bg-brand-deep\/10 { background-color: color-mix(in srgb, var(--brand-deep) 10%, transparent) !important; }
+.bg-brand-deep\/5 { background-color: color-mix(in srgb, var(--brand-deep) 5%, transparent) !important; }
+

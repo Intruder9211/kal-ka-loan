@@ -16,6 +16,7 @@ import {
   Globe
 } from "lucide-react"
 import { signOut } from "@/auth"
+import ThemeSwitcher from "@/components/layout/ThemeSwitcher"
 
 import { MobileSidebar } from "@/components/MobileSidebar"
 
@@ -167,7 +168,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <MobileSidebar theme="dark">{sidebarContent}</MobileSidebar>
             <h1 className="text-xl font-semibold text-slate-800">Admin Control Center</h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="text-slate-800">
+              <ThemeSwitcher />
+            </div>
             <span className="text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1 rounded-full">
               {session.user?.role}
             </span>

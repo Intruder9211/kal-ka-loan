@@ -104,7 +104,7 @@ export default function WelcomePopup() {
         </button>
 
         {/* Top Header Banner */}
-        <div className="relative bg-gradient-to-br from-brand-deep via-[#0d2a23] to-[#061e18] text-white p-7 pb-8 overflow-hidden">
+        <div className="relative bg-gradient-to-br from-brand-deep via-[var(--brand-gradient-via)] to-[var(--brand-gradient-to)] text-white p-7 pb-8 overflow-hidden">
           {/* Subtle decorative glow */}
           <div className="absolute -top-16 -right-16 w-44 h-44 bg-brand-mint/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-10 -left-10 w-36 h-36 bg-brand-mint/15 rounded-full blur-2xl pointer-events-none" />
@@ -156,7 +156,7 @@ export default function WelcomePopup() {
           <div className="space-y-3 pt-1">
             <button
               onClick={handleOpenLeadForm}
-              className="w-full btn-interactive flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-brand-mint text-brand-deep font-bold text-base shadow-[0_4px_20px_rgba(7,153,116,0.3)] hover:bg-[#62dc96] transition-all"
+              className="w-full btn-interactive flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-brand-mint text-brand-deep font-bold text-base shadow-lg hover:opacity-90 transition-all"
             >
               Check My Free Eligibility
               <ArrowRight size={18} />

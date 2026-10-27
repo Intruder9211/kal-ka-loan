@@ -8,6 +8,7 @@ import { CALCULATORS_CONFIG } from "@/lib/calculators-data";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
+import ThemeSwitcher from "@/components/layout/ThemeSwitcher";
 
 export default function Header({ session }: { session?: Session | null }) {
   const [scrolled, setScrolled] = useState(false);
@@ -188,6 +189,9 @@ export default function Header({ session }: { session?: Session | null }) {
           </div>
           
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
+            {/* Theme Color Palette Switcher */}
+            <ThemeSwitcher />
+
             {session ? (
               <>
                 <Link 
@@ -219,14 +223,17 @@ export default function Header({ session }: { session?: Session | null }) {
           </div>
         </nav>
 
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden p-2 text-brand-mint active:scale-95 transition-transform" 
-          aria-label="Toggle menu"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <Menu size={24} />
-        </button>
+        {/* Mobile Actions: Theme Switcher & Menu Toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeSwitcher />
+          <button 
+            className="p-2 text-brand-mint active:scale-95 transition-transform" 
+            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Menu size={24} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown */}

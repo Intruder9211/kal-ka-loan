@@ -5,6 +5,7 @@ import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import { LayoutDashboard, FileText, Landmark, CreditCard, Bell, User as UserIcon, LogOut } from "lucide-react"
 import { signOut } from "@/auth"
+import ThemeSwitcher from "@/components/layout/ThemeSwitcher"
 
 import { MobileSidebar } from "@/components/MobileSidebar"
 
@@ -86,11 +87,14 @@ export default async function DashboardLayout({ children }: { children: ReactNod
             <MobileSidebar theme="light">{sidebarContent}</MobileSidebar>
             <h1 className="text-xl font-semibold text-slate-800">Client Portal</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-slate-600">
+          <div className="flex items-center gap-3">
+            <div className="text-slate-800">
+              <ThemeSwitcher />
+            </div>
+            <span className="text-sm font-medium text-slate-600 hidden sm:inline">
               Welcome, {session.user?.name || "Customer"}
             </span>
-            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+            <div className="h-8 w-8 rounded-full bg-brand-mint/20 text-brand-deep flex items-center justify-center font-bold">
               {session.user?.name?.charAt(0) || "C"}
             </div>
           </div>
