@@ -96,8 +96,24 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <Globe className="h-5 w-5 text-slate-400" />
             Website Content
           </Link>
+          <Link href="/admin/projects" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+            <Building2 className="h-5 w-5 text-slate-400" />
+            Verified Projects
+          </Link>
+          <Link href="/admin/stamp-duty" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+            <Landmark className="h-5 w-5 text-slate-400" />
+            Stamp Duty Rates
+          </Link>
+          <Link href="/admin/branches" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+            <Building2 className="h-5 w-5 text-slate-400" />
+            Branches & Hubs
+          </Link>
 
           <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-3 mt-6">Content</div>
+          <Link href="/admin/forms" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+            <FileText className="h-5 w-5 text-slate-400" />
+            Forms & Guides
+          </Link>
           <Link href="/admin/articles" className="flex items-center gap-3 px-3 py-2 text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
             <FileText className="h-5 w-5 text-slate-400" />
             Articles

@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation"
 import { ReactNode } from "react"
 
-export function PublicWrapper({ children, session }: { children: ReactNode, session?: any }) {
+export function PublicWrapper({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   
   // Hide public components on dashboard and admin routes

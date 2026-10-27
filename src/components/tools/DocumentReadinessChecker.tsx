@@ -3,10 +3,21 @@
 import { useState } from "react";
 import { CheckCircle2, AlertCircle, FileText, Upload } from "lucide-react";
 
+interface DocumentCheck {
+  name: string;
+  status: "passed" | "warning";
+  message: string;
+}
+
+interface AnalysisResult {
+  score: number;
+  checks: DocumentCheck[];
+}
+
 export default function DocumentReadinessChecker() {
   const [files, setFiles] = useState<File[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<AnalysisResult | null>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -85,7 +96,7 @@ export default function DocumentReadinessChecker() {
           </div>
 
           <div className="space-y-4">
-            {results.checks.map((check: any, idx: number) => (
+            {results.checks.map((check: DocumentCheck, idx: number) => (
               <div key={idx} className={`p-4 rounded-lg border flex gap-4 ${check.status === 'passed' ? 'border-green-200 bg-green-50' : 'border-yellow-200 bg-yellow-50'}`}>
                 <div className="mt-1">
                   {check.status === 'passed' ? (

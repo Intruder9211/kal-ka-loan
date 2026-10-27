@@ -10,7 +10,7 @@ export default function RateComparison() {
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16 animate-fade-up">
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6">Compare <span className="text-brand-mint">Top Banks</span></h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto font-medium">Stop guessing. We've compiled the lowest live interest rates from India's top lenders.</p>
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto font-medium">Stop guessing. We&apos;ve compiled the lowest live interest rates from India&apos;s top lenders.</p>
         </div>
         
         {/* Responsive Comparison Grid */}
@@ -27,7 +27,7 @@ export default function RateComparison() {
 
           {/* Bank Cards / Rows */}
           <div className="flex flex-col gap-4 md:gap-0 md:bg-white md:rounded-b-2xl md:shadow-sm md:border md:border-slate-100 md:border-t-0 md:overflow-hidden">
-            {tableData.map((bank, i) => (
+            {tableData.map((bank) => (
               <div 
                 key={bank.id} 
                 className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-4 items-center p-6 md:p-8 bg-white rounded-2xl md:rounded-none border border-slate-200 md:border-none md:border-b md:border-slate-50 hover:bg-slate-50 transition-colors shadow-sm md:shadow-none"

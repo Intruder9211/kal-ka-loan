@@ -26,6 +26,7 @@ export default function Home() {
           alt="Happy Indian family with new home" 
           fill 
           priority
+          sizes="100vw"
           className="object-cover object-center opacity-80"
         />
         <div className="absolute inset-0 bg-brand-deep/60 md:bg-transparent md:bg-gradient-to-r md:from-brand-deep/95 md:via-brand-deep/80 md:to-brand-deep/30"></div>

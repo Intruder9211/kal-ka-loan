@@ -28,7 +28,8 @@ export async function GET(req: NextRequest) {
 
     // 2. Fetch the base LoanProduct for context
     const loanProduct = await prisma.loanProduct.findFirst({
-      where: { name: loanType, status: "PUBLISHED" }
+      where: { name: loanType, status: "PUBLISHED" },
+      select: { id: true, name: true, interestRate: true }
     });
 
     if (!loanProduct) {
@@ -38,11 +39,16 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // 3. Fetch Lenders that offer this loan type
-    // In our schema, lenders have a `loanTypes` string (e.g., "Home Loan, Top Up Loan")
-    // Or we just fetch all active lenders if `loanTypes` is empty/null, assuming they offer it.
+    // 3. Fetch Lenders that offer this loan type (fetching only necessary columns)
     const lenders = await prisma.lender.findMany({
       where: { status: true },
+      select: {
+        id: true,
+        name: true,
+        logo: true,
+        interestRate: true,
+        processingFee: true,
+      },
       orderBy: { interestRate: 'asc' }
     });
 

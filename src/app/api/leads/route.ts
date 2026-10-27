@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, mobile, email, employment, monthlyIncome, loanAmount, city } = body;
+    const { name, mobile, countryCode, residentType, email, employment, monthlyIncome, loanAmount, city } = body;
 
     if (!name || !mobile || !email) {
       return NextResponse.json(
@@ -13,12 +13,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const formattedMobile = countryCode && !mobile.startsWith("+") ? `${countryCode} ${mobile}` : mobile;
+
     const lead = await prisma.lead.create({
       data: {
         name,
-        mobile,
+        mobile: formattedMobile,
         email,
-        employment,
+        employment: residentType === "NRI" ? `NRI (${employment || "Employed"})` : employment,
         monthlyIncome: monthlyIncome ? parseFloat(monthlyIncome) : null,
         loanAmount: loanAmount ? parseFloat(loanAmount) : null,
         city,

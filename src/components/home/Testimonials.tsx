@@ -47,7 +47,7 @@ export default function Testimonials() {
               <Quote size={32} className="text-brand-mint/30 mb-6" />
               
               <p className={`text-lg leading-relaxed mb-8 flex-1 ${review.isReal ? 'text-slate-700' : 'text-slate-400 italic'}`}>
-                "{review.text}"
+                &ldquo;{review.text}&rdquo;
               </p>
               
               <div className="flex items-center gap-4 pt-6 border-t border-slate-100">

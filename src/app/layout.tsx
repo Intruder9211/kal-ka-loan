@@ -10,6 +10,8 @@ import SiteLoader from "@/components/layout/SiteLoader";
 import Chatbot from "@/components/ui/Chatbot";
 import SocialSidebar from "@/components/layout/SocialSidebar";
 import VisitorTracker from "@/components/analytics/VisitorTracker";
+import WelcomePopup from "@/components/ui/WelcomePopup";
+import InstantCallbackBar from "@/components/ui/InstantCallbackBar";
 import { auth } from "@/auth";
 import { PublicWrapper } from "@/components/layout/PublicWrapper";
 
@@ -47,7 +49,7 @@ export default async function RootLayout({
         <PageTransition />
         
         {/* We use a PublicWrapper to hide public components (Header, Footer) on Dashboard and Admin routes */}
-        <PublicWrapper session={session}>
+        <PublicWrapper>
           <Header session={session} />
         </PublicWrapper>
         
@@ -55,10 +57,12 @@ export default async function RootLayout({
           {children}
         </main>
         
-        <PublicWrapper session={session}>
+        <PublicWrapper>
           <Footer />
           <StickyMobileCTA />
           <LeadModal />
+          <WelcomePopup />
+          <InstantCallbackBar />
           <Chatbot />
           <SocialSidebar />
         </PublicWrapper>

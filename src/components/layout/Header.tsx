@@ -2,21 +2,29 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Phone, User, LayoutDashboard, LogOut, ChevronDown } from "lucide-react";
+import { Menu, User, LayoutDashboard, LogOut, ChevronDown, Building2, Zap, MapPin, FileText } from "lucide-react";
 import { useState, useEffect } from "react";
-import { CALCULATORS } from "@/components/calculators/CalculatorsAccordion";
+import { CALCULATORS_CONFIG } from "@/lib/calculators-data";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
+import type { Session } from "next-auth";
 
-export default function Header({ session }: { session?: any }) {
+export default function Header({ session }: { session?: Session | null }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 10);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -37,6 +45,7 @@ export default function Header({ session }: { session?: any }) {
               src="/logo_white.png" 
               alt="Money Viora Logo" 
               fill 
+              sizes="240px"
               className="object-contain object-left"
               priority
             />
@@ -60,7 +69,7 @@ export default function Header({ session }: { session?: any }) {
             
             {/* Mega Menu */}
             <div className="absolute top-[100%] left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border border-gray-100 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 p-6 grid grid-cols-4 gap-4 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
-              {CALCULATORS.map((calc) => {
+              {CALCULATORS_CONFIG.map((calc) => {
                 const Icon = calc.icon;
                 return (
                   <Link 
@@ -84,6 +93,99 @@ export default function Header({ session }: { session?: any }) {
           <Link href="/affordability" className="link-underline pb-1">
             Affordability
           </Link>
+
+          {/* Explore & Services Dropdown */}
+          <div className="group/services relative py-4 flex items-center">
+            <span className="link-underline flex items-center gap-1.5 cursor-pointer">
+              <span>Explore & Services</span>
+              <ChevronDown size={14} className="group-hover/services:rotate-180 transition-transform inline-block" />
+            </span>
+
+            {/* Services Dropdown Menu */}
+            <div className="absolute top-[100%] right-0 w-[520px] bg-white rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.18)] border border-gray-100 opacity-0 invisible group-hover/services:opacity-100 group-hover/services:visible transition-all duration-300 z-50 p-4 grid grid-cols-2 gap-3 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+              {/* 1. Verified Projects */}
+              <Link
+                href="/projects"
+                className="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group/item"
+              >
+                <div className="h-10 w-10 bg-brand-mint/10 text-brand-mint rounded-lg flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                  <Building2 size={20} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="text-slate-900 font-bold text-sm leading-tight group-hover/item:text-brand-mint transition-colors">
+                      Verified Projects
+                    </h4>
+                    <span className="text-[10px] bg-brand-mint/20 text-brand-mint font-bold px-1.5 py-0.5 rounded-full">
+                      New
+                    </span>
+                  </div>
+                  <p className="text-slate-500 text-xs mt-1 leading-snug">
+                    Bank-approved builder homes with rapid 48-hr loan sanctions.
+                  </p>
+                </div>
+              </Link>
+
+              {/* 2. Instant Sanction */}
+              <Link
+                href="/instant-sanction"
+                className="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group/item"
+              >
+                <div className="h-10 w-10 bg-amber-500/10 text-amber-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                  <Zap size={20} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="text-slate-900 font-bold text-sm leading-tight group-hover/item:text-brand-mint transition-colors">
+                      Instant Sanction
+                    </h4>
+                    <span className="text-[10px] bg-amber-500/20 text-amber-700 font-bold px-1.5 py-0.5 rounded-full">
+                      Fast
+                    </span>
+                  </div>
+                  <p className="text-slate-500 text-xs mt-1 leading-snug">
+                    Download official In-Principle approval letter in 2 mins.
+                  </p>
+                </div>
+              </Link>
+
+              {/* 3. Branches */}
+              <Link
+                href="/branches"
+                className="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group/item"
+              >
+                <div className="h-10 w-10 bg-blue-500/10 text-blue-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                  <MapPin size={20} />
+                </div>
+                <div>
+                  <h4 className="text-slate-900 font-bold text-sm leading-tight group-hover/item:text-brand-mint transition-colors">
+                    Branches & Hubs
+                  </h4>
+                  <p className="text-slate-500 text-xs mt-1 leading-snug">
+                    Find nearest consultation center or book doorstep manager.
+                  </p>
+                </div>
+              </Link>
+
+              {/* 4. Forms & Guides */}
+              <Link
+                href="/forms"
+                className="flex items-start gap-3 p-3.5 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group/item"
+              >
+                <div className="h-10 w-10 bg-emerald-500/10 text-emerald-600 rounded-lg flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                  <FileText size={20} />
+                </div>
+                <div>
+                  <h4 className="text-slate-900 font-bold text-sm leading-tight group-hover/item:text-brand-mint transition-colors">
+                    Forms & Guides
+                  </h4>
+                  <p className="text-slate-500 text-xs mt-1 leading-snug">
+                    Download printable draft agreements, affidavits & checklists.
+                  </p>
+                </div>
+              </Link>
+            </div>
+          </div>
           
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
             {session ? (
@@ -146,6 +248,20 @@ export default function Header({ session }: { session?: any }) {
           </Link>
           <Link href="/affordability" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
             Affordability
+          </Link>
+          <Link href="/projects" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors flex items-center justify-between">
+            <span>Verified Projects</span>
+            <span className="text-[10px] bg-brand-mint/20 text-brand-mint font-bold px-2 py-0.5 rounded-full">New</span>
+          </Link>
+          <Link href="/instant-sanction" onClick={() => setMobileMenuOpen(false)} className="text-brand-mint font-bold flex items-center justify-between">
+            <span>Instant Sanction Letter</span>
+            <span className="text-[10px] bg-brand-mint/20 px-2 py-0.5 rounded-full">Fast</span>
+          </Link>
+          <Link href="/branches" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
+            Branches & Hubs
+          </Link>
+          <Link href="/forms" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
+            Forms & Guides
           </Link>
           
           <div className="pt-4 border-t border-white/10 flex flex-col gap-4">

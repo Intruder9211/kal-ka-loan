@@ -31,7 +31,6 @@ export default auth((req) => {
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
   const isPublicApiRoute = nextUrl.pathname.startsWith(publicApiPrefix)
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || nextUrl.pathname.startsWith("/loans/") || nextUrl.pathname.startsWith("/calculators/") || nextUrl.pathname.startsWith("/articles/")
   const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
   const isClientDashboard = nextUrl.pathname.startsWith("/dashboard")

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "f-1",
+    "title": "Provisional Interest Certificate (Sample Form)",
+    "category": "Tax",
+    "description": "Format for claiming Income Tax deduction on home loan interest under Section 24(b) and principal under Section 80C.",
+    "fileUrl": "/uploads/forms/1793119703976-Building_Client_website_as_wordpress_plugins.pdf",
+    "fileName": "Building Client website as wordpress plugins.pdf",
+    "fileSize": "1.7 MB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T16:48:28.981Z"
+  },
+  {
+    "id": "f-2",
+    "title": "Final Interest Certificate / Annual Loan Statement",
+    "category": "Tax",
+    "description": "Standard year-end statement showing exact breakup of principal paid and interest incurred for ITR filing.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "180 KB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  },
+  {
+    "id": "f-3",
+    "title": "General Power of Attorney (POA) for NRIs",
+    "category": "Legal",
+    "description": "Standard consular-notarized Power of Attorney draft required by Indian banks for Non-Resident Indians purchasing property.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "210 KB",
+    "format": "DOCX & PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  },
+  {
+    "id": "f-4",
+    "title": "Agreement to Sale & Builder NOC Template",
+    "category": "Legal",
+    "description": "Format of No Objection Certificate (NOC) required from builders/societies for mortgaging flats.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "120 KB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  },
+  {
+    "id": "f-5",
+    "title": "List of Documents (LOD) Checklist",
+    "category": "Application",
+    "description": "Comprehensive bank-wise checklist for Salaried and Self-Employed borrowers to avoid sanction rejections.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "95 KB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  },
+  {
+    "id": "f-6",
+    "title": "Staged Disbursement Request Letter",
+    "category": "Disbursement",
+    "description": "Template to request release of subsequent loan tranches linked to builder construction milestones.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "115 KB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  },
+  {
+    "id": "f-7",
+    "title": "Home Loan Rate Conversion Request Letter",
+    "category": "Application",
+    "description": "Official application format for existing borrowers requesting lower prevailing interest rates from their lender.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "85 KB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  },
+  {
+    "id": "f-8",
+    "title": "PMAY (Urban) 2.0 Self-Declaration Affidavit",
+    "category": "Application",
+    "description": "Affidavit draft certifying first pucca home ownership for Pradhan Mantri Awas Yojana interest subsidy claim.",
+    "fileUrl": null,
+    "fileName": null,
+    "fileSize": "130 KB",
+    "format": "PDF",
+    "updatedAt": "2026-10-27T12:00:00.000Z"
+  }
+]

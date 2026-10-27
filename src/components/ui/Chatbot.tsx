@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, User, Calculator } from "lucide-react";
+import { MessageSquare, X, Send, Calculator } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -66,7 +66,7 @@ export default function Chatbot() {
       } else {
         setMessages(prev => [...prev, { id: Date.now().toString(), sender: "bot", text: `⚠️ Error: ${data.error}` }]);
       }
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { id: Date.now().toString(), sender: "bot", text: "Sorry, I am having trouble connecting to the network right now." }]);
     } finally {
       setIsLoading(false);

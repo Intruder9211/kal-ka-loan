@@ -13,24 +13,17 @@ import {
   AmountCalculator, 
   AmortizationCalculator, 
   DownPaymentCalculator, 
-  PropertyCostCalculator 
+  PropertyCostCalculator,
+  TaxBenefitCalculator,
+  PmayCalculator,
+  StampDutyCalculator,
+  RentVsBuyCalculator
 } from "./OtherCalculators";
-import { ChevronDown, Calculator, IndianRupee, Percent, Clock, Home, ArrowRightLeft } from "lucide-react";
+import { CALCULATORS_CONFIG } from "@/lib/calculators-data";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const CALCULATORS = [
-  { id: "emi", title: "EMI Calculator", icon: Calculator, description: "Calculate your monthly EMI and view the amortization schedule." },
-  { id: "eligibility", title: "Loan Eligibility Calculator", icon: IndianRupee, description: "Check how much loan you are eligible for based on your income." },
-  { id: "affordability", title: "Home Loan Affordability Calculator", icon: Home, description: "Determine the maximum property value you can afford." },
-  { id: "prepayment", title: "Home Loan Prepayment Calculator", icon: Percent, description: "See how prepayments can save you interest and reduce tenure." },
-  { id: "balance-transfer", title: "Home Loan Balance Transfer Calculator", icon: ArrowRightLeft, description: "Calculate savings by transferring your loan to a lower interest rate." },
-  { id: "tenure", title: "Loan Tenure Calculator", icon: Clock, description: "Find out the optimal tenure for your desired EMI." },
-  { id: "amount", title: "Loan Amount Calculator", icon: IndianRupee, description: "Calculate the loan amount you can get for a specific EMI." },
-  { id: "comparison", title: "EMI Comparison Calculator", icon: Calculator, description: "Compare two different loan options side-by-side." },
-  { id: "amortization", title: "Amortization Calculator", icon: Percent, description: "View a detailed month-by-month breakdown of your loan repayment." },
-  { id: "down-payment", title: "Down Payment Calculator", icon: IndianRupee, description: "Calculate the required down payment for your target property." },
-  { id: "property-cost", title: "Property Cost Calculator", icon: Home, description: "Estimate the total cost of a property including registration and stamp duty." }
-];
+export const CALCULATORS = CALCULATORS_CONFIG;
 
 export default function CalculatorsAccordion() {
   const searchParams = useSearchParams();
@@ -121,6 +114,10 @@ export default function CalculatorsAccordion() {
                     {calc.id === "amortization" && <AmortizationCalculator />}
                     {calc.id === "down-payment" && <DownPaymentCalculator />}
                     {calc.id === "property-cost" && <PropertyCostCalculator />}
+                    {calc.id === "stamp-duty" && <StampDutyCalculator />}
+                    {calc.id === "rent-vs-buy" && <RentVsBuyCalculator />}
+                    {calc.id === "tax-benefit" && <TaxBenefitCalculator />}
+                    {calc.id === "pmay" && <PmayCalculator />}
                   </div>
                 )}
               </div>

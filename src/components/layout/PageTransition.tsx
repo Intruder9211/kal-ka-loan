@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export default function PageTransition() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [isInitialMount, setIsInitialMount] = useState(true);
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
-    if (isInitialMount) {
-      setIsInitialMount(false);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
       return;
     }
 

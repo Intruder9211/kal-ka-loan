@@ -1,0 +1,104 @@
+{
+  "states": [
+    {
+      "code": "MH",
+      "name": "Maharashtra",
+      "maleStampDuty": 6.0,
+      "femaleStampDuty": 5.0,
+      "jointStampDuty": 5.5,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 30000,
+      "cessPercent": 1.0
+    },
+    {
+      "code": "DL",
+      "name": "Delhi",
+      "maleStampDuty": 6.0,
+      "femaleStampDuty": 4.0,
+      "jointStampDuty": 5.0,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 0,
+      "cessPercent": 0.0
+    },
+    {
+      "code": "KA",
+      "name": "Karnataka",
+      "maleStampDuty": 5.0,
+      "femaleStampDuty": 5.0,
+      "jointStampDuty": 5.0,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 0,
+      "cessPercent": 0.6
+    },
+    {
+      "code": "UP",
+      "name": "Uttar Pradesh",
+      "maleStampDuty": 7.0,
+      "femaleStampDuty": 6.0,
+      "jointStampDuty": 6.5,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 20000,
+      "cessPercent": 0.0
+    },
+    {
+      "code": "HR",
+      "name": "Haryana",
+      "maleStampDuty": 7.0,
+      "femaleStampDuty": 5.0,
+      "jointStampDuty": 6.0,
+      "registrationFeePercent": 0.0,
+      "maxRegistrationFee": 50000,
+      "cessPercent": 0.0
+    },
+    {
+      "code": "TG",
+      "name": "Telangana",
+      "maleStampDuty": 6.0,
+      "femaleStampDuty": 6.0,
+      "jointStampDuty": 6.0,
+      "registrationFeePercent": 0.5,
+      "maxRegistrationFee": 0,
+      "cessPercent": 1.5
+    },
+    {
+      "code": "TN",
+      "name": "Tamil Nadu",
+      "maleStampDuty": 7.0,
+      "femaleStampDuty": 7.0,
+      "jointStampDuty": 7.0,
+      "registrationFeePercent": 4.0,
+      "maxRegistrationFee": 0,
+      "cessPercent": 0.0
+    },
+    {
+      "code": "WB",
+      "name": "West Bengal",
+      "maleStampDuty": 6.0,
+      "femaleStampDuty": 6.0,
+      "jointStampDuty": 6.0,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 0,
+      "cessPercent": 0.0
+    },
+    {
+      "code": "GJ",
+      "name": "Gujarat",
+      "maleStampDuty": 4.9,
+      "femaleStampDuty": 4.9,
+      "jointStampDuty": 4.9,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 0,
+      "cessPercent": 0.0
+    },
+    {
+      "code": "RJ",
+      "name": "Rajasthan",
+      "maleStampDuty": 6.0,
+      "femaleStampDuty": 5.0,
+      "jointStampDuty": 5.5,
+      "registrationFeePercent": 1.0,
+      "maxRegistrationFee": 0,
+      "cessPercent": 0.5
+    }
+  ]
+}

@@ -11,6 +11,7 @@ export default function Footer() {
               src="/logo_white.png" 
               alt="Money Viora Logo" 
               fill 
+              sizes="240px"
               className="object-contain object-left"
             />
           </div>

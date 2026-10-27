@@ -8,19 +8,18 @@ export default function SiteLoader() {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const [hasPlayed, setHasPlayed] = useState(false); // default false so server renders it, preventing page flash
+  const [hasPlayed, setHasPlayed] = useState(false);
 
   useEffect(() => {
+    let isAlreadyPlayed = false;
     try {
-      const played = sessionStorage.getItem("moneyviora_initial_loader");
-      if (played === "true") {
-        setHasPlayed(true);
-        setIsVisible(false);
-        return;
-      }
-      setHasPlayed(false);
-    } catch (e) {
-      // Ignore sessionStorage errors
+      isAlreadyPlayed = sessionStorage.getItem("moneyviora_initial_loader") === "true";
+    } catch {
+      // Ignore sessionStorage error
+    }
+
+    if (isAlreadyPlayed) {
+      setHasPlayed(true);
       setIsVisible(false);
       return;
     }
@@ -49,11 +48,14 @@ export default function SiteLoader() {
           setIsFadingOut(true);
           setTimeout(() => {
             setIsVisible(false);
+            setHasPlayed(true);
             try {
               sessionStorage.setItem("moneyviora_initial_loader", "true");
               // Dispatch event so PageTransition knows initial load is done
               window.dispatchEvent(new Event("initial_load_complete"));
-            } catch (e) {}
+            } catch {
+              // Ignore storage errors
+            }
           }, 300);
         }, 150);
       }
@@ -101,6 +103,7 @@ export default function SiteLoader() {
             src="/logo.png" 
             alt="" 
             fill 
+            sizes="(max-width: 768px) 200px, 280px"
             className="object-contain object-center"
             priority
           />
@@ -115,6 +118,7 @@ export default function SiteLoader() {
             src="/logo.png" 
             alt="Money Viora Logo" 
             fill 
+            sizes="(max-width: 768px) 200px, 280px"
             className="object-contain object-center"
             priority
           />

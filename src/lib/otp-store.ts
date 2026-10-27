@@ -48,7 +48,9 @@ export async function deleteOtp(phone: string) {
       await kv.del(`otp:${phone}`);
       return;
     }
-  } catch (e) {}
+  } catch {
+    // Ignore KV deletion errors and fallback
+  }
 
   otpStore.delete(phone);
 }

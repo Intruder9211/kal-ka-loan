@@ -1,0 +1,76 @@
+{
+  "branches": [
+    {
+      "id": "br-1",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "area": "Bandra Kurla Complex (BKC)",
+      "address": "Unit 402, 4th Floor, Platina Tower, G Block, BKC, Bandra East, Mumbai - 400051",
+      "pincode": "400051",
+      "phone": "+91 22 4529 7300",
+      "email": "mumbai.bkc@moneyviora.com",
+      "timing": "Mon - Sat: 9:30 AM - 6:30 PM",
+      "coordinates": { "lat": 19.0657, "lng": 72.8687 }
+    },
+    {
+      "id": "br-2",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "area": "Connaught Place",
+      "address": "2nd Floor, Statesman House, Barakhamba Road, Connaught Place, New Delhi - 110001",
+      "pincode": "110001",
+      "phone": "+91 11 4150 9200",
+      "email": "delhi.cp@moneyviora.com",
+      "timing": "Mon - Sat: 9:30 AM - 6:30 PM",
+      "coordinates": { "lat": 28.6304, "lng": 77.2177 }
+    },
+    {
+      "id": "br-3",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "area": "Indiranagar",
+      "address": "No. 742, 100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru - 560038",
+      "pincode": "560038",
+      "phone": "+91 80 4099 8100",
+      "email": "bangalore@moneyviora.com",
+      "timing": "Mon - Sat: 9:30 AM - 6:30 PM",
+      "coordinates": { "lat": 12.9784, "lng": 77.6408 }
+    },
+    {
+      "id": "br-4",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "area": "Shivaji Nagar",
+      "address": "Floor 3, ICC Tech Park, Senapati Bapat Road, Shivaji Nagar, Pune - 411016",
+      "pincode": "411016",
+      "phone": "+91 20 6720 1100",
+      "email": "pune@moneyviora.com",
+      "timing": "Mon - Sat: 9:30 AM - 6:30 PM",
+      "coordinates": { "lat": 18.5314, "lng": 73.8446 }
+    },
+    {
+      "id": "br-5",
+      "city": "Hyderabad",
+      "state": "Telangana",
+      "area": "HITEC City",
+      "address": "Level 5, Cyber Gateway, Madhapur, HITEC City, Hyderabad - 500081",
+      "pincode": "500081",
+      "phone": "+91 40 4600 5500",
+      "email": "hyderabad@moneyviora.com",
+      "timing": "Mon - Sat: 9:30 AM - 6:30 PM",
+      "coordinates": { "lat": 17.4474, "lng": 78.3762 }
+    },
+    {
+      "id": "br-6",
+      "city": "Gurugram",
+      "state": "Haryana",
+      "area": "Cyber City",
+      "address": "Building 10B, 8th Floor, DLF Cyber City, Phase 2, Gurugram - 122002",
+      "pincode": "122002",
+      "phone": "+91 124 4890 300",
+      "email": "gurgaon@moneyviora.com",
+      "timing": "Mon - Sat: 9:30 AM - 6:30 PM",
+      "coordinates": { "lat": 28.4906, "lng": 77.0903 }
+    }
+  ]
+}

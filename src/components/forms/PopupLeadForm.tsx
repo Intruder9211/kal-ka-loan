@@ -7,6 +7,7 @@ import { CheckCircle2, Building, User, Phone, Mail, MapPin, IndianRupee, Briefca
 export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [residentType, setResidentType] = useState<"RI" | "NRI">("RI");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +18,8 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
       const data = {
         name: formData.get('name'),
         mobile: formData.get('mobile'),
+        countryCode: formData.get('countryCode') || '+91',
+        residentType,
         email: formData.get('email'),
         employment: formData.get('employment'),
         monthlyIncome: formData.get('monthlyIncome'),
@@ -35,7 +38,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
       } else {
         alert('Failed to submit application. Please try again.');
       }
-    } catch (error) {
+    } catch {
       alert('An error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -49,7 +52,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
           <CheckCircle2 size={32} />
         </div>
         <h3 className="text-2xl font-bold text-brand-deep mb-2">Application Received!</h3>
-        <p className="text-gray-600 mb-6">Our loan expert will call you shortly to discuss your eligibility and best offers.</p>
+        <p className="text-gray-600 mb-6">Our {residentType === "NRI" ? "NRI Loan Specialist" : "loan expert"} will call you shortly to discuss your eligibility and best offers.</p>
         <button 
           onClick={() => {
             if (onClose) onClose();
@@ -75,7 +78,29 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
           />
         </div>
         <h3 className="text-2xl font-bold text-brand-deep mb-1">Check Eligibility</h3>
-        <p className="text-sm text-gray-500">Fill this quick form to see offers from 50+ lenders.</p>
+        <p className="text-sm text-gray-500">Fill this quick form to see offers from 30+ lenders.</p>
+
+        {/* Resident Indian vs NRI Tabs like HDFC */}
+        <div className="flex bg-slate-100 p-1 rounded-xl mt-4 max-w-xs mx-auto">
+          <button
+            type="button"
+            onClick={() => setResidentType("RI")}
+            className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+              residentType === "RI" ? "bg-white text-brand-deep shadow-sm" : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            Resident Indian
+          </button>
+          <button
+            type="button"
+            onClick={() => setResidentType("NRI")}
+            className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+              residentType === "NRI" ? "bg-white text-brand-deep shadow-sm" : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            Non-Resident Indian (NRI)
+          </button>
+        </div>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -89,10 +114,31 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Mobile No.</label>
-            <div className="relative">
-              <Phone size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required name="mobile" type="tel" pattern="[0-9]{10}" maxLength={10} className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="10-digit number" />
+            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">
+              {residentType === "NRI" ? "Overseas Mobile" : "Mobile No."}
+            </label>
+            <div className="relative flex">
+              {residentType === "NRI" ? (
+                <select name="countryCode" defaultValue="+971" className="w-20 pl-2 pr-1 py-2.5 rounded-l-lg border border-r-0 border-gray-300 bg-slate-50 text-xs font-semibold text-slate-700 focus:outline-none">
+                  <option value="+971">🇦🇪 +971</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+65">🇸🇬 +65</option>
+                  <option value="+61">🇦🇺 +61</option>
+                  <option value="+91">🇮🇳 +91</option>
+                </select>
+              ) : (
+                <span className="inline-flex items-center px-2.5 rounded-l-lg border border-r-0 border-gray-300 bg-slate-50 text-xs text-slate-500 font-bold">
+                  +91
+                </span>
+              )}
+              <input 
+                required 
+                name="mobile" 
+                type="tel" 
+                className="w-full pl-3 pr-4 py-2.5 rounded-r-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" 
+                placeholder={residentType === "NRI" ? "Phone number" : "10-digit number"} 
+              />
             </div>
           </div>
         </div>

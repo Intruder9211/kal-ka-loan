@@ -1,0 +1,80 @@
+[
+  {
+    "id": "proj-1",
+    "name": "Godrej Woods",
+    "developer": "Godrej Properties",
+    "city": "Noida",
+    "location": "Sector 43, Noida",
+    "type": "2, 3, 4 BHK Apartments",
+    "priceRange": "₹1.45 Cr - ₹3.85 Cr",
+    "reraNumber": "UPRERAPRJ704730",
+    "status": "Under Construction (Possession 2026)",
+    "approvedBanks": ["HDFC Bank", "SBI", "ICICI Bank", "Axis Bank"],
+    "highlights": ["Zero processing fee via Money Viora", "Pre-approved legal verification", "Up to 80% LTV financing"]
+  },
+  {
+    "id": "proj-2",
+    "name": "DLF The Arbour",
+    "developer": "DLF Limited",
+    "city": "Gurgaon",
+    "location": "Sector 63, Golf Course Ext Road, Gurgaon",
+    "type": "4 BHK Ultra Luxury",
+    "priceRange": "₹7.5 Cr - ₹9.5 Cr",
+    "reraNumber": "RC/REP/HARERA/GGM/671/403/2023/15",
+    "status": "Under Construction",
+    "approvedBanks": ["HDFC Bank", "ICICI Bank", "Kotak Mahindra", "Axis Bank"],
+    "highlights": ["Instant fast-track sanction in 24 hours", "Preferential interest rate from 8.35%"]
+  },
+  {
+    "id": "proj-3",
+    "name": "Prestige City",
+    "developer": "Prestige Group",
+    "city": "Bangalore",
+    "location": "Sarjapur Road, Bangalore",
+    "type": "1, 2, 3 BHK & Luxury Villas",
+    "priceRange": "₹65 Lakhs - ₹3.2 Cr",
+    "reraNumber": "PRM/KA/RERA/1251/308/PR/210928/004316",
+    "status": "Ready to Move & Ongoing",
+    "approvedBanks": ["SBI", "HDFC Bank", "Bank of Baroda", "Canara Bank"],
+    "highlights": ["Subsidized processing charges", "Special NRI investment desk"]
+  },
+  {
+    "id": "proj-4",
+    "name": "Lodha Woods",
+    "developer": "Lodha Group",
+    "city": "Mumbai",
+    "location": "Kandivali East, Mumbai",
+    "type": "2 & 3 BHK Nature Residences",
+    "priceRange": "₹1.85 Cr - ₹3.1 Cr",
+    "reraNumber": "P51800031523",
+    "status": "Ready to Move In",
+    "approvedBanks": ["HDFC Bank", "ICICI Bank", "SBI", "Bajaj Finserv"],
+    "highlights": ["Ready possession - save on GST", "Instant sanction with title clearance"]
+  },
+  {
+    "id": "proj-5",
+    "name": "Tata Carnatica",
+    "developer": "Tata Housing",
+    "city": "Bangalore",
+    "location": "Devanahalli, North Bangalore",
+    "type": "Residential Plots & Apartments",
+    "priceRange": "₹55 Lakhs - ₹1.75 Cr",
+    "reraNumber": "PRM/KA/RERA/1250/303/PR/220504/004863",
+    "status": "New Launch",
+    "approvedBanks": ["HDFC Bank", "SBI", "Axis Bank", "Punjab National Bank"],
+    "highlights": ["Composite Plot + Construction loans", "Staged milestone disbursals"]
+  },
+  {
+    "id": "proj-6",
+    "name": "Sobha City",
+    "developer": "Sobha Developers",
+    "city": "Delhi NCR",
+    "location": "Sector 108, Dwarka Expressway, Gurgaon",
+    "type": "2 & 3 BHK Urban Residences",
+    "priceRange": "₹1.65 Cr - ₹2.95 Cr",
+    "reraNumber": "HARERA/GGM/2018/16",
+    "status": "Ready / Near Possession",
+    "approvedBanks": ["HDFC Bank", "ICICI Bank", "SBI", "Bank of Baroda"],
+    "highlights": ["Dwarka Expressway fast-track sanction", "Zero legal validation charge"]
+  }
+]
