@@ -53,12 +53,13 @@ export default async function RootLayout({
                 try {
                   var themeMap = {
                     'forest-green': { deep: '#1a3b32', mint: '#75e87a', light: '#f4f7f6', dark: '#0f231e', via: '#0d2a23', to: '#061e18' },
-                    'navy-blue': { deep: '#0a192f', mint: '#38bdf8', light: '#f0f7ff', dark: '#050d1a', via: '#0e2444', to: '#040912' },
-                    'sunset-orange': { deep: '#2e150a', mint: '#fb923c', light: '#fff7ed', dark: '#1c0c05', via: '#3d1c0e', to: '#120703' },
-                    'royal-purple': { deep: '#24123b', mint: '#c084fc', light: '#faf5ff', dark: '#150923', via: '#341a54', to: '#0e0517' },
-                    'slate-black': { deep: '#0f1115', mint: '#facc15', light: '#f8fafc', dark: '#050607', via: '#1a1e24', to: '#07080a' },
-                    'ruby-red': { deep: '#3b111a', mint: '#fb7185', light: '#fff1f2', dark: '#22090f', via: '#4f1723', to: '#150407' },
-                    'ocean-teal': { deep: '#0c2b33', mint: '#2dd4bf', light: '#f0fdfa', dark: '#06191e', via: '#113c47', to: '#030d10' }
+                    'navy-blue': { deep: '#0f233a', mint: '#38bdf8', light: '#f1f6fa', dark: '#091728', via: '#0b1d30', to: '#050e1a' },
+                    'midnight-slate': { deep: '#192231', mint: '#60a5fa', light: '#f4f6f9', dark: '#0f1622', via: '#141c28', to: '#090e16' },
+                    'emerald-teal': { deep: '#13353b', mint: '#34d399', light: '#f2f8f7', dark: '#0c2327', via: '#0f2c31', to: '#071619' },
+                    'royal-sapphire': { deep: '#1b2447', mint: '#818cf8', light: '#f3f5fc', dark: '#10162e', via: '#151d3b', to: '#0a0e1e' },
+                    'nordic-steel': { deep: '#1a2a36', mint: '#4fc3f7', light: '#f2f6f9', dark: '#0e1a24', via: '#14222c', to: '#081017' },
+                    'rich-charcoal': { deep: '#1a1d24', mint: '#10b981', light: '#f5f6f8', dark: '#101217', via: '#15181e', to: '#0a0c0f' },
+                    'monaco-blue': { deep: '#132544', mint: '#2dd4bf', light: '#f1f5fa', dark: '#0b1629', via: '#0e1d35', to: '#060d19' }
                   };
                   var saved = localStorage.getItem('moneyviora_theme') || 'forest-green';
                   var t = themeMap[saved] || themeMap['forest-green'];

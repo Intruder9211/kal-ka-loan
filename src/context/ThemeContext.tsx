@@ -5,112 +5,104 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 export type ThemeId = 
   | "forest-green" 
   | "navy-blue" 
-  | "sunset-orange" 
-  | "royal-purple" 
-  | "slate-black" 
-  | "ruby-red"
-  | "ocean-teal";
+  | "midnight-slate" 
+  | "emerald-teal" 
+  | "royal-sapphire"
+  | "nordic-steel"
+  | "rich-charcoal"
+  | "monaco-blue";
 
 export interface ThemeOption {
   id: ThemeId;
   name: string;
-  nameHindi?: string;
-  description: string;
   previewDeep: string;
   previewAccent: string;
   previewLight: string;
   previewDark: string;
   previewVia: string;
   previewTo: string;
-  badge?: string;
 }
 
 export const THEME_OPTIONS: ThemeOption[] = [
   {
     id: "forest-green",
     name: "Emerald Green",
-    nameHindi: "ग्रीन थीम (मूल)",
-    description: "Classic rich forest green with mint vibrancy",
     previewDeep: "#1a3b32",
     previewAccent: "#75e87a",
     previewLight: "#f4f7f6",
     previewDark: "#0f231e",
     previewVia: "#0d2a23",
     previewTo: "#061e18",
-    badge: "Default"
   },
   {
     id: "navy-blue",
-    name: "Navy Blue",
-    nameHindi: "नेवी ब्लू थीम",
-    description: "Trustworthy deep navy with glowing cyan & sky blue",
-    previewDeep: "#0a192f",
+    name: "Classic Navy",
+    previewDeep: "#0f233a",
     previewAccent: "#38bdf8",
-    previewLight: "#f0f7ff",
-    previewDark: "#050d1a",
-    previewVia: "#0e2444",
-    previewTo: "#040912",
-    badge: "Popular"
+    previewLight: "#f1f6fa",
+    previewDark: "#091728",
+    previewVia: "#0b1d30",
+    previewTo: "#050e1a",
   },
   {
-    id: "sunset-orange",
-    name: "Sunset Orange",
-    nameHindi: "ऑरेंज थीम",
-    description: "Warm espresso brown with energetic amber & coral glow",
-    previewDeep: "#2e150a",
-    previewAccent: "#fb923c",
-    previewLight: "#fff7ed",
-    previewDark: "#1c0c05",
-    previewVia: "#3d1c0e",
-    previewTo: "#120703",
+    id: "midnight-slate",
+    name: "Executive Slate",
+    previewDeep: "#192231",
+    previewAccent: "#60a5fa",
+    previewLight: "#f4f6f9",
+    previewDark: "#0f1622",
+    previewVia: "#141c28",
+    previewTo: "#090e16",
   },
   {
-    id: "royal-purple",
-    name: "Royal Purple",
-    nameHindi: "रॉयल पर्पल थीम",
-    description: "Deep luxury amethyst with electric lilac radiance",
-    previewDeep: "#24123b",
-    previewAccent: "#c084fc",
-    previewLight: "#faf5ff",
-    previewDark: "#150923",
-    previewVia: "#341a54",
-    previewTo: "#0e0517",
+    id: "emerald-teal",
+    name: "Deep Teal",
+    previewDeep: "#13353b",
+    previewAccent: "#34d399",
+    previewLight: "#f2f8f7",
+    previewDark: "#0c2327",
+    previewVia: "#0f2c31",
+    previewTo: "#071619",
   },
   {
-    id: "slate-black",
-    name: "Obsidian Black",
-    nameHindi: "ब्लैक थीम",
-    description: "Ultra-sleek stealth black with bright platinum gold",
-    previewDeep: "#0f1115",
-    previewAccent: "#facc15",
-    previewLight: "#f8fafc",
-    previewDark: "#050607",
-    previewVia: "#1a1e24",
-    previewTo: "#07080a",
+    id: "royal-sapphire",
+    name: "Sapphire Indigo",
+    previewDeep: "#1b2447",
+    previewAccent: "#818cf8",
+    previewLight: "#f3f5fc",
+    previewDark: "#10162e",
+    previewVia: "#151d3b",
+    previewTo: "#0a0e1e",
   },
   {
-    id: "ruby-red",
-    name: "Ruby Crimson",
-    nameHindi: "रूबी रेड थीम",
-    description: "Bold deep burgundy with radiant rose accents",
-    previewDeep: "#3b111a",
-    previewAccent: "#fb7185",
-    previewLight: "#fff1f2",
-    previewDark: "#22090f",
-    previewVia: "#4f1723",
-    previewTo: "#150407",
+    id: "nordic-steel",
+    name: "Nordic Steel",
+    previewDeep: "#1a2a36",
+    previewAccent: "#4fc3f7",
+    previewLight: "#f2f6f9",
+    previewDark: "#0e1a24",
+    previewVia: "#14222c",
+    previewTo: "#081017",
   },
   {
-    id: "ocean-teal",
-    name: "Ocean Teal",
-    nameHindi: "ओशन टील थीम",
-    description: "Deep marine cyan with vivid aquatic glow",
-    previewDeep: "#0c2b33",
+    id: "rich-charcoal",
+    name: "Rich Charcoal",
+    previewDeep: "#1a1d24",
+    previewAccent: "#10b981",
+    previewLight: "#f5f6f8",
+    previewDark: "#101217",
+    previewVia: "#15181e",
+    previewTo: "#0a0c0f",
+  },
+  {
+    id: "monaco-blue",
+    name: "Monaco Blue",
+    previewDeep: "#132544",
     previewAccent: "#2dd4bf",
-    previewLight: "#f0fdfa",
-    previewDark: "#06191e",
-    previewVia: "#113c47",
-    previewTo: "#030d10",
+    previewLight: "#f1f5fa",
+    previewDark: "#0b1629",
+    previewVia: "#0e1d35",
+    previewTo: "#060d19",
   }
 ];
 

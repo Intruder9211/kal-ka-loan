@@ -42,77 +42,90 @@ body[data-theme="forest-green"],
 html[data-theme="navy-blue"],
 body[data-theme="navy-blue"],
 [data-theme="navy-blue"] {
-  --brand-deep: #0a192f !important;
+  --brand-deep: #0f233a !important;
   --brand-mint: #38bdf8 !important;
-  --brand-light: #f0f7ff !important;
-  --brand-dark: #050d1a !important;
-  --brand-gradient-via: #0e2444 !important;
-  --brand-gradient-to: #040912 !important;
+  --brand-light: #f1f6fa !important;
+  --brand-dark: #091728 !important;
+  --brand-gradient-via: #0b1d30 !important;
+  --brand-gradient-to: #050e1a !important;
 }
 
-/* 3. Sunset Orange Theme */
-:root[data-theme="sunset-orange"],
-html[data-theme="sunset-orange"],
-body[data-theme="sunset-orange"],
-[data-theme="sunset-orange"] {
-  --brand-deep: #2e150a !important;
-  --brand-mint: #fb923c !important;
-  --brand-light: #fff7ed !important;
-  --brand-dark: #1c0c05 !important;
-  --brand-gradient-via: #3d1c0e !important;
-  --brand-gradient-to: #120703 !important;
+/* 3. Executive Slate Theme */
+:root[data-theme="midnight-slate"],
+html[data-theme="midnight-slate"],
+body[data-theme="midnight-slate"],
+[data-theme="midnight-slate"] {
+  --brand-deep: #192231 !important;
+  --brand-mint: #60a5fa !important;
+  --brand-light: #f4f6f9 !important;
+  --brand-dark: #0f1622 !important;
+  --brand-gradient-via: #141c28 !important;
+  --brand-gradient-to: #090e16 !important;
 }
 
-/* 4. Royal Purple Theme */
-:root[data-theme="royal-purple"],
-html[data-theme="royal-purple"],
-body[data-theme="royal-purple"],
-[data-theme="royal-purple"] {
-  --brand-deep: #24123b !important;
-  --brand-mint: #c084fc !important;
-  --brand-light: #faf5ff !important;
-  --brand-dark: #150923 !important;
-  --brand-gradient-via: #341a54 !important;
-  --brand-gradient-to: #0e0517 !important;
+/* 4. Deep Teal Theme */
+:root[data-theme="emerald-teal"],
+html[data-theme="emerald-teal"],
+body[data-theme="emerald-teal"],
+[data-theme="emerald-teal"] {
+  --brand-deep: #13353b !important;
+  --brand-mint: #34d399 !important;
+  --brand-light: #f2f8f7 !important;
+  --brand-dark: #0c2327 !important;
+  --brand-gradient-via: #0f2c31 !important;
+  --brand-gradient-to: #071619 !important;
 }
 
-/* 5. Obsidian Black / Gold Theme */
-:root[data-theme="slate-black"],
-html[data-theme="slate-black"],
-body[data-theme="slate-black"],
-[data-theme="slate-black"] {
-  --brand-deep: #0f1115 !important;
-  --brand-mint: #facc15 !important;
-  --brand-light: #f8fafc !important;
-  --brand-dark: #050607 !important;
-  --brand-gradient-via: #1a1e24 !important;
-  --brand-gradient-to: #07080a !important;
+/* 5. Sapphire Indigo Theme */
+:root[data-theme="royal-sapphire"],
+html[data-theme="royal-sapphire"],
+body[data-theme="royal-sapphire"],
+[data-theme="royal-sapphire"] {
+  --brand-deep: #1b2447 !important;
+  --brand-mint: #818cf8 !important;
+  --brand-light: #f3f5fc !important;
+  --brand-dark: #10162e !important;
+  --brand-gradient-via: #151d3b !important;
+  --brand-gradient-to: #0a0e1e !important;
 }
 
-/* 6. Ruby Crimson Theme */
-:root[data-theme="ruby-red"],
-html[data-theme="ruby-red"],
-body[data-theme="ruby-red"],
-[data-theme="ruby-red"] {
-  --brand-deep: #3b111a !important;
-  --brand-mint: #fb7185 !important;
-  --brand-light: #fff1f2 !important;
-  --brand-dark: #22090f !important;
-  --brand-gradient-via: #4f1723 !important;
-  --brand-gradient-to: #150407 !important;
+/* 6. Nordic Steel Theme */
+:root[data-theme="nordic-steel"],
+html[data-theme="nordic-steel"],
+body[data-theme="nordic-steel"],
+[data-theme="nordic-steel"] {
+  --brand-deep: #1a2a36 !important;
+  --brand-mint: #4fc3f7 !important;
+  --brand-light: #f2f6f9 !important;
+  --brand-dark: #0e1a24 !important;
+  --brand-gradient-via: #14222c !important;
+  --brand-gradient-to: #081017 !important;
 }
 
-/* 7. Ocean Teal Theme */
-:root[data-theme="ocean-teal"],
-html[data-theme="ocean-teal"],
-body[data-theme="ocean-teal"],
-[data-theme="ocean-teal"] {
-  --brand-deep: #0c2b33 !important;
+/* 7. Rich Charcoal Theme */
+:root[data-theme="rich-charcoal"],
+html[data-theme="rich-charcoal"],
+body[data-theme="rich-charcoal"],
+[data-theme="rich-charcoal"] {
+  --brand-deep: #1a1d24 !important;
+  --brand-mint: #10b981 !important;
+  --brand-light: #f5f6f8 !important;
+  --brand-dark: #101217 !important;
+  --brand-gradient-via: #15181e !important;
+  --brand-gradient-to: #0a0c0f !important;
+}
+
+/* 8. Monaco Blue Theme */
+:root[data-theme="monaco-blue"],
+html[data-theme="monaco-blue"],
+body[data-theme="monaco-blue"],
+[data-theme="monaco-blue"] {
+  --brand-deep: #132544 !important;
   --brand-mint: #2dd4bf !important;
-  --brand-light: #f0fdfa !important;
-  --brand-dark: #06191e !important;
-  --brand-gradient-via: #113c47 !important;
-  --brand-gradient-to: #030d10 !important;
+  --brand-light: #f1f5fa !important;
+  --brand-dark: #0b1629 !important;
+  --brand-gradient-via: #0e1d35 !important;
+  --brand-gradient-to: #060d19 !important;
 }
 
 body {
