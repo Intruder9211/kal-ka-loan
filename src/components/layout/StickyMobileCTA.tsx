@@ -13,7 +13,7 @@ export default function StickyMobileCTA() {
       </a>
       
       <a 
-        href="https://wa.me/917303061282?text=Hi%20Kal%20Ka%20Loan!%20I%20want%20to%20check%20my%20eligibility." 
+        href="https://wa.me/917303061282?text=Hi%20Money%20Viora%20!%20I%20want%20to%20check%20my%20eligibility." 
         target="_blank"
         rel="noopener noreferrer"
         className="flex flex-col items-center justify-center flex-1 py-1 text-[#25D366] hover:text-[#1DA851] transition-colors"
