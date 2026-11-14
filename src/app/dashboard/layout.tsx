@@ -88,9 +88,6 @@ export default async function DashboardLayout({ children }: { children: ReactNod
             <h1 className="text-xl font-semibold text-slate-800">Client Portal</h1>
           </div>
           <div className="flex items-center gap-3">
-            <div className="text-slate-800">
-              <ThemeSwitcher />
-            </div>
             <span className="text-sm font-medium text-slate-600 hidden sm:inline">
               Welcome, {session.user?.name || "Customer"}
             </span>

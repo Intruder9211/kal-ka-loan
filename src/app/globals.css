@@ -198,24 +198,67 @@ input[type=range]:active::-webkit-slider-thumb {
   }
   
   .animate-fade-up {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
   
+  .animate-float-slow {
+    animation: floatSlow 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulseSubtle 3s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+  }
+
   .stagger-1 { animation-delay: 100ms; }
   .stagger-2 { animation-delay: 200ms; }
   .stagger-3 { animation-delay: 300ms; }
   .stagger-4 { animation-delay: 400ms; }
+  .stagger-5 { animation-delay: 500ms; }
 }
 
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
   }
 }
 
@@ -264,6 +307,31 @@ html.skip-loader #moneyviora-site-loader { display: none !important; }
 
 .bg-brand-dark { background-color: var(--brand-dark) !important; }
 .text-brand-dark { color: var(--brand-dark) !important; }
+
+/* Interactive Hover utilities to prevent black-on-black / unreadable text */
+.hover\:bg-brand-mint:hover {
+  background-color: var(--brand-mint) !important;
+}
+.hover\:text-brand-deep:hover {
+  color: var(--brand-deep) !important;
+}
+.hover\:bg-brand-deep:hover {
+  background-color: var(--brand-deep) !important;
+}
+.hover\:text-white:hover {
+  color: #ffffff !important;
+}
+
+/* Button interactive base */
+.btn-primary-interactive {
+  background-color: var(--brand-deep);
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary-interactive:hover {
+  background-color: var(--brand-mint) !important;
+  color: var(--brand-deep) !important;
+}
 
 /* Transparent / Opacity helpers */
 .bg-brand-mint\/10 { background-color: color-mix(in srgb, var(--brand-mint) 10%, transparent) !important; }

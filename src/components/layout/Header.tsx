@@ -189,9 +189,6 @@ export default function Header({ session }: { session?: Session | null }) {
           </div>
           
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
-            {/* Theme Color Palette Switcher */}
-            <ThemeSwitcher />
-
             {session ? (
               <>
                 <Link 
@@ -223,9 +220,8 @@ export default function Header({ session }: { session?: Session | null }) {
           </div>
         </nav>
 
-        {/* Mobile Actions: Theme Switcher & Menu Toggle */}
+        {/* Mobile Actions: Menu Toggle */}
         <div className="md:hidden flex items-center gap-2">
-          <ThemeSwitcher />
           <button 
             className="p-2 text-brand-mint active:scale-95 transition-transform" 
             aria-label="Toggle menu"

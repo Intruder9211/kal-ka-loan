@@ -35,7 +35,7 @@ export default function HomeLoanPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">
                 <Percent className="text-brand-mint mb-3" size={24} />
-                <div className="font-black text-3xl mb-1">8.35%</div>
+                <div className="font-black text-3xl mb-1">7.25%</div>
                 <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Starting Rate</div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">

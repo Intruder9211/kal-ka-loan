@@ -34,7 +34,7 @@ export default function BalanceTransferPage() {
             <ul className="space-y-4 mb-8">
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="text-brand-mint" size={20} />
-                <span>Rates starting from 8.35%</span>
+                <span>Rates starting from 7.25%</span>
               </li>
               <li className="flex items-center gap-3">
                 <CheckCircle2 className="text-brand-mint" size={20} />

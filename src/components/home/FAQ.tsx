@@ -12,7 +12,7 @@ export default function FAQ() {
     {
       category: "Eligibility",
       q: "What is the minimum CIBIL score required for a home loan?",
-      a: "Most banks require a minimum CIBIL score of 650. However, to unlock the absolute lowest interest rates (starting at 8.35%), a score of 750 or above is recommended. If your score is lower, our experts can still help you find specialized NBFC lenders."
+      a: "Most banks require a minimum CIBIL score of 650. However, to unlock the absolute lowest interest rates (starting at 7.25%), a score of 750 or above is recommended. If your score is lower, our experts can still help you find specialized NBFC lenders."
     },
     {
       category: "Fees",

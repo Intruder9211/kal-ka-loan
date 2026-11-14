@@ -13,7 +13,7 @@ export default function PersonalizedRecommendations() {
       bankColor: "bg-blue-600",
       eligibleAmount: 4500000,
       estimatedEmi: 39500,
-      interestRange: "8.35% - 8.55%",
+      interestRange: "7.45% - 8.55%",
       tenure: "20 Years",
       processingFee: "₹2,999 (Special Waiver)",
       matchReason: "Best match for your salaried profile (>₹75k/month) with zero pre-closure charges.",

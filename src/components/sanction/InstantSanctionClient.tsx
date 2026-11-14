@@ -28,8 +28,8 @@ export default function InstantSanctionClient() {
   const [sanctionDate, setSanctionDate] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // EMI math: 8.40% interest p.a.
-  const rate = 8.4;
+  // EMI math: 7.25% starting interest p.a.
+  const rate = 7.25;
   const r = rate / 12 / 100;
   const n = tenureYears * 12;
   const emi = Math.round((loanAmount * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));
@@ -177,7 +177,7 @@ export default function InstantSanctionClient() {
                 </div>
                 <div className="text-right">
                   <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Sanction Rate</span>
-                  <p className="text-base font-bold text-emerald-600 mt-0.5">8.40% p.a.*</p>
+                  <p className="text-base font-bold text-emerald-600 mt-0.5">7.25% p.a.*</p>
                 </div>
               </div>
 
@@ -267,7 +267,7 @@ export default function InstantSanctionClient() {
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 block">Indicative Interest Rate</span>
-                    <span className="text-lg font-bold text-emerald-600 mt-0.5 block">8.40% p.a. (Floating)</span>
+                    <span className="text-lg font-bold text-emerald-600 mt-0.5 block">7.25% p.a. (Floating)</span>
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 block">Indicative Monthly EMI</span>

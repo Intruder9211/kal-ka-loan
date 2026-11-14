@@ -61,7 +61,11 @@ export default async function RootLayout({
                     'rich-charcoal': { deep: '#1a1d24', mint: '#10b981', light: '#f5f6f8', dark: '#101217', via: '#15181e', to: '#0a0c0f' },
                     'monaco-blue': { deep: '#132544', mint: '#2dd4bf', light: '#f1f5fa', dark: '#0b1629', via: '#0e1d35', to: '#060d19' }
                   };
-                  var saved = localStorage.getItem('moneyviora_theme') || 'forest-green';
+                  var saved = 'forest-green';
+                  try {
+                    var match = document.cookie.match(new RegExp('(^| )moneyviora_theme=([^;]+)'));
+                    if (match) saved = match[2];
+                  } catch (e) {}
                   var t = themeMap[saved] || themeMap['forest-green'];
                   var root = document.documentElement;
                   root.setAttribute('data-theme', saved);

@@ -5,7 +5,7 @@ import { Briefcase, Plus, Edit2, Trash2, Search, CheckCircle2, XCircle, Percent,
 
 // Mock Loan Products Data
 const initialProducts = [
-  { id: "PRD-01", name: "Standard Home Loan", code: "HL-STD", minRate: "8.35%", maxRate: "10.50%", maxTenure: "30 Years", maxAmount: "₹5 Cr", status: "Active" },
+  { id: "PRD-01", name: "Standard Home Loan", code: "HL-STD", minRate: "7.25%", maxRate: "10.50%", maxTenure: "30 Years", maxAmount: "₹15 Cr", status: "Active" },
   { id: "PRD-02", name: "Home Construction Loan", code: "HL-CONST", minRate: "8.50%", maxRate: "11.00%", maxTenure: "20 Years", maxAmount: "₹3 Cr", status: "Active" },
   { id: "PRD-03", name: "Plot Purchase Loan", code: "HL-PLOT", minRate: "8.90%", maxRate: "11.50%", maxTenure: "15 Years", maxAmount: "₹2 Cr", status: "Active" },
   { id: "PRD-04", name: "Home Renovation Loan", code: "HL-RENOV", minRate: "9.25%", maxRate: "12.00%", maxTenure: "10 Years", maxAmount: "₹50 L", status: "Active" },

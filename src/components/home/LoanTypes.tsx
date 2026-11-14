@@ -8,7 +8,7 @@ export default function LoanTypes() {
       href: "/home-loan", 
       icon: Home, 
       desc: "Finance your dream home with the lowest rates in the market.",
-      rate: "Starts at 8.35%",
+      rate: "Starts at 7.25%",
       tenure: "Up to 30 Yrs",
       benefits: ["Zero pre-closure charges", "Quick digital sanction"],
       popular: true

@@ -108,9 +108,10 @@ export const THEME_OPTIONS: ThemeOption[] = [
 
 interface ThemeContextType {
   currentTheme: ThemeId;
-  setTheme: (theme: ThemeId) => void;
+  setTheme: (theme: ThemeId) => Promise<void>;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  isLoading: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -118,6 +119,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<ThemeId>("forest-green");
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const applyThemeToDOM = (theme: ThemeId) => {
     const t = THEME_OPTIONS.find((opt) => opt.id === theme) || THEME_OPTIONS[0];
@@ -186,35 +188,63 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       .border-brand-mint\\/30 { border-color: ${t.previewAccent}4d !important; }
       .border-brand-mint\\/40 { border-color: ${t.previewAccent}66 !important; }
       .border-brand-mint\\/50 { border-color: ${t.previewAccent}80 !important; }
+
+      /* Interactive Hover readability fixes */
+      .hover\\:bg-brand-mint:hover {
+        background-color: ${t.previewAccent} !important;
+      }
+      .hover\\:text-brand-deep:hover {
+        color: ${t.previewDeep} !important;
+      }
+      .hover\\:bg-brand-deep:hover {
+        background-color: ${t.previewDeep} !important;
+      }
+      .hover\\:text-white:hover {
+        color: #ffffff !important;
+      }
     `;
   };
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("moneyviora_theme") as ThemeId;
-      if (saved && THEME_OPTIONS.some((t) => t.id === saved)) {
-        setCurrentTheme(saved);
-        applyThemeToDOM(saved);
-      } else {
-        applyThemeToDOM("forest-green");
+    async function initGlobalTheme() {
+      try {
+        const res = await fetch("/api/theme");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.activeTheme && THEME_OPTIONS.some((t) => t.id === data.activeTheme)) {
+            setCurrentTheme(data.activeTheme);
+            applyThemeToDOM(data.activeTheme);
+            return;
+          }
+        }
+      } catch {
+        // fallback to default
       }
-    } catch {
       applyThemeToDOM("forest-green");
     }
+    initGlobalTheme();
   }, []);
 
-  const setTheme = (theme: ThemeId) => {
+  const setTheme = async (theme: ThemeId) => {
+    setIsLoading(true);
     setCurrentTheme(theme);
-    try {
-      localStorage.setItem("moneyviora_theme", theme);
-    } catch {
-      // ignore
-    }
     applyThemeToDOM(theme);
+
+    try {
+      await fetch("/api/theme", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ theme })
+      });
+    } catch (e) {
+      console.error("Failed to persist theme globally:", e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <ThemeContext.Provider value={{ currentTheme, setTheme, isOpen, setIsOpen }}>
+    <ThemeContext.Provider value={{ currentTheme, setTheme, isOpen, setIsOpen, isLoading }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -1,7 +1,7 @@
 import { Percent, FastForward, EyeOff, HeadphonesIcon, FileCheck, ShieldCheck } from "lucide-react";
 
 const benefits = [
-  { icon: Percent, title: "Lowest Interest Rates", desc: "Compare 50+ lenders to find the cheapest rate starting at 8.35%." },
+  { icon: Percent, title: "Lowest Interest Rates", desc: "Compare 50+ lenders to find the cheapest rate starting at 7.25%." },
   { icon: FastForward, title: "Fast Sanction", desc: "Get your loan sanctioned in as little as 48 hours." },
   { icon: EyeOff, title: "Zero Hidden Charges", desc: "We charge 0 upfront fees. Complete transparency." },
   { icon: HeadphonesIcon, title: "Expert Support", desc: "Dedicated relationship manager for end-to-end guidance." },

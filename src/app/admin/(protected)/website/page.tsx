@@ -1,9 +1,11 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Globe, Save, Layout, MessageSquare, Image as ImageIcon, AlertCircle } from "lucide-react"
+import { Globe, Save, Layout, MessageSquare, Image as ImageIcon, AlertCircle, Palette, Check } from "lucide-react"
+import { useTheme, THEME_OPTIONS } from "@/context/ThemeContext"
 
 export default function WebsiteAdminPage() {
+  const { currentTheme, setTheme } = useTheme()
   const [isSaving, setIsSaving] = useState(false)
   const [activeTab, setActiveTab] = useState("general")
   const [logoUrl, setLogoUrl] = useState("/logo.png")
@@ -79,6 +81,12 @@ export default function WebsiteAdminPage() {
               <Globe className="h-4 w-4" /> General Settings
             </button>
             <button 
+              onClick={() => setActiveTab("theme")}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${activeTab === "theme" ? "bg-emerald-50 text-emerald-800 font-bold" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
+            >
+              <Palette className="h-4 w-4 text-emerald-600" /> Website Theme
+            </button>
+            <button 
               onClick={() => setActiveTab("hero")}
               className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${activeTab === "hero" ? "bg-blue-50 text-blue-700" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`}
             >
@@ -146,6 +154,63 @@ export default function WebsiteAdminPage() {
                   </div>
                   <label className="text-sm font-medium text-slate-700">Maintenance Mode (Hide site from public)</label>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "theme" && (
+            <div className="space-y-6">
+              <div className="border-b border-slate-100 pb-3">
+                <h3 className="text-lg font-bold text-slate-900">Website Theme & Color Palette</h3>
+                <p className="text-sm text-slate-500 mt-0.5">
+                  The theme chosen here will be applied globally across the entire platform for all visitors.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {THEME_OPTIONS.map((theme) => {
+                  const isSelected = theme.id === currentTheme;
+                  return (
+                    <div
+                      key={theme.id}
+                      onClick={() => setTheme(theme.id)}
+                      className={`p-4 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between ${
+                        isSelected 
+                          ? "border-emerald-600 bg-emerald-50/40 shadow-sm" 
+                          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3.5">
+                        <div 
+                          className="w-12 h-12 rounded-xl flex items-center justify-center shadow-xs border border-white/20 shrink-0"
+                          style={{
+                            background: `linear-gradient(135deg, ${theme.previewDeep} 50%, ${theme.previewAccent} 50%)`,
+                          }}
+                        />
+                        <div>
+                          <div className="font-bold text-slate-900 text-sm">{theme.name}</div>
+                          <div className="text-xs text-slate-400 mt-0.5 font-mono">
+                            {theme.previewDeep} • {theme.previewAccent}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="shrink-0">
+                        {isSelected ? (
+                          <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xs">
+                            <Check size={14} strokeWidth={3} />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full border-2 border-slate-300" />
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
+                <strong>Admin Notice:</strong> Public users cannot change the website theme. All site branding adheres strictly to the selection saved in this control panel.
               </div>
             </div>
           )}
