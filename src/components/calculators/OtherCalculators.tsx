@@ -54,8 +54,8 @@ export function EligibilityCalculator() {
   const [tenure, setTenure] = useState(20);
   const [creditScore, setCreditScore] = useState("excellent");
 
-  // Math: 50% FOIR (Fixed Obligation to Income Ratio)
-  const maxEmi = (income * 0.5) - obligations;
+  // Math: 70% FOIR (Fixed Obligation to Income Ratio) for standard comfortable borrowing
+  const maxEmi = (income * 0.70) - obligations;
   const r = rate / 12 / 100;
   const n = tenure * 12;
   const eligibleLoan = maxEmi > 0 ? (maxEmi * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n)) : 0;
@@ -106,7 +106,8 @@ export function AffordabilityCalculator() {
   const [rate, setRate] = useState(8.5);
   const [tenure, setTenure] = useState(20);
 
-  const maxEmi = income * 0.5;
+  // 70% FOIR Affordability
+  const maxEmi = income * 0.70;
   const r = rate / 12 / 100;
   const n = tenure * 12;
   const eligibleLoan = (maxEmi * (Math.pow(1 + r, n) - 1)) / (r * Math.pow(1 + r, n));

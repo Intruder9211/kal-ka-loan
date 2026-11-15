@@ -3,28 +3,44 @@
 import { useState } from "react";
 import { IndianRupee, TrendingUp, AlertTriangle, CheckCircle2, ShieldCheck } from "lucide-react";
 
-// Helper for Input
-const InputSlider = ({ label, value, setter, min, max, step }: any) => (
-  <div className="space-y-4">
-    <div className="flex justify-between items-end">
-      <label className="font-medium text-sm text-slate-700">{label}</label>
-      <div className="relative flex items-center">
-        <span className="absolute left-3 font-medium text-gray-500">₹</span>
+// Helper for Input with Touch-Scroll Protection on Mobile & Tablet
+const InputSlider = ({ label, value, setter, min, max, step }: any) => {
+  const [isInteracting, setIsInteracting] = useState(false);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-end">
+        <label className="font-medium text-sm text-slate-700">{label}</label>
+        <div className="relative flex items-center">
+          <span className="absolute left-3 font-medium text-gray-500">₹</span>
+          <input 
+            type="text" 
+            suppressHydrationWarning
+            value={value ? Number(value).toLocaleString('en-IN') : ''}
+            onChange={(e) => {
+              const val = Number(e.target.value.replace(/,/g, ''));
+              if (!isNaN(val)) setter(val);
+            }}
+            className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+          />
+        </div>
+      </div>
+      <div className="relative py-1">
         <input 
-          type="text" 
-          suppressHydrationWarning
-          value={value ? Number(value).toLocaleString('en-IN') : ''}
-          onChange={(e) => {
-            const val = Number(e.target.value.replace(/,/g, ''));
-            if (!isNaN(val)) setter(val);
-          }}
-          className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+          type="range" 
+          min={min} 
+          max={max} 
+          step={step} 
+          value={value} 
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => setIsInteracting(false)}
+          onChange={(e) => setter(Number(e.target.value))} 
+          className="w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint touch-pan-y" 
         />
       </div>
     </div>
-    <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => setter(Number(e.target.value))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint" />
-  </div>
-);
+  );
+};
 
 export default function FinancialHealthView() {
   // Inputs
@@ -45,10 +61,10 @@ export default function FinancialHealthView() {
   const totalDesiredCommitment = desiredEmi + existingEmis + expenses;
   const leftoverCash = income - totalDesiredCommitment;
 
-  // Affordability Ranges (Max EMI based on different FOIR thresholds)
-  const comfortableEmi = (income * 0.50) - existingEmis; // 50% FOIR
-  const stretchedEmi = (income * 0.60) - existingEmis;   // 60% FOIR
-  const maxEmi = (income * 0.70) - existingEmis;         // 70% FOIR (Absolute Limit)
+  // Affordability Ranges (Max EMI based on updated FOIR thresholds: 70% Comfortable, 80% Stretched, 85% Absolute Limit)
+  const comfortableEmi = (income * 0.70) - existingEmis; // 70% FOIR
+  const stretchedEmi = (income * 0.80) - existingEmis;   // 80% FOIR
+  const maxEmi = (income * 0.85) - existingEmis;         // 85%+ FOIR (Absolute Limit)
 
   const calcLoanFromEmi = (emiAmt: number) => {
     if (emiAmt <= 0) return 0;
@@ -59,7 +75,7 @@ export default function FinancialHealthView() {
   const stretchedLoan = calcLoanFromEmi(stretchedEmi);
   const maxLoan = calcLoanFromEmi(maxEmi);
 
-  // Health Status (Strict Evaluation based on FOIR & Residual Cash)
+  // Health Status (Strictly following user FOIR bands: <= 70% Comfortable, > 70% & <= 80% Stretched, > 80% Critical)
   let healthStatus = "Comfortable";
   let healthColor = "text-emerald-600";
   let healthBg = "bg-emerald-50/70";
@@ -67,15 +83,16 @@ export default function FinancialHealthView() {
   let HealthIcon = CheckCircle2;
   
   const totalDebtEmi = desiredEmi + existingEmis;
-  const foirPercent = (totalDebtEmi / income) * 100;
+  // Calculate exact integer/rounded FOIR to perfectly match the displayed meter percentage
+  const foirPercent = Math.round((totalDebtEmi / income) * 100);
 
-  if (leftoverCash < income * 0.1 || foirPercent > 68) {
+  if (foirPercent > 80) {
     healthStatus = "Critical";
     healthColor = "text-rose-600";
     healthBg = "bg-rose-50/70";
     healthBorder = "border-rose-200";
     HealthIcon = AlertTriangle;
-  } else if (desiredEmi > comfortableEmi || foirPercent > 50) {
+  } else if (foirPercent > 70) {
     healthStatus = "Stretched";
     healthColor = "text-amber-600";
     healthBg = "bg-amber-50/70";
@@ -320,15 +337,15 @@ export default function FinancialHealthView() {
           {/* Interactive Affordability Gauge Needle */}
           <div className="mt-6 pt-5 border-t border-slate-200/60 relative z-10">
             <div className="flex justify-between text-xs font-bold mb-1.5">
-              <span className="text-emerald-700 flex items-center gap-1">● Comfortable (50% FOIR)</span>
-              <span className="text-amber-700 flex items-center gap-1">● Stretched (60%)</span>
-              <span className="text-rose-700 flex items-center gap-1">● Critical (70%+)</span>
+              <span className="text-emerald-700 flex items-center gap-1">● Comfortable (Up to 70% FOIR)</span>
+              <span className="text-amber-700 flex items-center gap-1">● Stretched (70% - 80%)</span>
+              <span className="text-rose-700 flex items-center gap-1">● Critical (&gt; 80%)</span>
             </div>
             
             <div className="h-3 w-full bg-slate-200 rounded-full relative overflow-hidden flex">
-              <div className="w-[50%] bg-emerald-400 h-full"></div>
-              <div className="w-[15%] bg-amber-400 h-full"></div>
-              <div className="w-[35%] bg-rose-400 h-full"></div>
+              <div className="w-[70%] bg-emerald-400 h-full"></div>
+              <div className="w-[10%] bg-amber-400 h-full"></div>
+              <div className="w-[20%] bg-rose-400 h-full"></div>
             </div>
             
             {/* Position Pointer based on actual FOIR */}
@@ -377,7 +394,7 @@ export default function FinancialHealthView() {
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                     <h4 className="font-bold text-emerald-950 text-base">Comfortable Zone</h4>
                   </div>
-                  <p className="text-xs text-emerald-700 font-medium mt-1">Recommended by RBI (leaves 50% for living expenses)</p>
+                  <p className="text-xs text-emerald-700 font-medium mt-1">Safe repayment buffer (Up to 70% FOIR)</p>
                 </div>
                 <div className="text-right">
                   <p className="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight">
@@ -405,7 +422,7 @@ export default function FinancialHealthView() {
                     <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                     <h4 className="font-bold text-amber-950 text-base">Stretched Zone</h4>
                   </div>
-                  <p className="text-xs text-amber-700 font-medium mt-1">High approval chance, requires tighter monthly budgeting</p>
+                  <p className="text-xs text-amber-700 font-medium mt-1">High approval chance, tighter budget (70% - 80% FOIR)</p>
                 </div>
                 <div className="text-right">
                   <p className="text-xl sm:text-2xl font-black text-amber-800 tracking-tight">
@@ -431,9 +448,9 @@ export default function FinancialHealthView() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                    <h4 className="font-bold text-rose-950 text-base">Absolute Limit</h4>
+                    <h4 className="font-bold text-rose-950 text-base">Critical Zone (Absolute Limit)</h4>
                   </div>
-                  <p className="text-xs text-rose-700 font-medium mt-1">Requires special approval / co-borrower credit (70% FOIR)</p>
+                  <p className="text-xs text-rose-700 font-medium mt-1">Exceeds standard limits (&gt; 80% FOIR) - requires co-borrower</p>
                 </div>
                 <div className="text-right">
                   <p className="text-xl sm:text-2xl font-black text-rose-800 tracking-tight">

@@ -555,4 +555,24 @@ html.skip-loader #moneyviora-site-loader { display: none !important; }
   }
 }
 
+/* Touch Safety on Mobile & Tablets: 
+   Prevent accidental tap jumps when scrolling past sliders.
+   Requires dragging the thumb specifically instead of jumping on track tap. */
+@media (max-width: 1024px) {
+  input[type="range"] {
+    touch-action: pan-y !important;
+  }
+}
+
+/* Enhanced Custom Thumb & Track for high precision & accidental touch immunity */
+input[type="range"]::-webkit-slider-thumb {
+  cursor: grab;
+  touch-action: none;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+
 
