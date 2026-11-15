@@ -30,31 +30,33 @@ export default function Header({ session }: { session?: Session | null }) {
   }, []);
 
   return (
-    <header 
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300 ease-out border-b",
-        scrolled 
-          ? "bg-brand-deep/90 backdrop-blur-md border-brand-mint/20 shadow-md py-1" 
-          : "bg-brand-deep border-transparent py-3"
-      )}
-    >
-      <div className="container mx-auto flex h-14 items-center justify-between px-4 text-white">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group relative">
-          <div className="relative w-60 h-16 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
-            <Image 
-              src="/logo_white.png" 
-              alt="Money Viora Logo" 
-              fill 
-              sizes="240px"
-              className="object-contain object-left"
-              priority
-            />
-          </div>
-        </Link>
+    <div className="sticky top-0 z-50 w-full p-3 sm:p-4 md:p-6 pb-0 sm:pb-0 md:pb-0 transition-all duration-300 pointer-events-none">
+      <header 
+        className={cn(
+          "w-full bg-brand-deep text-white border border-white/10 shadow-xl transition-all duration-300 pointer-events-auto",
+          "rounded-2xl sm:rounded-2xl lg:rounded-2xl",
+          scrolled 
+            ? "bg-brand-deep/90 backdrop-blur-md border-brand-mint/20 shadow-2xl py-1.5 px-4 sm:px-6" 
+            : "py-2 sm:py-3 px-4 sm:px-8"
+        )}
+      >
+        <div className="flex h-12 sm:h-14 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group relative">
+            <div className="relative w-48 sm:w-56 md:w-60 h-12 sm:h-14 md:h-16 overflow-hidden transition-transform duration-300 group-hover:scale-[1.02]">
+              <Image 
+                src="/logo_white.png" 
+                alt="Money Viora Logo" 
+                fill 
+                sizes="240px"
+                className="object-contain object-left"
+                priority
+              />
+            </div>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-7 xl:gap-8 text-sm font-medium">
           <Link href="/home-loan" className="link-underline pb-1">
             Home Loans
           </Link>
@@ -69,7 +71,7 @@ export default function Header({ session }: { session?: Session | null }) {
             </Link>
             
             {/* Mega Menu */}
-            <div className="absolute top-[100%] left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border border-gray-100 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 p-6 grid grid-cols-4 gap-4 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+            <div className="absolute top-[calc(100%+0.75rem)] left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-slate-100 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 p-6 grid grid-cols-4 gap-4 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
               {CALCULATORS_CONFIG.map((calc) => {
                 const Icon = calc.icon;
                 return (
@@ -103,7 +105,7 @@ export default function Header({ session }: { session?: Session | null }) {
             </span>
 
             {/* Services Dropdown Menu */}
-            <div className="absolute top-[100%] right-0 w-[520px] bg-white rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.18)] border border-gray-100 opacity-0 invisible group-hover/services:opacity-100 group-hover/services:visible transition-all duration-300 z-50 p-4 grid grid-cols-2 gap-3 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+            <div className="absolute top-[calc(100%+0.75rem)] right-0 w-[520px] bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-slate-100 opacity-0 invisible group-hover/services:opacity-100 group-hover/services:visible transition-all duration-300 z-50 p-5 grid grid-cols-2 gap-3 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
               {/* 1. Verified Projects */}
               <Link
                 href="/projects"
@@ -220,8 +222,8 @@ export default function Header({ session }: { session?: Session | null }) {
           </div>
         </nav>
 
-        {/* Mobile Actions: Menu Toggle */}
-        <div className="md:hidden flex items-center gap-2">
+        {/* Mobile / Tablet Actions: Menu Toggle */}
+        <div className="lg:hidden flex items-center gap-2">
           <button 
             className="p-2 text-brand-mint active:scale-95 transition-transform" 
             aria-label="Toggle menu"
@@ -232,14 +234,14 @@ export default function Header({ session }: { session?: Session | null }) {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile / Tablet Menu Dropdown */}
       <div 
         className={cn(
-          "md:hidden absolute top-full left-0 w-full bg-brand-deep/95 backdrop-blur-md border-b border-brand-mint/20 overflow-hidden transition-all duration-300 ease-in-out",
-          mobileMenuOpen ? "max-h-[400px] border-b py-4" : "max-h-0 border-b-0 py-0"
+          "lg:hidden overflow-hidden transition-all duration-300 ease-in-out border-t border-white/10 mt-2",
+          mobileMenuOpen ? "max-h-[500px] py-4 opacity-100" : "max-h-0 py-0 opacity-0 border-t-0"
         )}
       >
-        <nav className="flex flex-col px-4 space-y-4 text-white">
+        <nav className="flex flex-col px-2 space-y-3.5 text-white">
           <Link href="/home-loan" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
             Home Loans
           </Link>
@@ -302,5 +304,6 @@ export default function Header({ session }: { session?: Session | null }) {
         </nav>
       </div>
     </header>
+  </div>
   );
 }

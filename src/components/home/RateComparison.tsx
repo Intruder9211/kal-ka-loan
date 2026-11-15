@@ -46,7 +46,7 @@ export default function RateComparison() {
         </div>
         
         {/* Comparison Table / Cards */}
-        <div className="flex flex-col gap-3.5 md:gap-0 md:bg-white md:rounded-3xl md:shadow-sm md:border md:border-slate-200 md:overflow-hidden animate-fade-up stagger-1">
+        <div className="flex flex-col gap-4 md:gap-0 md:bg-white md:rounded-3xl md:shadow-sm md:border md:border-slate-200 md:overflow-hidden animate-fade-up stagger-1">
           
           {/* Desktop Table Header */}
           <div className="hidden lg:grid grid-cols-12 gap-4 px-8 py-4 bg-slate-50/80 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -56,11 +56,15 @@ export default function RateComparison() {
             <div className="col-span-2 text-right">Action</div>
           </div>
 
-          {/* Bank Rows */}
-          {tableData.map((bank: any) => (
+          {/* Bank Rows / Mobile Stacking Cards */}
+          {tableData.map((bank: any, index: number) => (
             <div 
               key={bank.id} 
-              className="bg-white rounded-2xl md:rounded-none border border-slate-200 md:border-none md:border-b md:border-slate-100 p-5 md:px-8 md:py-5 hover:bg-slate-50/70 transition-colors shadow-xs md:shadow-none flex flex-col lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center"
+              style={{
+                top: `${4.5 + index * 0.4}rem`,
+                zIndex: 10 + index,
+              }}
+              className="mobile-bank-card-stack bg-white rounded-2xl md:rounded-none border border-slate-200/90 md:border-none md:border-b md:border-slate-100 p-5 md:px-8 md:py-5 hover:bg-slate-50/70 transition-all shadow-[0_10px_25px_-5px_rgba(0,0,0,0.08)] md:shadow-none flex flex-col lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center"
             >
               {/* 1. Bank Brand & Details */}
               <div className="lg:col-span-4 flex items-center gap-3.5">

@@ -31,39 +31,39 @@ export default function Home() {
             className="object-cover object-center opacity-80"
           />
           <div className="absolute inset-0 bg-brand-deep/60 md:bg-transparent md:bg-gradient-to-r md:from-brand-deep/95 md:via-brand-deep/80 md:to-brand-deep/30"></div>
-          <div className="container mx-auto px-6 md:px-12 py-12 md:py-16 relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-16 w-full">
+          <div className="container mx-auto px-5 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12 lg:py-16 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-12 lg:gap-12 w-full">
             
             {/* Hero Content */}
-            <div className="flex-1 space-y-6 text-center lg:text-left max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/30 text-brand-mint text-sm font-semibold tracking-wide animate-fade-up backdrop-blur-sm shadow-lg shadow-brand-mint/5 animate-pulse-subtle">
+            <div className="flex-1 space-y-4 sm:space-y-5 lg:space-y-6 text-center lg:text-left max-w-2xl min-w-0">
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/30 text-brand-mint text-xs sm:text-sm font-semibold tracking-wide animate-fade-up backdrop-blur-sm shadow-lg shadow-brand-mint/5 animate-pulse-subtle">
                 <CheckCircle2 size={16} />
                 <span>India's Most Transparent Loan Platform</span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] animate-fade-up stagger-1">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight leading-[1.15] animate-fade-up stagger-1">
                 The smartest way to get a <span className="text-brand-mint">home loan.</span>
               </h1>
               
-              <p className="text-lg sm:text-xl text-slate-200 animate-fade-up stagger-2 font-medium leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-xl text-slate-200 animate-fade-up stagger-2 font-medium leading-relaxed">
                 Compare offers from 30+ top banks, calculate your exact eligibility, and secure the lowest interest rate without the hidden fees.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4 animate-fade-up stagger-3">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-4 animate-fade-up stagger-3">
                 <Link 
                   href="/affordability" 
-                  className="btn-interactive group inline-flex items-center justify-center gap-2 bg-brand-mint text-brand-deep font-bold px-8 py-4 rounded-xl hover:bg-white shadow-[0_0_30px_rgba(7,153,116,0.3)] transition-all"
+                  className="btn-interactive group inline-flex items-center justify-center gap-2 bg-brand-mint text-brand-deep font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-white shadow-[0_0_30px_rgba(7,153,116,0.3)] transition-all text-sm sm:text-base"
                 >
-                  Check Affordability <ChevronRight size={20} className="icon-slide" />
+                  Check Affordability <ChevronRight size={18} className="icon-slide" />
                 </Link>
                 <Link 
                   href="/calculators" 
-                  className="btn-interactive inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/20 font-bold px-8 py-4 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all"
+                  className="btn-interactive inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/20 font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl hover:bg-white/20 backdrop-blur-sm transition-all text-sm sm:text-base"
                 >
                   Compare Rates
                 </Link>
               </div>
               
-              <div className="pt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 text-sm text-slate-300 animate-fade-up stagger-4">
+              <div className="pt-3 sm:pt-6 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 text-xs sm:text-sm text-slate-300 animate-fade-up stagger-4">
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 bg-brand-mint/20 rounded-md"><IndianRupee size={16} className="text-brand-mint" /></div>
                   <span className="font-medium">Zero Hidden Fees</span>
@@ -76,7 +76,7 @@ export default function Home() {
             </div>
             
             {/* Personalized Loan Finder Component */}
-            <div className="w-full lg:w-[450px] shrink-0 min-h-[480px] sm:h-[500px] relative z-20">
+            <div className="w-full max-w-md lg:max-w-none lg:w-[420px] xl:w-[450px] shrink-0 min-h-[460px] sm:min-h-[480px] sm:h-[500px] relative z-20">
               {/* Glowing Orbs */}
               <div className="absolute top-10 -left-10 w-48 h-48 bg-brand-mint/40 rounded-full mix-blend-screen filter blur-[60px] animate-pulse pointer-events-none"></div>
               <div className="absolute -bottom-10 -right-10 w-56 h-56 bg-brand-deep/50 rounded-full mix-blend-screen filter blur-[80px] animate-pulse pointer-events-none" style={{ animationDelay: '2s' }}></div>

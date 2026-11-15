@@ -354,3 +354,205 @@ html.skip-loader #moneyviora-site-loader { display: none !important; }
 .bg-brand-deep\/10 { background-color: color-mix(in srgb, var(--brand-deep) 10%, transparent) !important; }
 .bg-brand-deep\/5 { background-color: color-mix(in srgb, var(--brand-deep) 5%, transparent) !important; }
 
+/* ==========================================================================
+   Luminous Glowing Orb & Shimmer Animations (Social Sidebar & Orb Buttons)
+   ========================================================================== */
+@keyframes orbFloatIn {
+  0% {
+    opacity: 0;
+    transform: translateX(25px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes orbShimmerSweep {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+@keyframes iconWigglePop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.22) rotate(-8deg);
+  }
+  75% {
+    transform: scale(1.15) rotate(6deg);
+  }
+  100% {
+    transform: scale(1.18) rotate(0deg);
+  }
+}
+
+.social-orb-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 1;
+  opacity: 0;
+  animation: orbFloatIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.social-orb-wrapper:nth-child(1) { animation-delay: 0.1s; }
+.social-orb-wrapper:nth-child(2) { animation-delay: 0.22s; }
+.social-orb-wrapper:nth-child(3) { animation-delay: 0.34s; }
+
+.social-orb-wrapper:hover {
+  z-index: 50;
+}
+
+.social-orb-btn {
+  position: relative;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-top-left-radius: 0.65rem;
+  border-bottom-left-radius: 0.65rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: none;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .social-orb-btn {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-top-left-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+  }
+}
+
+/* Glass highlight reflection */
+.social-orb-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-top-left-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* High-speed specular shimmer ray across orb */
+.social-orb-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.social-orb-wrapper:hover .social-orb-btn::after {
+  animation: orbShimmerSweep 0.65s ease-out forwards;
+}
+
+.social-orb-wrapper:hover .social-orb-btn {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: translateX(-3px) scale(1.08);
+  box-shadow: -4px 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.social-orb-wrapper:active .social-orb-btn {
+  transform: translateX(-1px) scale(0.96);
+}
+
+.social-orb-btn svg {
+  position: relative;
+  z-index: 3;
+  color: #334155;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* On dark backgrounds or dark themes, provide legible white/translucent icons */
+[data-theme="rich-charcoal"] .social-orb-btn svg,
+[data-theme="midnight-slate"] .social-orb-btn svg,
+[data-theme="navy-blue"] .social-orb-btn svg,
+[data-theme="forest-green"] .social-orb-btn svg {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.social-orb-wrapper:hover .social-orb-btn svg {
+  animation: iconWigglePop 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  color: rgb(var(--orb-glow-color, 255, 255, 255)) !important;
+  filter: drop-shadow(0 0 8px rgba(var(--orb-glow-color, 255, 255, 255), 0.75));
+}
+
+/* Elegant Reveal Label flying in from right side on hover */
+.social-orb-label {
+  position: absolute;
+  right: 100%;
+  margin-right: 0.25rem;
+  opacity: 0;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(var(--orb-glow-color, 255, 255, 255), 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(8px) scale(0.9);
+  filter: blur(4px);
+}
+
+.social-orb-wrapper:hover .social-orb-label {
+  opacity: 1;
+  transform: translateX(-4px) scale(1);
+  filter: blur(0px);
+  letter-spacing: 2px;
+}
+
+/* Stacking Card Sticking Animation for Compare Top Banks in Mobile */
+@media (max-width: 1023px) {
+  .mobile-bank-card-stack {
+    position: sticky;
+    top: 5rem;
+    will-change: transform;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+}
+
+

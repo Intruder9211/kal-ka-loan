@@ -27,8 +27,59 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Money Viora | Fast, transparent, hassle-free home loans",
-  description: "Compare offers from multiple banks, check eligibility, and get your home loan sanctioned fast. Aaj apply karo, kal paisa.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://moneyviora.com'),
+  title: {
+    default: "Money Viora | Fast, Transparent, Hassle-Free Home Loans & Rate Comparison",
+    template: "%s | Money Viora"
+  },
+  description: "Compare live interest rates from 30+ top Indian banks (HDFC, ICICI, SBI, Axis, Bajaj Housing). Calculate exact eligibility, zero hidden fees, and instant digital sanction letters.",
+  keywords: [
+    "Home Loan",
+    "Compare Home Loans",
+    "Home Loan Interest Rates",
+    "EMI Calculator",
+    "Balance Transfer",
+    "Money Viora",
+    "Lowest Home Loan Rates",
+    "Bajaj Housing Finance Rates",
+    "HDFC Home Loan ROI"
+  ],
+  authors: [{ name: "Money Viora" }],
+  creator: "Money Viora",
+  publisher: "Money Viora",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://moneyviora.com",
+    title: "Money Viora | Fast, Transparent, Hassle-Free Home Loans",
+    description: "Compare offers from 30+ top banks, calculate exact eligibility, and secure the lowest interest rates without hidden fees.",
+    siteName: "Money Viora",
+    images: [
+      {
+        url: "/logo_white.png",
+        width: 800,
+        height: 600,
+        alt: "Money Viora Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Money Viora | Home Loan Rate Comparison & Sanctions",
+    description: "Compare offers from 30+ top banks and secure the lowest interest rates without hidden fees.",
+    images: ["/logo_white.png"],
+  },
 };
 
 export default async function RootLayout({
@@ -82,6 +133,27 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-brand-light text-brand-deep transition-colors duration-300">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FinancialService",
+              "name": "Money Viora",
+              "url": "https://moneyviora.com",
+              "logo": "https://moneyviora.com/logo_white.png",
+              "description": "India's premier digital home loan comparison & loan sanction platform.",
+              "telephone": "+91-73030-61282",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "New Delhi",
+                "addressCountry": "IN"
+              },
+              "priceRange": "₹₹",
+              "openingHours": "Mo-Sa 09:30-19:00"
+            })
+          }}
+        />
         <ThemeProvider>
           <VisitorTracker />
           <SiteLoader />
