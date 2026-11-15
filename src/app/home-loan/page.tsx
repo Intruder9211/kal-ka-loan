@@ -13,53 +13,55 @@ export default function HomeLoanPage() {
     <div className="flex-1 bg-slate-50">
       
       {/* Hero Section */}
-      <div className="bg-slate-900 text-white py-20 relative overflow-hidden">
-        {/* Abstract Background */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2000')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-900/40"></div>
-        
-        <div className="container mx-auto px-4 max-w-7xl relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-7 animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-mint text-sm font-bold mb-6">
-              <Home size={16} /> Home Loan Products
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-[1.1]">
-              Unlock the door to your <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-mint to-teal-200">dream home.</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed font-medium">
-              Compare India's top 50+ banks instantly. Get the absolute lowest interest rates, zero hidden charges, and sanction letters within 48 hours.
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">
-                <Percent className="text-brand-mint mb-3" size={24} />
-                <div className="font-black text-3xl mb-1">7.25%</div>
-                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Starting Rate</div>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">
-                <IndianRupee className="text-brand-mint mb-3" size={24} />
-                <div className="font-black text-3xl mb-1">90%</div>
-                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Max Funding</div>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm hidden md:block">
-                <Clock className="text-brand-mint mb-3" size={24} />
-                <div className="font-black text-3xl mb-1">30 Yrs</div>
-                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Max Tenure</div>
-              </div>
-            </div>
-          </div>
+      <section className="p-3 sm:p-4 md:p-6">
+        <div className="bg-slate-900 text-white relative overflow-hidden rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl py-14 sm:py-16 md:py-20">
+          {/* Abstract Background */}
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2000')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-900/40"></div>
           
-          <div className="lg:col-span-5 relative" id="apply">
-            {/* Glow effect behind form */}
-            <div className="absolute inset-0 bg-brand-mint/20 blur-[100px] rounded-full z-0"></div>
-            <div className="relative z-10 animate-fade-up stagger-1">
-              <MultiStepLeadForm />
+          <div className="container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 animate-fade-up">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-mint text-sm font-bold mb-6">
+                <Home size={16} /> Home Loan Products
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-[1.1]">
+                Unlock the door to your <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-mint to-teal-200">dream home.</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed font-medium">
+                Compare India's top 50+ banks instantly. Get the absolute lowest interest rates, zero hidden charges, and sanction letters within 48 hours.
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">
+                  <Percent className="text-brand-mint mb-3" size={24} />
+                  <div className="font-black text-3xl mb-1">7.25%</div>
+                  <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Starting Rate</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">
+                  <IndianRupee className="text-brand-mint mb-3" size={24} />
+                  <div className="font-black text-3xl mb-1">90%</div>
+                  <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Max Funding</div>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm hidden md:block">
+                  <Clock className="text-brand-mint mb-3" size={24} />
+                  <div className="font-black text-3xl mb-1">30 Yrs</div>
+                  <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Max Tenure</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="lg:col-span-5 relative" id="apply">
+              {/* Glow effect behind form */}
+              <div className="absolute inset-0 bg-brand-mint/20 blur-[100px] rounded-full z-0"></div>
+              <div className="relative z-10 animate-fade-up stagger-1">
+                <MultiStepLeadForm />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-20 max-w-7xl">

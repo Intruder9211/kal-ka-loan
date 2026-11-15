@@ -25,24 +25,26 @@ export default async function ComparePage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       
-      {/* Header section */}
-      <div className="bg-brand-deep text-white py-12 md:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-brand-mint via-brand-deep to-brand-deep"></div>
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-brand-mint text-xs font-bold uppercase tracking-wider mb-4">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Official Circulars & Live ROI
+      {/* Header / Hero section */}
+      <section className="p-3 sm:p-4 md:p-6">
+        <div className="bg-brand-deep text-white py-12 md:py-20 relative overflow-hidden rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl">
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-brand-mint via-brand-deep to-brand-deep"></div>
+          <div className="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-brand-mint text-xs font-bold uppercase tracking-wider mb-4">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Official Circulars & Live ROI
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+              Compare <span className="text-brand-mint">Bank Home Loan Rates</span>
+            </h1>
+            <p className="text-base sm:text-lg text-gray-300">
+              Compare official interest rates, salaried vs self-employed tiers, and rate sheet circulars across leading lenders in India.
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Compare <span className="text-brand-mint">Bank Home Loan Rates</span>
-          </h1>
-          <p className="text-lg text-gray-300">
-            Compare official interest rates, salaried vs self-employed tiers, and rate sheet circulars across leading lenders in India.
-          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 max-w-6xl -mt-8 relative z-20 pb-20">
+      <div className="container mx-auto px-4 max-w-6xl mt-2 md:mt-4 relative z-20 pb-20">
         {/* Dynamic calculation results when URL has query params */}
         <Suspense fallback={
           <div className="bg-white rounded-xl shadow-xl p-8 text-center border border-gray-200 mb-8">
