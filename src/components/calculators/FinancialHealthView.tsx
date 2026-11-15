@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IndianRupee, TrendingUp, AlertTriangle, CheckCircle2, ShieldCheck } from "lucide-react";
 
 // Helper for Input with Touch-Scroll Protection on Mobile & Tablet
-const InputSlider = ({ label, value, setter, min, max, step }: any) => {
+const InputSlider = ({ label, value, setter, min, max, step, prefix = "₹", suffix = "" }: any) => {
   const [isInteracting, setIsInteracting] = useState(false);
 
   return (
@@ -12,17 +12,19 @@ const InputSlider = ({ label, value, setter, min, max, step }: any) => {
       <div className="flex justify-between items-end">
         <label className="font-medium text-sm text-slate-700">{label}</label>
         <div className="relative flex items-center">
-          <span className="absolute left-3 font-medium text-gray-500">₹</span>
+          {prefix && <span className="absolute left-3 font-medium text-gray-500">{prefix}</span>}
           <input 
             type="text" 
             suppressHydrationWarning
-            value={value ? Number(value).toLocaleString('en-IN') : ''}
+            value={value !== undefined ? (prefix === "₹" ? Number(value).toLocaleString('en-IN') : value) : ''}
             onChange={(e) => {
-              const val = Number(e.target.value.replace(/,/g, ''));
+              const cleaned = e.target.value.replace(/,/g, '');
+              const val = Number(cleaned);
               if (!isNaN(val)) setter(val);
             }}
-            className="text-xl font-bold text-brand-deep bg-white pl-7 pr-3 py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
+            className={`text-xl font-bold text-brand-deep bg-white ${prefix ? 'pl-7' : 'pl-3'} ${suffix ? 'pr-8' : 'pr-3'} py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all`}
           />
+          {suffix && <span className="absolute right-3 font-medium text-gray-500">{suffix}</span>}
         </div>
       </div>
       <div className="relative py-1">
@@ -47,10 +49,9 @@ export default function FinancialHealthView() {
   const [income, setIncome] = useState(120000);
   const [existingEmis, setExistingEmis] = useState(15000);
   const [expenses, setExpenses] = useState(40000);
-  const [downPayment, setDownPayment] = useState(1500000);
+  const [interestRate, setInterestRate] = useState(8.5); // Expected ROI (%)
   const [desiredLoan, setDesiredLoan] = useState(4000000);
   const [tenure, setTenure] = useState(20);
-  const interestRate = 8.5; // Standard market rate assumption
 
   // Math
   const r = interestRate / 12 / 100;
@@ -119,8 +120,8 @@ export default function FinancialHealthView() {
         <InputSlider label="Monthly Expenses" value={expenses} setter={setExpenses} min={10000} max={500000} step={5000} />
         
         <h3 className="font-bold text-lg text-slate-800 border-b border-slate-100 pb-3 mt-8">Loan Requirement</h3>
-        <InputSlider label="Down Payment Available" value={downPayment} setter={setDownPayment} min={100000} max={20000000} step={100000} />
         <InputSlider label="Desired Loan Amount" value={desiredLoan} setter={setDesiredLoan} min={1000000} max={50000000} step={100000} />
+        <InputSlider label="Expected Rate of Interest (ROI)" value={interestRate} setter={setInterestRate} min={6.5} max={16} step={0.1} prefix="" suffix="%" />
         
         <div className="space-y-4">
           <div className="flex justify-between items-end">
