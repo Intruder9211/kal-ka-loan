@@ -21,13 +21,12 @@ export async function sendContactNotification({
 
     // If SMTP credentials exist, dispatch directly via SMTP
     if (smtpUser && smtpPass) {
+      const cleanPass = smtpPass.replace(/\s+/g, '');
       const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpPort === 465,
+        service: 'gmail',
         auth: {
           user: smtpUser,
-          pass: smtpPass,
+          pass: cleanPass,
         },
       });
 

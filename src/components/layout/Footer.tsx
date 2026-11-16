@@ -42,7 +42,7 @@ export default function Footer() {
         <div>
           <h4 className="font-bold mb-4 text-brand-mint">Contact</h4>
           <ul className="space-y-2 text-sm text-gray-400">
-            <li>Email: support@moneyviora.com</li>
+            <li><a href="mailto:singhmohit101103@gmail.com" className="hover:text-white transition-colors">Email: singhmohit101103@gmail.com</a></li>
             <li>Phone: +91 73030 61282</li>
             <li>HQ: New Delhi, India</li>
           </ul>
