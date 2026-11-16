@@ -6,6 +6,13 @@ import { IndianRupee, TrendingUp, AlertTriangle, CheckCircle2, ShieldCheck } fro
 // Helper for Input with Touch-Scroll Protection on Mobile & Tablet
 const InputSlider = ({ label, value, setter, min, max, step, prefix = "₹", suffix = "" }: any) => {
   const [isInteracting, setIsInteracting] = useState(false);
+  const [textValue, setTextValue] = useState<string | null>(null);
+
+  // Keep display string in sync when value changes from outside (e.g. slider)
+  const isPercent = suffix.includes("%");
+  const displayValue = textValue !== null 
+    ? textValue 
+    : (value !== undefined ? (prefix === "₹" ? Number(value).toLocaleString('en-IN') : String(value)) : '');
 
   return (
     <div className="space-y-4">
@@ -16,9 +23,20 @@ const InputSlider = ({ label, value, setter, min, max, step, prefix = "₹", suf
           <input 
             type="text" 
             suppressHydrationWarning
-            value={value !== undefined ? (prefix === "₹" ? Number(value).toLocaleString('en-IN') : value) : ''}
+            value={displayValue}
+            onFocus={() => {
+              if (value !== undefined) {
+                setTextValue(String(value));
+              }
+            }}
+            onBlur={() => {
+              setTextValue(null);
+            }}
             onChange={(e) => {
-              const cleaned = e.target.value.replace(/,/g, '');
+              const raw = e.target.value;
+              setTextValue(raw);
+              const cleaned = raw.replace(/,/g, '');
+              if (cleaned === '' || cleaned === '.') return;
               const val = Number(cleaned);
               if (!isNaN(val)) setter(val);
             }}
@@ -36,7 +54,10 @@ const InputSlider = ({ label, value, setter, min, max, step, prefix = "₹", suf
           value={value} 
           onTouchStart={() => setIsInteracting(true)}
           onTouchEnd={() => setIsInteracting(false)}
-          onChange={(e) => setter(Number(e.target.value))} 
+          onChange={(e) => {
+            setTextValue(null);
+            setter(Number(e.target.value));
+          }} 
           className="w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint touch-pan-y" 
         />
       </div>
@@ -121,7 +142,7 @@ export default function FinancialHealthView() {
         
         <h3 className="font-bold text-lg text-slate-800 border-b border-slate-100 pb-3 mt-8">Loan Requirement</h3>
         <InputSlider label="Desired Loan Amount" value={desiredLoan} setter={setDesiredLoan} min={1000000} max={50000000} step={100000} />
-        <InputSlider label="Expected Rate of Interest (ROI)" value={interestRate} setter={setInterestRate} min={6.5} max={16} step={0.1} prefix="" suffix="%" />
+        <InputSlider label="Expected Rate of Interest (ROI)" value={interestRate} setter={setInterestRate} min={6.5} max={16} step={0.05} prefix="" suffix="%" />
         
         <div className="space-y-4">
           <div className="flex justify-between items-end">

@@ -4,38 +4,62 @@ import { useState, useEffect } from "react";
 import { IndianRupee } from "lucide-react";
 
 // --- Shared UI Components ---
-const InputGroup = ({ label, value, onChange, min, max, step, icon: Icon, suffix }: any) => (
-  <div className="space-y-4">
-    <div className="flex justify-between items-end">
-      <label className="font-medium text-sm text-gray-700">{label}</label>
-      <div className="relative flex items-center">
-        {Icon === IndianRupee && <span className="absolute left-3 font-medium text-gray-500">₹</span>}
-        <input 
-          type="text" 
-          suppressHydrationWarning
-          value={value ? Number(value).toLocaleString('en-IN') : ''}
+const InputGroup = ({ label, value, onChange, min, max, step, icon: Icon, suffix }: any) => {
+  const [textValue, setTextValue] = useState<string | null>(null);
+  const isPercent = suffix?.includes("%");
+
+  const displayValue = textValue !== null 
+    ? textValue 
+    : (value !== undefined ? (Icon === IndianRupee ? Number(value).toLocaleString('en-IN') : String(value)) : '');
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-end">
+        <label className="font-medium text-sm text-gray-700">{label}</label>
+        <div className="relative flex items-center">
+          {Icon === IndianRupee && <span className="absolute left-3 font-medium text-gray-500">₹</span>}
+          <input 
+            type="text" 
+            suppressHydrationWarning
+            value={displayValue}
+            onFocus={() => {
+              if (value !== undefined) {
+                setTextValue(String(value));
+              }
+            }}
+            onBlur={() => {
+              setTextValue(null);
+            }}
+            onChange={(e) => {
+              const raw = e.target.value;
+              setTextValue(raw);
+              const cleaned = raw.replace(/,/g, '');
+              if (cleaned === '' || cleaned === '.') return;
+              const val = Number(cleaned);
+              if (!isNaN(val)) onChange(val);
+            }}
+            className={`text-xl font-bold text-brand-deep bg-white ${Icon === IndianRupee ? 'pl-7' : 'pl-3'} ${suffix ? 'pr-12' : 'pr-3'} py-1.5 rounded-md shadow-sm border border-gray-200 w-40 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all`}
+          />
+          {suffix && <span className="absolute right-3 font-medium text-gray-500">{suffix}</span>}
+        </div>
+      </div>
+      <div className="relative">
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step || (isPercent ? 0.05 : 1)}
+          value={value}
           onChange={(e) => {
-            const val = Number(e.target.value.replace(/,/g, ''));
-            if (!isNaN(val)) onChange(val);
+            setTextValue(null);
+            onChange(Number(e.target.value));
           }}
-          className={`text-xl font-bold text-brand-deep bg-white ${Icon === IndianRupee ? 'pl-7' : 'pl-3'} ${suffix ? 'pr-12' : 'pr-3'} py-1.5 rounded-md shadow-sm border border-gray-200 w-40 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all`}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint"
         />
-        {suffix && <span className="absolute right-3 font-medium text-gray-500">{suffix}</span>}
       </div>
     </div>
-    <div className="relative">
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 const ResultCard = ({ title, value, prefix = "₹", suffix = "" }: any) => (
   <div className="bg-brand-deep/5 border border-brand-deep/10 p-4 rounded-xl text-center">

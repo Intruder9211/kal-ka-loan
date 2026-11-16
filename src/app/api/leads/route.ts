@@ -4,26 +4,33 @@ import { prisma } from '@/lib/prisma';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, mobile, countryCode, residentType, email, employment, monthlyIncome, loanAmount, city } = body;
+    const { name, mobile, countryCode, residentType, email, employment, monthlyIncome, loanAmount, city, message } = body;
 
-    if (!name || !mobile || !email) {
+    if (!name || !email) {
       return NextResponse.json(
-        { error: 'Name, mobile, and email are required fields.' },
+        { error: 'Name and email are required fields.' },
         { status: 400 }
       );
     }
 
-    const formattedMobile = countryCode && !mobile.startsWith("+") ? `${countryCode} ${mobile}` : mobile;
+    const rawMobile = mobile || "N/A";
+    const formattedMobile = countryCode && !rawMobile.startsWith("+") && rawMobile !== "N/A"
+      ? `${countryCode} ${rawMobile}` 
+      : rawMobile;
+
+    const employmentText = message 
+      ? `Inquiry: ${message.slice(0, 150)}` 
+      : (residentType === "NRI" ? `NRI (${employment || "Employed"})` : employment);
 
     const lead = await prisma.lead.create({
       data: {
         name,
         mobile: formattedMobile,
         email,
-        employment: residentType === "NRI" ? `NRI (${employment || "Employed"})` : employment,
+        employment: employmentText,
         monthlyIncome: monthlyIncome ? parseFloat(monthlyIncome) : null,
         loanAmount: loanAmount ? parseFloat(loanAmount) : null,
-        city,
+        city: city || null,
       },
     });
 

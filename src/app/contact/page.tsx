@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import ContactForm from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us | Money Viora",
@@ -8,19 +9,23 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="flex-1 bg-white">
-      <div className="bg-brand-deep text-white py-16 relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Get in <span className="text-brand-mint">Touch</span>
-          </h1>
-          <p className="text-lg text-gray-300">
-            Have questions about your home loan? Our experts are here to help you navigate the process.
-          </p>
+    <div className="flex-1 bg-slate-50 min-h-screen">
+      {/* Floating Hero Section matching Home, Affordability & Calculators */}
+      <section className="p-3 sm:p-4 md:p-6">
+        <div className="bg-brand-deep text-white py-12 md:py-16 relative overflow-hidden rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl">
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-brand-mint via-brand-deep to-brand-deep"></div>
+          <div className="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3">
+              Get in <span className="text-brand-mint">Touch</span>
+            </h1>
+            <p className="text-base sm:text-lg text-slate-300">
+              Have questions about your home loan? Our experts are here to help you navigate the process.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 py-16 max-w-5xl">
+      <div className="container mx-auto px-4 py-8 md:py-12 max-w-5xl">
         <div className="grid md:grid-cols-2 gap-12">
           
           {/* Contact Details */}
@@ -62,27 +67,8 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
-            <h3 className="text-2xl font-bold text-brand-deep mb-6">Send us a Message</h3>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Name</label>
-                <input type="text" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none bg-white text-gray-900 placeholder-gray-400" placeholder="Your full name" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Email</label>
-                <input type="email" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none bg-white text-gray-900 placeholder-gray-400" placeholder="you@example.com" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Message</label>
-                <textarea rows={4} className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none resize-none bg-white text-gray-900 placeholder-gray-400" placeholder="How can we help you?"></textarea>
-              </div>
-              <button type="button" className="btn-interactive w-full bg-brand-deep text-white font-bold py-4 rounded-lg mt-2 hover:bg-opacity-90">
-                Send Message
-              </button>
-            </form>
-          </div>
+          {/* Interactive Contact Form */}
+          <ContactForm />
 
         </div>
       </div>

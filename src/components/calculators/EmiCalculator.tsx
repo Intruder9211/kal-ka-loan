@@ -227,9 +227,9 @@ export default function EmiCalculator() {
             <div className="relative flex items-center">
               <input 
                 type="number" 
-                step="0.1"
+                step="0.05"
                 value={rate}
-                onChange={(e) => setRate(Number(e.target.value))}
+                onChange={(e) => setRate(e.target.value === '' ? 0 : Number(e.target.value))}
                 className="text-xl font-bold text-brand-deep bg-white pl-3 pr-8 py-1.5 rounded-md shadow-sm border border-gray-200 w-28 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
               />
               <span className="absolute right-3 font-medium text-gray-500">%</span>
@@ -239,7 +239,7 @@ export default function EmiCalculator() {
             type="range" 
             min={5} 
             max={20} 
-            step={0.1} 
+            step={0.05} 
             value={rate}
             onChange={(e) => setRate(Number(e.target.value))}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint"

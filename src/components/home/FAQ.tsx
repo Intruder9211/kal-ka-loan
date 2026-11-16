@@ -54,7 +54,7 @@ export default function FAQ() {
         </div>
         
         {/* Category Filter */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-12 animate-fade-up stagger-1">
+        <div className="flex items-center justify-start sm:justify-center gap-2.5 sm:gap-3 mb-12 animate-fade-up stagger-1 overflow-x-auto no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -62,9 +62,9 @@ export default function FAQ() {
                 setActiveCategory(cat);
                 setOpenIndex(0); // Reset open index on filter change
               }}
-              className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
+              className={`px-5 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold text-sm whitespace-nowrap shrink-0 transition-all ${
                 activeCategory === cat 
-                  ? "bg-brand-deep text-white shadow-md" 
+                  ? "bg-brand-deep text-white shadow-md scale-105 sm:scale-100" 
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
               }`}
             >
