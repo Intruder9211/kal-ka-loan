@@ -7,6 +7,7 @@ import { CheckCircle2, Building, User, Phone, Mail, MapPin, IndianRupee, Briefca
 export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [referenceNumber, setReferenceNumber] = useState<string>("");
   const [residentType, setResidentType] = useState<"RI" | "NRI">("RI");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,6 +26,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
         monthlyIncome: formData.get('monthlyIncome'),
         loanAmount: formData.get('loanAmount'),
         city: formData.get('city'),
+        source: residentType === "NRI" ? "NRI Eligibility" : "Instant Eligibility",
       };
 
       const res = await fetch('/api/leads', {
@@ -33,10 +35,12 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
         body: JSON.stringify(data),
       });
 
+      const resData = await res.json();
       if (res.ok) {
+        setReferenceNumber(resData.referenceNumber || "");
         setIsSuccess(true);
       } else {
-        alert('Failed to submit application. Please try again.');
+        alert(resData.error || 'Failed to submit application. Please try again.');
       }
     } catch {
       alert('An error occurred. Please try again.');
@@ -48,20 +52,38 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
   if (isSuccess) {
     return (
       <div className="p-8 text-center bg-white rounded-2xl">
-        <div className="w-16 h-16 bg-brand-mint/20 rounded-full flex items-center justify-center mx-auto mb-4 text-brand-mint">
-          <CheckCircle2 size={32} />
+        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3 text-emerald-600">
+          <CheckCircle2 size={36} />
         </div>
-        <h3 className="text-2xl font-bold text-brand-deep mb-2">Application Received!</h3>
-        <p className="text-gray-600 mb-6">Our {residentType === "NRI" ? "NRI Loan Specialist" : "loan expert"} will call you shortly to discuss your eligibility and best offers.</p>
-        <button 
-          onClick={() => {
-            if (onClose) onClose();
-            else window.dispatchEvent(new Event("close-lead-modal"));
-          }}
-          className="btn-interactive w-full bg-brand-deep text-white font-bold py-3 rounded-lg"
-        >
-          Close Window
-        </button>
+        <h3 className="text-2xl font-bold text-slate-900 mb-1">Application Received!</h3>
+        <p className="text-sm text-gray-600 mb-4">Our {residentType === "NRI" ? "NRI Loan Specialist" : "loan expert"} will call you shortly to discuss your eligibility.</p>
+        
+        {referenceNumber && (
+          <div className="bg-blue-50 border border-dashed border-blue-300 rounded-xl p-3 mb-6">
+            <span className="text-[10px] uppercase font-bold text-blue-600 tracking-wider block mb-0.5">Reference Number</span>
+            <span className="text-base font-black font-mono text-slate-900">{referenceNumber}</span>
+          </div>
+        )}
+
+        <div className="flex gap-2">
+          {referenceNumber && (
+            <a
+              href={`/track?ref=${encodeURIComponent(referenceNumber)}`}
+              className="flex-1 py-3 bg-brand-deep text-white font-bold rounded-xl text-center text-sm hover:bg-slate-800 transition-colors"
+            >
+              Track Application
+            </a>
+          )}
+          <button 
+            onClick={() => {
+              if (onClose) onClose();
+              else window.dispatchEvent(new Event("close-lead-modal"));
+            }}
+            className="flex-1 bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold py-3 rounded-xl text-sm"
+          >
+            Close
+          </button>
+        </div>
       </div>
     );
   }

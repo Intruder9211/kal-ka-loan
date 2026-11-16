@@ -73,9 +73,21 @@ export function getAdminEnquiryTemplate(data: EmailTemplateData): string {
       </p>
 
       <!-- Applicant Details Capsule Tag -->
-      <div style="display: inline-block; background-color: #0b1a2d; color: #ffffff; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 6px; margin-bottom: 0;">
-        Applicant Details
-      </div>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 0;">
+        <tr>
+          <td>
+            <div style="display: inline-block; background-color: #0b1a2d; color: #ffffff; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 6px;">
+              Applicant Details
+            </div>
+          </td>
+          ${data.referenceNumber ? `
+          <td style="text-align: right;">
+            <span style="font-family: monospace; font-weight: 800; font-size: 13px; color: #0284c7; background: #e0f2fe; padding: 4px 10px; border-radius: 6px;">
+              Ref: ${data.referenceNumber}
+            </span>
+          </td>` : ""}
+        </tr>
+      </table>
 
       <!-- Details Card -->
       <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-top: -2px; margin-bottom: 24px;">

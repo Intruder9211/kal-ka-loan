@@ -8,9 +8,19 @@ import { prisma } from "@/lib/prisma"
 
 export default async function DashboardOverview() {
   const session = await auth()
-  const applicationsCount = session?.user?.id ? await prisma.application.count({
-    where: { customer: { userId: session.user.id } }
-  }) : 0
+  const userId = session?.user?.id
+  const userEmail = session?.user?.email
+
+  const [applicationsCount, leadsCount] = await Promise.all([
+    userId ? prisma.application.count({
+      where: { customer: { userId: userId } }
+    }).catch(() => 0) : 0,
+    userEmail ? prisma.lead.count({
+      where: { email: userEmail }
+    }).catch(() => 0) : 0,
+  ]);
+
+  const totalActiveInquiries = applicationsCount + leadsCount;
 
   return (
     <div className="space-y-8 pb-12">
@@ -36,13 +46,15 @@ export default async function DashboardOverview() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:border-brand-mint/50 transition-colors group">
           <div className="flex flex-row items-center justify-between space-y-0 pb-4">
-            <h3 className="tracking-tight text-xs font-bold text-slate-400 uppercase">Active Applications</h3>
+            <h3 className="tracking-tight text-xs font-bold text-slate-400 uppercase">Active Applications &amp; Visits</h3>
             <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-brand-mint/10 transition-colors">
               <Clock className="h-4 w-4 text-slate-400 group-hover:text-brand-mint transition-colors" />
             </div>
           </div>
-          <div className="text-4xl font-black text-slate-900 mb-1">{applicationsCount}</div>
-          <p className="text-sm font-medium text-amber-500 flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Under Review</p>
+          <div className="text-4xl font-black text-slate-900 mb-1">{totalActiveInquiries}</div>
+          <p className="text-sm font-medium text-amber-500 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> {totalActiveInquiries > 0 ? "Under Review & Processing" : "No pending reviews"}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:border-brand-mint/50 transition-colors group">

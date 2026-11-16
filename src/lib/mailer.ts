@@ -15,6 +15,7 @@ export async function sendContactNotification({
   loanAmount,
   propertyType,
   city,
+  referenceNumber,
 }: EmailTemplateData) {
   try {
     const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
@@ -39,6 +40,7 @@ export async function sendContactNotification({
         loanAmount,
         propertyType,
         city,
+        referenceNumber,
       };
 
       // 1. Send Admin Enquiry Notification to singhmohit101103@gmail.com

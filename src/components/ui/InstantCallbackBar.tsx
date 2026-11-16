@@ -7,6 +7,7 @@ export default function InstantCallbackBar() {
   const [modalOpen, setModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [referenceNumber, setReferenceNumber] = useState<string>("");
 
   const handleDoorstepSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,19 +20,27 @@ export default function InstantCallbackBar() {
         mobile: formData.get("mobile"),
         email: formData.get("email"),
         city: formData.get("city"),
-        employment: `Doorstep Visit Request: ${formData.get("date")} at ${formData.get("time")}`,
+        preferredDate: formData.get("date"),
+        preferredTime: formData.get("time"),
         loanAmount: formData.get("loanAmount"),
+        source: "Doorstep Visit",
       };
 
-      await fetch("/api/leads", {
+      const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
+      const resData = await res.json();
+      if (!res.ok) {
+        throw new Error(resData.error || "Failed to submit request.");
+      }
+
+      setReferenceNumber(resData.referenceNumber || "MVHL" + Date.now().toString().slice(-6));
       setSubmitted(true);
-    } catch {
-      alert("Failed to submit request. Please try again.");
+    } catch (err: any) {
+      alert(err.message || "Failed to submit request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -89,23 +98,45 @@ export default function InstantCallbackBar() {
             </button>
 
             {submitted ? (
-              <div className="text-center py-6">
-                <div className="w-16 h-16 rounded-full bg-brand-mint/20 text-brand-mint flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 size={32} />
+              <div className="text-center py-4">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3 shadow-inner">
+                  <CheckCircle2 size={36} />
                 </div>
-                <h3 className="text-2xl font-bold text-brand-deep mb-2">Doorstep Visit Confirmed!</h3>
-                <p className="text-sm text-slate-600 mb-6 leading-relaxed">
-                  Our loan specialist will visit your designated location to assist with document collection and sanction processing.
+                <h3 className="text-2xl font-black text-slate-900 mb-1">Doorstep Visit Confirmed!</h3>
+                <p className="text-xs text-slate-600 mb-5 leading-relaxed">
+                  Our certified loan advisor will visit your address as requested. Confirmation has also been dispatched.
                 </p>
-                <button
-                  onClick={() => {
-                    setModalOpen(false);
-                    setSubmitted(false);
-                  }}
-                  className="w-full py-3 bg-brand-deep text-white font-bold rounded-xl"
-                >
-                  Close
-                </button>
+
+                {/* Tracking Reference Capsule */}
+                <div className="bg-blue-50 border border-dashed border-blue-300 rounded-2xl p-4 mb-6">
+                  <span className="text-[10px] uppercase font-bold text-blue-600 tracking-wider block mb-1">
+                    Application Reference Number
+                  </span>
+                  <div className="text-lg font-black font-mono text-slate-900 tracking-wider">
+                    {referenceNumber}
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    Keep this number handy to track your application status.
+                  </p>
+                </div>
+
+                <div className="flex gap-2">
+                  <a
+                    href={`/track?ref=${encodeURIComponent(referenceNumber)}`}
+                    className="flex-1 py-3 bg-brand-deep text-white font-bold rounded-xl text-center text-sm hover:bg-slate-800 transition-colors"
+                  >
+                    Track Status
+                  </a>
+                  <button
+                    onClick={() => {
+                      setModalOpen(false);
+                      setSubmitted(false);
+                    }}
+                    className="flex-1 py-3 bg-slate-100 text-slate-700 font-bold rounded-xl text-center text-sm hover:bg-slate-200 transition-colors"
+                  >
+                    Done
+                  </button>
+                </div>
               </div>
             ) : (
               <>
@@ -144,15 +175,25 @@ export default function InstantCallbackBar() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">City / Locality</label>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Email Address</label>
                       <input
-                        required
-                        name="city"
-                        type="text"
-                        placeholder="e.g. Noida Sec 62"
+                        name="email"
+                        type="email"
+                        placeholder="name@email.com"
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">City / Locality</label>
+                    <input
+                      required
+                      name="city"
+                      type="text"
+                      placeholder="e.g. Noida Sec 62, Delhi NCR"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
+                    />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">

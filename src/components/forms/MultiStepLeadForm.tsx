@@ -105,17 +105,21 @@ export default function MultiStepLeadForm() {
         body: JSON.stringify({
           name: data.fullName,
           mobile: data.phone,
-          email: "Not provided via multi-step form", // Required by schema but not in form
+          email: `${data.phone}@leads.moneyviora.com`,
           employment: data.employmentType,
           loanAmount: data.loanAmount,
           city: data.city,
+          source: "Multi-Step Loan Application",
         }),
       });
 
+      const resJson = await response.json();
+
       if (response.ok) {
-        router.push('/thank-you');
+        const refParam = resJson.referenceNumber ? `?ref=${encodeURIComponent(resJson.referenceNumber)}` : '';
+        router.push(`/thank-you${refParam}`);
       } else {
-        alert("Something went wrong, please try again.");
+        alert(resJson.error || "Something went wrong, please try again.");
       }
     } catch (error) {
       console.error(error);
