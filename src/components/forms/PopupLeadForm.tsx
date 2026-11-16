@@ -8,6 +8,7 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState<string>("");
+  const [applicantInfo, setApplicantInfo] = useState({ name: "", email: "", mobile: "" });
   const [residentType, setResidentType] = useState<"RI" | "NRI">("RI");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -16,12 +17,18 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
     
     try {
       const formData = new FormData(e.currentTarget);
+      const nameVal = (formData.get('name') as string) || '';
+      const emailVal = (formData.get('email') as string) || '';
+      const mobileVal = (formData.get('mobile') as string) || '';
+
+      setApplicantInfo({ name: nameVal, email: emailVal, mobile: mobileVal });
+
       const data = {
-        name: formData.get('name'),
-        mobile: formData.get('mobile'),
+        name: nameVal,
+        mobile: mobileVal,
         countryCode: formData.get('countryCode') || '+91',
         residentType,
-        email: formData.get('email'),
+        email: emailVal,
         employment: formData.get('employment'),
         monthlyIncome: formData.get('monthlyIncome'),
         loanAmount: formData.get('loanAmount'),
@@ -65,13 +72,13 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
           </div>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2.5">
           {referenceNumber && (
             <a
-              href={`/track?ref=${encodeURIComponent(referenceNumber)}`}
-              className="flex-1 py-3 bg-brand-deep text-white font-bold rounded-xl text-center text-sm hover:bg-slate-800 transition-colors"
+              href={`/signup?ref=${encodeURIComponent(referenceNumber)}&name=${encodeURIComponent(applicantInfo.name)}&email=${encodeURIComponent(applicantInfo.email)}&mobile=${encodeURIComponent(applicantInfo.mobile)}`}
+              className="w-full py-3 bg-brand-deep text-white font-bold rounded-xl text-center text-sm hover:bg-slate-800 transition-colors shadow-sm"
             >
-              Track Application
+              Sign Up / Sign In to Track
             </a>
           )}
           <button 
@@ -79,9 +86,9 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
               if (onClose) onClose();
               else window.dispatchEvent(new Event("close-lead-modal"));
             }}
-            className="flex-1 bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold py-3 rounded-xl text-sm"
+            className="w-full bg-slate-100 text-slate-600 hover:bg-slate-200 font-bold py-2.5 rounded-xl text-xs"
           >
-            Close
+            Close Window
           </button>
         </div>
       </div>

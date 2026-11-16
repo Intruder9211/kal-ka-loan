@@ -11,12 +11,24 @@ export default async function DashboardOverview() {
   const userId = session?.user?.id
   const userEmail = session?.user?.email
 
+  const userProfile = userId ? await prisma.customerProfile.findUnique({
+    where: { userId },
+    select: { phone: true }
+  }).catch(() => null) : null
+
+  const userPhone = userProfile?.phone?.replace(/[^0-9]/g, '').slice(-10)
+
   const [applicationsCount, leadsCount] = await Promise.all([
     userId ? prisma.application.count({
       where: { customer: { userId: userId } }
     }).catch(() => 0) : 0,
-    userEmail ? prisma.lead.count({
-      where: { email: userEmail }
+    (userEmail || userPhone) ? prisma.lead.count({
+      where: {
+        OR: [
+          ...(userEmail ? [{ email: userEmail }] : []),
+          ...(userPhone ? [{ mobile: { contains: userPhone } }] : [])
+        ]
+      }
     }).catch(() => 0) : 0,
   ]);
 

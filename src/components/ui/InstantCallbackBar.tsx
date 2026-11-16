@@ -8,17 +8,24 @@ export default function InstantCallbackBar() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState<string>("");
+  const [applicantInfo, setApplicantInfo] = useState({ name: "", email: "", mobile: "" });
 
   const handleDoorstepSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     const formData = new FormData(e.currentTarget);
 
+    const nameVal = (formData.get("name") as string) || "";
+    const emailVal = (formData.get("email") as string) || "";
+    const mobileVal = (formData.get("mobile") as string) || "";
+
+    setApplicantInfo({ name: nameVal, email: emailVal, mobile: mobileVal });
+
     try {
       const data = {
-        name: formData.get("name"),
-        mobile: formData.get("mobile"),
-        email: formData.get("email"),
+        name: nameVal,
+        mobile: mobileVal,
+        email: emailVal,
         city: formData.get("city"),
         preferredDate: formData.get("date"),
         preferredTime: formData.get("time"),
@@ -120,21 +127,21 @@ export default function InstantCallbackBar() {
                   </p>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-2.5">
                   <a
-                    href={`/track?ref=${encodeURIComponent(referenceNumber)}`}
-                    className="flex-1 py-3 bg-brand-deep text-white font-bold rounded-xl text-center text-sm hover:bg-slate-800 transition-colors"
+                    href={`/signup?ref=${encodeURIComponent(referenceNumber)}&name=${encodeURIComponent(applicantInfo.name)}&email=${encodeURIComponent(applicantInfo.email)}&mobile=${encodeURIComponent(applicantInfo.mobile)}`}
+                    className="w-full py-3 bg-brand-deep text-white font-bold rounded-xl text-center text-sm hover:bg-slate-800 transition-colors shadow-sm"
                   >
-                    Track Status
+                    Sign In / Sign Up to Track Application
                   </a>
                   <button
                     onClick={() => {
                       setModalOpen(false);
                       setSubmitted(false);
                     }}
-                    className="flex-1 py-3 bg-slate-100 text-slate-700 font-bold rounded-xl text-center text-sm hover:bg-slate-200 transition-colors"
+                    className="w-full py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-center text-xs hover:bg-slate-200 transition-colors"
                   >
-                    Done
+                    Close Window
                   </button>
                 </div>
               </div>

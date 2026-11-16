@@ -15,9 +15,21 @@ export default async function ApplicationsPage() {
     orderBy: { createdAt: 'desc' }
   }).catch(() => []) : []
 
-  // Also fetch any website enquiries or doorstep visits matching the user's email
-  const leads = userEmail ? await prisma.lead.findMany({
-    where: { email: userEmail },
+  // Also fetch any website enquiries or doorstep visits matching the user's email or mobile
+  const userProfile = userId ? await prisma.customerProfile.findUnique({
+    where: { userId },
+    select: { phone: true }
+  }).catch(() => null) : null
+
+  const userPhone = userProfile?.phone?.replace(/[^0-9]/g, '').slice(-10)
+
+  const leads = (userEmail || userPhone) ? await prisma.lead.findMany({
+    where: {
+      OR: [
+        ...(userEmail ? [{ email: userEmail }] : []),
+        ...(userPhone ? [{ mobile: { contains: userPhone } }] : [])
+      ]
+    },
     orderBy: { createdAt: 'desc' }
   }).catch(() => []) : []
 

@@ -60,15 +60,33 @@ export async function signup(
     // 4. Hash password
     const hashedPassword = await hash(password, 12)
 
-    // 5. Create user
-    await prisma.user.create({
+    // 5. Create user and customer profile
+    const newUser = await prisma.user.create({
       data: {
         name: fullName.trim(),
         email: email.toLowerCase(),
         password: hashedPassword,
         role: "CLIENT",
+        customerProfile: {
+          create: {
+            phone: mobileNumber.trim(),
+          }
+        }
       }
     })
+
+    // If there are existing leads matching this email or mobile, link or update notes
+    await prisma.lead.updateMany({
+      where: {
+        OR: [
+          { email: email.toLowerCase() },
+          { mobile: { contains: mobileNumber.replace(/[^0-9]/g, '').slice(-10) } }
+        ]
+      },
+      data: {
+        status: "IN_REVIEW"
+      }
+    }).catch(e => console.log("Lead status update notice:", e));
 
   } catch (error) {
     console.error("Signup error:", error)

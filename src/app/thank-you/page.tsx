@@ -33,14 +33,22 @@ export default async function ThankYouPage({
               {ref}
             </div>
             <p className="text-xs text-slate-500 mt-1.5">
-              Use this reference number anytime to check the status of your approval.
+              Sign in or create your client account to manage and track this application in your dashboard.
             </p>
-            <Link
-              href={`/track?ref=${encodeURIComponent(ref)}`}
-              className="inline-flex items-center gap-1.5 mt-3 text-xs font-bold text-blue-700 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-xl transition-colors"
-            >
-              <Search size={13} /> Live Track Status
-            </Link>
+            <div className="flex justify-center gap-2 mt-3">
+              <Link
+                href={`/signup?ref=${encodeURIComponent(ref)}`}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl transition-colors shadow-sm"
+              >
+                Sign Up &amp; Track
+              </Link>
+              <Link
+                href={`/login?ref=${encodeURIComponent(ref)}`}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl transition-colors"
+              >
+                Already have account? Sign In
+              </Link>
+            </div>
           </div>
         )}
         
@@ -68,10 +76,10 @@ export default async function ThankYouPage({
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           {ref && (
             <Link 
-              href={`/track?ref=${encodeURIComponent(ref)}`}
+              href={`/signup?ref=${encodeURIComponent(ref)}`}
               className="inline-flex items-center justify-center gap-2 bg-brand-deep text-white font-bold px-7 py-3.5 rounded-xl hover:bg-slate-800 transition-all text-sm"
             >
-              Track Application
+              Sign In / Sign Up to Track
             </Link>
           )}
           <Link 
