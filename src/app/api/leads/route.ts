@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { sendContactNotification } from '@/lib/mailer';
 
 export async function POST(req: Request) {
   try {
@@ -33,6 +34,14 @@ export async function POST(req: Request) {
         city: city || null,
       },
     });
+
+    // Send instant email notification to singhmohit101103@gmail.com
+    await sendContactNotification({
+      name,
+      email,
+      mobile: formattedMobile,
+      message,
+    }).catch(err => console.error("Notification trigger error:", err));
 
     return NextResponse.json({ success: true, lead }, { status: 201 });
   } catch (error) {
