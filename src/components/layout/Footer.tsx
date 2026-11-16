@@ -26,6 +26,7 @@ export default function Footer() {
             <li><Link href="/home-loan" className="hover:text-white transition-colors">Home Loan</Link></li>
             <li><Link href="/compare" className="hover:text-white transition-colors">Compare Banks</Link></li>
             <li><Link href="/calculators" className="hover:text-white transition-colors">EMI Calculator</Link></li>
+            <li><Link href="/blog" className="hover:text-white transition-colors">Blog &amp; Knowledge Center</Link></li>
             <li><Link href="/variants/balance-transfer" className="hover:text-white transition-colors">Balance Transfer</Link></li>
           </ul>
         </div>

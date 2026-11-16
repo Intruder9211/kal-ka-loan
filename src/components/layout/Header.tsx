@@ -97,6 +97,10 @@ export default function Header({ session }: { session?: Session | null }) {
             Affordability
           </Link>
 
+          <Link href="/blog" className="link-underline pb-1">
+            Blog &amp; Guides
+          </Link>
+
           {/* Explore & Services Dropdown */}
           <div className="group/services relative py-4 flex items-center">
             <span className="link-underline flex items-center gap-1.5 cursor-pointer">
@@ -253,6 +257,9 @@ export default function Header({ session }: { session?: Session | null }) {
           </Link>
           <Link href="/affordability" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
             Affordability
+          </Link>
+          <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors">
+            Blog &amp; Guides
           </Link>
           <Link href="/projects" onClick={() => setMobileMenuOpen(false)} className="hover:text-brand-mint transition-colors flex items-center justify-between">
             <span>Verified Projects</span>
