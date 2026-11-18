@@ -42,25 +42,34 @@ export default function EligibilityDocs() {
 
   return (
     <section className="py-20 md:py-24 bg-gray-50 border-y border-gray-100 relative overflow-hidden">
+      {/* Subtle Futuristic Ambient Glows */}
+      <div className="absolute top-1/3 -left-20 w-80 h-80 bg-brand-mint/5 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-10 -right-20 w-96 h-96 bg-emerald-500/5 rounded-full blur-[140px] pointer-events-none" />
+
       <div className="container mx-auto px-4 max-w-5xl relative z-10">
         
         {/* Section Header */}
         <div className="text-center mb-12 animate-fade-up">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-deep text-xs font-semibold mb-3">
-            <Sparkles size={14} className="text-brand-mint" /> 100% Paperless & Transparent
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-deep text-xs font-semibold mb-3 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-mint animate-ping" />
+            <Sparkles size={14} className="text-brand-mint" /> 
+            <span>100% Paperless &amp; Transparent</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Eligibility & <span className="text-brand-mint">Documents</span>
+            Eligibility &amp; <span className="text-brand-mint drop-shadow-xs">Documents</span>
           </h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg font-medium">
             Check if you qualify and keep these documents handy for immediate bank verification.
           </p>
         </div>
 
-        {/* Outer Modern Card */}
-        <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-slate-200/80 overflow-hidden animate-fade-up stagger-1">
+        {/* Outer Modern Futuristic Card */}
+        <div className="relative bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-slate-200/80 overflow-hidden animate-fade-up stagger-1 backdrop-blur-sm group/card">
           
-          {/* Animated Segmented Tabs (Horizontally scrollable on mobile without wrapping) */}
+          {/* Subtle Top Cyber Neon Accent Line */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-mint/60 to-transparent opacity-80" />
+
+          {/* Animated Segmented Tabs */}
           <div className="p-2.5 sm:p-3 bg-slate-100/70 border-b border-slate-200/80">
             <div className="flex overflow-x-auto no-scrollbar gap-2 bg-slate-200/60 p-1.5 rounded-2xl relative">
               <button 
@@ -68,11 +77,15 @@ export default function EligibilityDocs() {
                 onClick={() => setTab("salaried")}
                 className={`relative z-10 py-3 px-4 sm:py-3.5 sm:px-6 rounded-xl font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 sm:gap-2.5 transition-all duration-300 whitespace-nowrap shrink-0 flex-1 ${
                   tab === "salaried" 
-                    ? "bg-white text-brand-deep shadow-md shadow-slate-900/5" 
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "bg-white text-brand-deep shadow-md shadow-slate-900/5 scale-[1.01]" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                 }`}
               >
-                <div className={`p-1.5 rounded-lg transition-colors shrink-0 ${tab === "salaried" ? "bg-brand-mint/20 text-brand-deep" : "bg-transparent text-slate-400"}`}>
+                <div className={`p-1.5 rounded-lg transition-all duration-300 shrink-0 ${
+                  tab === "salaried" 
+                    ? "bg-brand-mint/20 text-brand-deep shadow-[0_0_10px_rgba(117,232,122,0.3)]" 
+                    : "bg-transparent text-slate-400"
+                }`}>
                   <User size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </div>
                 <span>Salaried Professional</span>
@@ -83,11 +96,15 @@ export default function EligibilityDocs() {
                 onClick={() => setTab("self-employed")}
                 className={`relative z-10 py-3 px-4 sm:py-3.5 sm:px-6 rounded-xl font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 sm:gap-2.5 transition-all duration-300 whitespace-nowrap shrink-0 flex-1 ${
                   tab === "self-employed" 
-                    ? "bg-white text-brand-deep shadow-md shadow-slate-900/5" 
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "bg-white text-brand-deep shadow-md shadow-slate-900/5 scale-[1.01]" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                 }`}
               >
-                <div className={`p-1.5 rounded-lg transition-colors shrink-0 ${tab === "self-employed" ? "bg-brand-mint/20 text-brand-deep" : "bg-transparent text-slate-400"}`}>
+                <div className={`p-1.5 rounded-lg transition-all duration-300 shrink-0 ${
+                  tab === "self-employed" 
+                    ? "bg-brand-mint/20 text-brand-deep shadow-[0_0_10px_rgba(117,232,122,0.3)]" 
+                    : "bg-transparent text-slate-400"
+                }`}>
                   <Briefcase size={16} className="sm:w-[18px] sm:h-[18px]" />
                 </div>
                 <span>Self-Employed / Business</span>
@@ -98,19 +115,20 @@ export default function EligibilityDocs() {
           {/* Tab Content Panel with Smooth Key Transition */}
           <div 
             key={tab} 
-            className="p-6 sm:p-8 md:p-10 grid md:grid-cols-2 gap-8 lg:gap-12 animate-in fade-in slide-in-from-bottom-2 duration-300"
+            className="p-6 sm:p-8 md:p-10 grid md:grid-cols-2 gap-8 lg:gap-12 transition-all duration-400 animate-in fade-in zoom-in-98"
           >
             
             {/* Left: Eligibility Criteria Cards */}
             <div className="space-y-5">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                 <div className="flex items-center gap-2 text-brand-deep font-bold text-lg">
-                  <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700">
+                  <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700 shadow-2xs">
                     <CheckCircle2 size={18} />
                   </div>
                   <h3>Eligibility Criteria</h3>
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Instant Assessment
                 </span>
               </div>
@@ -119,15 +137,15 @@ export default function EligibilityDocs() {
                 {activeCriteria.map((item, index) => (
                   <div 
                     key={index} 
-                    className="p-4 rounded-xl bg-slate-50/70 hover:bg-slate-50 border border-slate-100 hover:border-slate-200 transition-all flex items-center justify-between group"
+                    className="p-4 rounded-xl bg-slate-50/70 hover:bg-white border border-slate-100 hover:border-emerald-500/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-between group border-l-2 border-l-transparent hover:border-l-brand-mint"
                   >
                     <div>
-                      <p className="text-xs text-slate-500 font-medium">{item.label}</p>
+                      <p className="text-xs text-slate-500 font-medium group-hover:text-slate-600 transition-colors">{item.label}</p>
                       <p className="text-sm font-semibold text-slate-900 group-hover:text-brand-deep transition-colors mt-0.5">
                         {item.value}
                       </p>
                     </div>
-                    <span className="text-[11px] text-slate-400 bg-white px-2 py-1 rounded-md border border-slate-100 shrink-0 font-medium">
+                    <span className="text-[11px] text-slate-400 bg-white px-2 py-1 rounded-md border border-slate-100 shrink-0 font-medium group-hover:border-emerald-200 group-hover:text-emerald-700 group-hover:bg-emerald-50/50 transition-all duration-300 shadow-2xs">
                       {item.hint}
                     </span>
                   </div>
@@ -139,12 +157,13 @@ export default function EligibilityDocs() {
             <div className="space-y-5">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                 <div className="flex items-center gap-2 text-brand-deep font-bold text-lg">
-                  <div className="p-1.5 rounded-lg bg-blue-100 text-blue-700">
+                  <div className="p-1.5 rounded-lg bg-blue-100 text-blue-700 shadow-2xs">
                     <FileText size={18} />
                   </div>
                   <h3>Required Documents</h3>
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200 shadow-2xs flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                   Digital Uploads
                 </span>
               </div>
@@ -153,16 +172,16 @@ export default function EligibilityDocs() {
                 {activeDocs.map((doc, idx) => (
                   <div 
                     key={idx} 
-                    className="p-3.5 rounded-xl bg-slate-50/70 hover:bg-slate-50 border border-slate-100 hover:border-slate-200 transition-all flex items-start gap-3 group"
+                    className="p-3.5 rounded-xl bg-slate-50/70 hover:bg-white border border-slate-100 hover:border-sky-500/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3 group border-l-2 border-l-transparent hover:border-l-sky-500"
                   >
-                    <div className="w-6 h-6 rounded-full bg-brand-mint/15 text-brand-deep font-bold flex items-center justify-center shrink-0 text-xs mt-0.5 group-hover:bg-brand-mint group-hover:text-white transition-colors">
+                    <div className="w-6 h-6 rounded-full bg-brand-mint/15 text-brand-deep font-bold flex items-center justify-center shrink-0 text-xs mt-0.5 group-hover:bg-brand-mint group-hover:text-white group-hover:shadow-[0_0_10px_rgba(117,232,122,0.5)] group-hover:scale-110 transition-all duration-300">
                       {idx + 1}
                     </div>
                     <div>
                       <p className="text-sm font-bold text-slate-900 group-hover:text-brand-deep transition-colors">
                         {doc.title}
                       </p>
-                      <p className="text-xs text-slate-500 mt-0.5 leading-snug">
+                      <p className="text-xs text-slate-500 mt-0.5 leading-snug group-hover:text-slate-600 transition-colors">
                         {doc.desc}
                       </p>
                     </div>
@@ -174,17 +193,17 @@ export default function EligibilityDocs() {
           </div>
 
           {/* Bottom Card Footer Action */}
-          <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+          <div className="px-6 py-4 bg-slate-50/90 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
             <div className="flex items-center gap-2">
-              <ShieldCheck size={16} className="text-brand-mint" />
+              <ShieldCheck size={16} className="text-brand-mint drop-shadow-2xs" />
               <span>Zero branch visits required. Upload digital copies for in-principle approval.</span>
             </div>
             <Link 
               href="/affordability"
-              className="font-bold text-brand-deep hover:text-brand-mint flex items-center gap-1 transition-colors"
+              className="font-bold text-brand-deep hover:text-emerald-600 flex items-center gap-1 transition-all duration-200 group/cta"
             >
               <span>Calculate exact loan eligibility</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={14} className="transition-transform duration-200 group-hover/cta:translate-x-1" />
             </Link>
           </div>
 

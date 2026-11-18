@@ -15,6 +15,7 @@ import PopularCities from "@/components/home/PopularCities";
 import FAQ from "@/components/home/FAQ";
 import FinalCTA from "@/components/home/FinalCTA";
 import BlogGuides from "@/components/home/BlogGuides";
+import RotatingLoanWord from "@/components/home/RotatingLoanWord";
 
 export default function Home() {
   return (
@@ -41,7 +42,7 @@ export default function Home() {
               </div>
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight leading-[1.15] animate-fade-up stagger-1">
-                The smartest way to get a <span className="text-brand-mint">home loan.</span>
+                The smartest way to get a <RotatingLoanWord />
               </h1>
               
               <p className="text-sm sm:text-base lg:text-xl text-slate-200 animate-fade-up stagger-2 font-medium leading-relaxed">
@@ -92,11 +93,15 @@ export default function Home() {
       <LoanTypes />
 
       {/* Step 3: Calculate / check eligibility */}
-      <section className="py-20 bg-gray-50 border-y border-gray-100 relative">
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="text-center mb-12 animate-fade-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-brand-deep mb-4">Calculate Your EMI Instantly</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+      <section className="py-4 sm:py-10 md:py-16 bg-slate-50 border-y border-gray-100 relative overflow-hidden">
+        <div className="container mx-auto px-2.5 sm:px-4 max-w-6xl relative z-10">
+          <div className="text-center mb-2.5 sm:mb-8 animate-fade-up">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-800 border border-emerald-500/20 mb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-mint animate-pulse" />
+              Instant Financial Planning
+            </span>
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-brand-deep tracking-tight">Calculate Your EMI Instantly</h2>
+            <p className="hidden sm:block text-gray-600 text-sm md:text-base max-w-2xl mx-auto mt-1.5">
               Plan your finances better with our interactive EMI calculator. See exactly how much your monthly payment will be and the total interest you'll pay over time.
             </p>
           </div>
