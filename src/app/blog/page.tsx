@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowRight, Calendar, User, BookOpen } from "lucide-react";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 
@@ -15,16 +15,30 @@ export default async function BlogArchive() {
   
   return (
     <div className="flex-1 bg-gray-50/50">
-      <div className="bg-brand-deep text-white py-16 relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10 text-center max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Blog & <span className="text-brand-mint">Guides</span>
-          </h1>
-          <p className="text-lg text-gray-300">
-            Insights, tips, and expert advice to help you navigate the world of home loans in India.
-          </p>
+      {/* Hero Section */}
+      <section className="p-3 sm:p-4 md:p-6">
+        <div className="bg-brand-deep text-white py-12 md:py-20 relative overflow-hidden rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl">
+          {/* Ambient Glow & Radial Background */}
+          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-brand-mint via-brand-deep to-brand-deep pointer-events-none" />
+          <div className="absolute top-0 right-10 w-96 h-96 bg-brand-mint/10 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute bottom-0 left-10 w-80 h-80 bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-mint text-xs font-bold uppercase tracking-wider mb-4 shadow-2xs backdrop-blur-sm">
+              <BookOpen size={14} />
+              <span>Knowledge Center & Insights</span>
+            </div>
+            
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 md:mb-6 leading-tight">
+              Blog & <span className="text-brand-mint">Guides</span>
+            </h1>
+            
+            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium">
+              Insights, expert advice, and step-by-step guides to help you navigate the world of home loans in India.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div className="container mx-auto px-4 py-16 max-w-6xl">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

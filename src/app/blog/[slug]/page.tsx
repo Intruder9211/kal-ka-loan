@@ -27,28 +27,35 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   return (
     <div className="flex-1 bg-white">
-      {/* Blog Header */}
-      <div className="bg-brand-deep text-white py-16 lg:py-24 relative">
-        <div className="container mx-auto px-4 max-w-4xl relative z-10">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-brand-mint hover:text-white transition-colors mb-8 font-medium">
-            <ArrowLeft size={18} /> Back to Blog
-          </Link>
-          
-          <div className="flex items-center gap-3 text-sm font-bold text-brand-mint uppercase tracking-wider mb-4">
-            <span>{data.category}</span>
-          </div>
-          
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-8 leading-tight">
-            {data.title}
-          </h1>
-          
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-300">
-            <div className="flex items-center gap-2"><User size={16} /> {data.author}</div>
-            <div className="flex items-center gap-2"><Calendar size={16} /> {data.date}</div>
-            <div className="flex items-center gap-2"><Clock size={16} /> {data.readTime}</div>
+      {/* Hero Section */}
+      <section className="p-3 sm:p-4 md:p-6">
+        <div className="bg-brand-deep text-white relative overflow-hidden rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl py-12 sm:py-16 md:py-20">
+          {/* Ambient Glow & Radial Background */}
+          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-brand-mint via-brand-deep to-brand-deep pointer-events-none" />
+          <div className="absolute top-0 right-10 w-96 h-96 bg-brand-mint/10 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute bottom-0 left-10 w-80 h-80 bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="container mx-auto px-6 sm:px-8 md:px-12 max-w-4xl relative z-10">
+            <Link href="/blog" className="inline-flex items-center gap-2 text-brand-mint hover:text-white transition-colors mb-6 font-medium text-sm">
+              <ArrowLeft size={16} /> Back to Blog
+            </Link>
+            
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-mint/10 border border-brand-mint/20 text-brand-mint text-xs font-bold uppercase tracking-wider mb-5 shadow-2xs backdrop-blur-sm">
+              <span>{data.category}</span>
+            </div>
+            
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+              {data.title}
+            </h1>
+            
+            <div className="flex flex-wrap items-center gap-6 text-sm text-slate-300 font-medium">
+              <div className="flex items-center gap-2"><User size={16} className="text-brand-mint" /> {data.author}</div>
+              <div className="flex items-center gap-2"><Calendar size={16} className="text-brand-mint" /> {data.date}</div>
+              <div className="flex items-center gap-2"><Clock size={16} className="text-brand-mint" /> {data.readTime}</div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
       
       {data.imageUrl && (
         <div className="container mx-auto px-4 max-w-5xl -mt-12 relative z-20">

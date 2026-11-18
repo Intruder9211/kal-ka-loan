@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, User, LayoutDashboard, LogOut, ChevronDown, Building2, Zap, MapPin, FileText } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CALCULATORS_CONFIG } from "@/lib/calculators-data";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
@@ -13,6 +13,23 @@ import ThemeSwitcher from "@/components/layout/ThemeSwitcher";
 export default function Header({ session }: { session?: Session | null }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Close mobile dropdown menu when clicking anywhere outside on the page/screen
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -32,6 +49,7 @@ export default function Header({ session }: { session?: Session | null }) {
   return (
     <div className="sticky top-0 z-50 w-full p-3 sm:p-4 md:p-6 pb-0 sm:pb-0 md:pb-0 transition-all duration-300 pointer-events-none">
       <header 
+        ref={headerRef}
         className={cn(
           "w-full bg-brand-deep text-white border border-white/10 shadow-xl transition-all duration-300 pointer-events-auto",
           "rounded-2xl sm:rounded-2xl lg:rounded-2xl",
@@ -304,6 +322,15 @@ export default function Header({ session }: { session?: Session | null }) {
         </nav>
       </div>
     </header>
+
+    {/* Screen Backdrop for Mobile Menu: clicking anywhere outside closes the menu */}
+    {mobileMenuOpen && (
+      <div 
+        className="fixed inset-0 -z-10 bg-black/40 backdrop-blur-[2px] lg:hidden pointer-events-auto transition-opacity"
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+    )}
   </div>
   );
 }
