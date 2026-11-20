@@ -17,9 +17,18 @@ async function saveForms(data: any) {
   await writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const NO_CACHE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+  "Pragma": "no-cache",
+  "Expires": "0",
+};
+
 export async function GET() {
   const forms = await getForms();
-  return NextResponse.json({ forms });
+  return NextResponse.json({ forms }, { headers: NO_CACHE_HEADERS });
 }
 
 export async function POST(req: NextRequest) {

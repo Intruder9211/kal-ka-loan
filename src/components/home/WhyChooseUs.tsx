@@ -149,9 +149,11 @@ export default function WhyChooseUs() {
                 <div
                   className="w-full flex flex-col items-center transition-transform origin-top duration-300"
                   style={{
-                    animation: isHovered
-                      ? "none"
-                      : `keychain-swing ${benefit.swingDuration} ease-in-out infinite alternate`,
+                    animationName: isHovered ? "none" : "keychain-swing",
+                    animationDuration: benefit.swingDuration,
+                    animationTimingFunction: "ease-in-out",
+                    animationIterationCount: "infinite",
+                    animationDirection: "alternate",
                     animationDelay: benefit.swingDelay,
                   }}
                 >

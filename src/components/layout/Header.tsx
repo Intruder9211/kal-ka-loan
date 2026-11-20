@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, User, LayoutDashboard, LogOut, ChevronDown, Building2, Zap, MapPin, FileText } from "lucide-react";
+import { Menu, User, LayoutDashboard, LogOut, ChevronDown, ChevronRight, Building2, Zap, MapPin, FileText } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { CALCULATORS_CONFIG } from "@/lib/calculators-data";
 import { cn } from "@/lib/utils";
@@ -51,7 +51,7 @@ export default function Header({ session }: { session?: Session | null }) {
       <header 
         ref={headerRef}
         className={cn(
-          "w-full bg-brand-deep text-white border border-white/10 shadow-xl transition-all duration-300 pointer-events-auto",
+          "relative w-full bg-brand-deep text-white border border-white/10 shadow-xl transition-all duration-300 pointer-events-auto",
           "rounded-2xl sm:rounded-2xl lg:rounded-2xl",
           scrolled 
             ? "bg-brand-deep/90 backdrop-blur-md border-brand-mint/20 shadow-2xl py-1.5 px-4 sm:px-6" 
@@ -82,32 +82,58 @@ export default function Header({ session }: { session?: Session | null }) {
             Compare Lenders
           </Link>
           
-          <div className="group/nav relative py-4 flex items-center">
+          <div className="group/nav py-4 flex items-center">
             <Link href="/calculators" className="link-underline flex items-center gap-1.5 cursor-pointer">
               <span>Calculators</span> 
               <ChevronDown size={14} className="group-hover/nav:rotate-180 transition-transform inline-block" />
             </Link>
             
-            {/* Mega Menu */}
-            <div className="absolute top-[calc(100%+0.75rem)] left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] border border-slate-100 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 p-6 grid grid-cols-4 gap-4 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
-              {CALCULATORS_CONFIG.map((calc) => {
-                const Icon = calc.icon;
-                return (
-                  <Link 
-                    key={calc.id}
-                    href={`/calculators?tab=${calc.id}`}
-                    className="flex flex-col gap-2 p-4 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 group/item"
-                  >
-                    <div className="h-10 w-10 bg-brand-mint/10 text-brand-mint rounded-lg flex items-center justify-center group-hover/item:scale-110 transition-transform">
-                      <Icon size={20} />
-                    </div>
-                    <div>
-                      <h4 className="text-slate-900 font-bold text-sm leading-tight group-hover/item:text-brand-mint transition-colors">{calc.title.replace('Calculator', '').trim()}</h4>
-                      <p className="text-slate-500 text-xs mt-1 line-clamp-2">{calc.description}</p>
-                    </div>
-                  </Link>
-                )
-              })}
+            {/* Mega Menu - Always 100% On Screen & Centered to Header */}
+            <div className="absolute top-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2 w-[920px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-6rem)] overflow-y-auto bg-white rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] border border-slate-200/90 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 p-5 before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+              
+              {/* Header inside Mega Menu */}
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="font-extrabold text-xs uppercase tracking-wider text-slate-800">
+                    Home Loan &amp; Financial Calculators (15)
+                  </span>
+                </div>
+                <Link
+                  href="/calculators"
+                  className="group/all inline-flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-900 transition-colors"
+                >
+                  <span>Explore All Calculators</span>
+                  <ChevronRight size={13} className="group-hover/all:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+
+              {/* 3-Column Balanced Grid of 15 Calculators */}
+              <div className="grid grid-cols-3 gap-2">
+                {CALCULATORS_CONFIG.map((calc) => {
+                  const Icon = calc.icon;
+                  return (
+                    <Link 
+                      key={calc.id}
+                      href={`/calculators?tab=${calc.id}`}
+                      className="flex items-start gap-3 p-2.5 rounded-2xl hover:bg-emerald-50/50 hover:border-emerald-200/60 border border-transparent transition-all duration-200 group/item"
+                    >
+                      <div className="h-9 w-9 bg-brand-mint/15 text-brand-deep rounded-xl flex items-center justify-center shrink-0 group-hover/item:bg-brand-mint group-hover/item:text-brand-deep group-hover/item:scale-110 transition-all duration-200">
+                        <Icon size={17} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-slate-900 font-bold text-xs leading-tight group-hover/item:text-emerald-800 transition-colors truncate">
+                          {calc.title.replace('Calculator', '').trim()} Calculator
+                        </h4>
+                        <p className="text-slate-500 text-[11px] mt-0.5 line-clamp-1 leading-snug font-medium">
+                          {calc.description}
+                        </p>
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
+
             </div>
           </div>
 

@@ -97,7 +97,7 @@ export default function PartnerBanksSection() {
   useEffect(() => {
     async function loadLenders() {
       try {
-        const res = await fetch("/api/lenders");
+        const res = await fetch("/api/lenders", { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
           if (data.lenders && data.lenders.length > 0) {

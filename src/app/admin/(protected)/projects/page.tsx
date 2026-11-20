@@ -217,76 +217,140 @@ export default function AdminProjectsPage() {
             No projects found. Click "Add Verified Project" to add your first one.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/75 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="py-3 px-5">Project & Developer</th>
-                  <th className="py-3 px-4">City / Location</th>
-                  <th className="py-3 px-4">Price Guide</th>
-                  <th className="py-3 px-4">Approved Banks</th>
-                  <th className="py-3 px-4">Status & RERA</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-sm">
-                {filtered.map((project) => (
-                  <tr key={project.id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="py-4 px-5">
-                      <div className="font-bold text-slate-900">{project.name}</div>
+          <div>
+            {/* Mobile Card View (< md) */}
+            <div className="block md:hidden divide-y divide-slate-100 p-3 space-y-3">
+              {filtered.map((project) => (
+                <div key={project.id} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="font-bold text-slate-900 text-sm">{project.name}</div>
                       <div className="text-xs text-slate-500 font-medium">By {project.developer}</div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className="font-semibold text-slate-800 text-xs block">{project.city}</span>
-                      <span className="text-[11px] text-slate-400 truncate max-w-[180px] block">{project.location}</span>
-                    </td>
-                    <td className="py-4 px-4 font-semibold text-slate-900 text-xs">
-                      {project.priceRange}
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="flex flex-wrap gap-1 max-w-[200px]">
-                        {project.approvedBanks.slice(0, 3).map((bank) => (
+                    </div>
+                    <span className="inline-block text-[10px] font-bold text-brand-mint bg-brand-mint/10 px-2 py-0.5 rounded-full shrink-0">
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-white border border-slate-200/60 text-xs">
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase block">City & Location</span>
+                      <span className="font-semibold text-slate-800 text-xs mt-0.5 block">{project.city}</span>
+                      <span className="text-[10px] text-slate-400 truncate block">{project.location}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase block">Price Guide</span>
+                      <span className="font-bold text-slate-900 text-xs mt-0.5 block">{project.priceRange}</span>
+                    </div>
+                    <div className="col-span-2 pt-1 border-t border-slate-100">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Approved Banks</span>
+                      <div className="flex flex-wrap gap-1">
+                        {project.approvedBanks.slice(0, 4).map((bank) => (
                           <span key={bank} className="text-[10px] font-semibold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">
                             {bank}
                           </span>
                         ))}
-                        {project.approvedBanks.length > 3 && (
-                          <span className="text-[10px] font-bold text-brand-mint">
-                            +{project.approvedBanks.length - 3} more
-                          </span>
-                        )}
                       </div>
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className="inline-block text-[11px] font-bold text-brand-mint bg-brand-mint/10 px-2 py-0.5 rounded-full mb-0.5">
-                        {project.status}
-                      </span>
-                      <div className="text-[10px] text-slate-400 font-mono">
-                        {project.reraNumber.length > 16 ? `${project.reraNumber.slice(0, 16)}...` : project.reraNumber}
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => openEditModal(project)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-brand-deep hover:bg-slate-100 transition-colors"
-                          title="Edit"
-                        >
-                          <Edit2 size={16} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(project.id)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-                          title="Delete"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2 pt-1">
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      RERA: {project.reraNumber.length > 18 ? `${project.reraNumber.slice(0, 18)}...` : project.reraNumber}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => openEditModal(project)}
+                        className="p-1.5 rounded-lg text-slate-500 hover:text-brand-deep hover:bg-slate-100"
+                        title="Edit"
+                      >
+                        <Edit2 size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(project.id)}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50"
+                        title="Delete"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View (>= md) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full min-w-[700px] text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50/75 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                    <th className="py-3 px-5">Project & Developer</th>
+                    <th className="py-3 px-4">City / Location</th>
+                    <th className="py-3 px-4">Price Guide</th>
+                    <th className="py-3 px-4">Approved Banks</th>
+                    <th className="py-3 px-4">Status & RERA</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-sm">
+                  {filtered.map((project) => (
+                    <tr key={project.id} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="py-4 px-5">
+                        <div className="font-bold text-slate-900">{project.name}</div>
+                        <div className="text-xs text-slate-500 font-medium">By {project.developer}</div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="font-semibold text-slate-800 text-xs block">{project.city}</span>
+                        <span className="text-[11px] text-slate-400 truncate max-w-[180px] block">{project.location}</span>
+                      </td>
+                      <td className="py-4 px-4 font-semibold text-slate-900 text-xs">
+                        {project.priceRange}
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex flex-wrap gap-1 max-w-[200px]">
+                          {project.approvedBanks.slice(0, 3).map((bank) => (
+                            <span key={bank} className="text-[10px] font-semibold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">
+                              {bank}
+                            </span>
+                          ))}
+                          {project.approvedBanks.length > 3 && (
+                            <span className="text-[10px] font-bold text-brand-mint">
+                              +{project.approvedBanks.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="inline-block text-[11px] font-bold text-brand-mint bg-brand-mint/10 px-2 py-0.5 rounded-full mb-0.5">
+                          {project.status}
+                        </span>
+                        <div className="text-[10px] text-slate-400 font-mono">
+                          {project.reraNumber.length > 16 ? `${project.reraNumber.slice(0, 16)}...` : project.reraNumber}
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => openEditModal(project)}
+                            className="p-1.5 rounded-lg text-slate-500 hover:text-brand-deep hover:bg-slate-100 transition-colors"
+                            title="Edit"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(project.id)}
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

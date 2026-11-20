@@ -253,8 +253,88 @@ export default function LendersAdminPage() {
         </div>
       ) : (
         <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-700">
+          {/* Mobile Card View (< md) */}
+          <div className="block md:hidden divide-y divide-slate-100 p-3 space-y-3">
+            {filteredLenders.map((lender) => (
+              <div key={lender.id} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <BankLogo 
+                      name={lender.name} 
+                      logoUrl={lender.logo} 
+                      className="w-9 h-9" 
+                      size={36} 
+                    />
+                    <div>
+                      <div className="font-bold text-slate-900 text-sm">{lender.name}</div>
+                      <span className="text-[10px] text-slate-500 font-semibold">{lender.type}</span>
+                    </div>
+                  </div>
+                  {lender.status === "Active" ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                      <CheckCircle2 size={10} /> Active
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">
+                      <XCircle size={10} /> Inactive
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-white border border-slate-200/60 text-xs">
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Starting ROI</span>
+                    <span className="font-extrabold text-emerald-600 text-sm mt-0.5 block">{lender.interestRate}</span>
+                    <span className="text-[10px] text-slate-400">{lender.rateType || "Floating"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Processing Fee</span>
+                    <span className="font-semibold text-slate-700 text-xs mt-0.5 block truncate">{lender.processingFee || "—"}</span>
+                  </div>
+                  {(lender.salariedRate || lender.selfEmployedRate) && (
+                    <div className="col-span-2 pt-1 border-t border-slate-100 text-[11px] text-slate-600 space-y-0.5">
+                      {lender.salariedRate && <div><span className="font-semibold text-slate-500">Salaried:</span> {lender.salariedRate}</div>}
+                      {lender.selfEmployedRate && <div><span className="font-semibold text-slate-500">Self-Employed:</span> {lender.selfEmployedRate}</div>}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between gap-2 pt-1">
+                  {lender.officialUrl ? (
+                    <a 
+                      href={lender.officialUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg"
+                    >
+                      Rate Sheet <ExternalLink size={10} />
+                    </a>
+                  ) : <span />}
+
+                  <div className="inline-flex items-center gap-1">
+                    <button 
+                      onClick={() => handleOpenEditModal(lender)}
+                      className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg"
+                      title="Edit ROI Details"
+                    >
+                      <Edit2 size={14} />
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(lender.id, lender.name)}
+                      className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                      title="Delete Bank"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table View (>= md) */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full min-w-[750px] text-left text-sm text-slate-700">
               <thead className="bg-slate-50/80 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
                 <tr>
                   <th className="px-6 py-4">Bank / Institution</th>

@@ -130,10 +130,67 @@ export default function AdminStampDutyPage() {
         </div>
       )}
 
-      {/* States Table */}
+      {/* States Table & Cards */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        {/* Mobile Card View (< md) */}
+        <div className="block md:hidden divide-y divide-slate-100 p-3 space-y-3">
+          {loading ? (
+            <div className="text-center py-8 text-slate-500 text-xs">Loading state rates...</div>
+          ) : states.length === 0 ? (
+            <div className="text-center py-8 text-slate-500 text-xs">No states found. Add one above!</div>
+          ) : (
+            states.map((s) => (
+              <div key={s.code} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="font-bold text-slate-900 text-sm">
+                    {s.name} <span className="text-[11px] text-slate-400 font-mono">({s.code})</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => {
+                        setEditingState(s);
+                        setShowModal(true);
+                      }}
+                      className="p-1.5 text-slate-500 hover:text-brand-deep hover:bg-slate-100 rounded-lg"
+                    >
+                      <Edit2 size={14} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(s.code)}
+                      className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 p-2 rounded-xl bg-white border border-slate-200/60 text-center text-xs">
+                  <div>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase block">Male</span>
+                    <span className="font-bold text-slate-800">{s.maleStampDuty}%</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase block">Female</span>
+                    <span className="font-bold text-emerald-600">{s.femaleStampDuty}%</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase block">Joint</span>
+                    <span className="font-bold text-slate-800">{s.jointStampDuty}%</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
+                  <span>Reg: {s.registrationFeePercent > 0 ? `${s.registrationFeePercent}%` : "Fixed"}</span>
+                  <span>Cess: {s.cessPercent > 0 ? `${s.cessPercent}%` : "None"}</span>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table View (>= md) */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full min-w-[650px] text-left border-collapse">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-600 uppercase tracking-wider">
                 <th className="py-3.5 px-4">State</th>

@@ -22,7 +22,7 @@ export default function BranchLocatorClient({ initialBranches }: { initialBranch
 
   // Fetch dynamic changes live from admin on mount
   useEffect(() => {
-    fetch("/api/admin/branches")
+    fetch("/api/admin/branches", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.branches && Array.isArray(data.branches) && data.branches.length > 0) {

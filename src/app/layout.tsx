@@ -1,29 +1,34 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
-import LeadModal from "@/components/ui/LeadModal";
 import PageTransition from "@/components/layout/PageTransition";
 import SiteLoader from "@/components/layout/SiteLoader";
-import Chatbot from "@/components/ui/Chatbot";
 import SocialSidebar from "@/components/layout/SocialSidebar";
 import VisitorTracker from "@/components/analytics/VisitorTracker";
-import WelcomePopup from "@/components/ui/WelcomePopup";
 import InstantCallbackBar from "@/components/ui/InstantCallbackBar";
 import { auth } from "@/auth";
 import { PublicWrapper } from "@/components/layout/PublicWrapper";
 import { ThemeProvider } from "@/context/ThemeContext";
 
+// Lazy-load non-critical client modals to split them into separate chunks
+const Chatbot = dynamic(() => import("@/components/ui/Chatbot"));
+const WelcomePopup = dynamic(() => import("@/components/ui/WelcomePopup"));
+const LeadModal = dynamic(() => import("@/components/ui/LeadModal"));
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

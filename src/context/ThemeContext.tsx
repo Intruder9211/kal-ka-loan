@@ -208,7 +208,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function initGlobalTheme() {
       try {
-        const res = await fetch("/api/theme");
+        const res = await fetch("/api/theme", { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
           if (data.activeTheme && THEME_OPTIONS.some((t) => t.id === data.activeTheme)) {

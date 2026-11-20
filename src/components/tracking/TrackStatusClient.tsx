@@ -21,7 +21,7 @@ export default function TrackStatusClient() {
     setResult(null);
 
     try {
-      const res = await fetch(`/api/track/status?q=${encodeURIComponent(searchVal.trim())}`);
+      const res = await fetch(`/api/track/status?q=${encodeURIComponent(searchVal.trim())}`, { cache: "no-store" });
       const data = await res.json();
 
       if (!res.ok || !data.found) {

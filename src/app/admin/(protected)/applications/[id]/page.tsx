@@ -4,6 +4,9 @@ import Link from "next/link"
 import { ArrowLeft, User, Phone, FileText, CheckCircle2, FileDown, UploadCloud, AlertCircle, Eye } from "lucide-react"
 import { StatusUpdater } from "@/components/admin/StatusUpdater"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function ApplicationDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const application = await prisma.application.findUnique({ 

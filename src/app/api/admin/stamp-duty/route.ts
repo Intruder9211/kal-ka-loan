@@ -27,9 +27,18 @@ function saveStampDutyData(data: any) {
   }
 }
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const NO_CACHE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+  "Pragma": "no-cache",
+  "Expires": "0",
+};
+
 export async function GET() {
   const data = getStampDutyData();
-  return NextResponse.json(data);
+  return NextResponse.json(data, { headers: NO_CACHE_HEADERS });
 }
 
 export async function POST(req: Request) {

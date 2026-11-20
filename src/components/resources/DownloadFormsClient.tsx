@@ -33,7 +33,7 @@ export default function DownloadFormsClient({ initialForms = [] }: { initialForm
 
   useEffect(() => {
     // Dynamically fetch live forms managed from the admin dashboard
-    fetch("/api/admin/forms")
+    fetch("/api/admin/forms", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.forms && data.forms.length > 0) {

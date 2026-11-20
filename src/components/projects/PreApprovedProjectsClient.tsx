@@ -26,7 +26,7 @@ export default function PreApprovedProjectsClient({ initialProjects }: { initial
 
   // Fetch latest dynamic projects from admin backend on mount
   useEffect(() => {
-    fetch("/api/admin/projects")
+    fetch("/api/admin/projects", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {

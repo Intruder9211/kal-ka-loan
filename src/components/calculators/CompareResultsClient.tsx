@@ -61,15 +61,7 @@ export default function CompareResultsClient() {
   }, [searchParams, amount, loanType]);
 
   if (!amount || !loanType) {
-    return (
-      <div className="bg-white rounded-xl shadow-xl p-12 text-center border border-gray-200">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">No loan details provided</h3>
-        <p className="text-gray-500 mb-8">Please use the Loan Finder on the homepage to see your personalized matches.</p>
-        <Link href="/" className="inline-block bg-brand-deep text-brand-mint font-bold px-8 py-3 rounded-xl hover:bg-brand-deep/90 transition-all">
-          Go to Loan Finder
-        </Link>
-      </div>
-    );
+    return null;
   }
 
   if (loading) {
@@ -137,12 +129,16 @@ export default function CompareResultsClient() {
         {matches.map((match, idx) => (
           <div 
             key={`${match.lenderId}-${idx}`} 
-            className={`bg-white/80 backdrop-blur-xl rounded-xl border-2 transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-1 ${
-              idx === 0 ? 'border-brand-mint/50 shadow-[0_10px_40px_-15px_rgba(7,153,116,0.3)] relative' : 'border-white hover:border-brand-mint/30'
+            className={`animate-card-cascade group relative overflow-hidden bg-white/95 backdrop-blur-xl rounded-3xl border-2 transition-all duration-400 hover:shadow-[0_20px_45px_-12px_rgba(7,153,116,0.22)] hover:-translate-y-2 hover:scale-[1.008] ${
+              idx === 0 ? 'border-brand-mint/60 shadow-[0_10px_40px_-15px_rgba(7,153,116,0.3)]' : 'border-slate-200/90 hover:border-brand-mint/40'
             }`}
+            style={{ animationDelay: `${idx * 100}ms` }}
           >
+            {/* Top Radiant Accent Line on Hover */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-brand-mint to-[#86efac] opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+
             {idx === 0 && (
-              <div className="absolute -top-3 left-6 bg-brand-mint text-brand-deep text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+              <div className="absolute -top-3 left-6 bg-brand-mint text-brand-deep text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md z-10">
                 <CheckCircle2 size={14} /> Top Match
               </div>
             )}

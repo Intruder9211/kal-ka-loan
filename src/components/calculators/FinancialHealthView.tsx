@@ -1,25 +1,192 @@
 "use client";
 
-import { useState } from "react";
-import { IndianRupee, TrendingUp, AlertTriangle, CheckCircle2, ShieldCheck } from "lucide-react";
+import { useState, useRef } from "react";
+import { 
+  IndianRupee, 
+  TrendingUp, 
+  AlertTriangle, 
+  CheckCircle2, 
+  ShieldCheck,
+  Coins,
+  CreditCard,
+  Home,
+  Percent,
+  Clock,
+  Sparkles
+} from "lucide-react";
 
-// Helper for Input with Touch-Scroll Protection on Mobile & Tablet
-const InputSlider = ({ label, value, setter, min, max, step, prefix = "₹", suffix = "" }: any) => {
-  const [isInteracting, setIsInteracting] = useState(false);
+/**
+ * Custom Drag-Only Slider (matching other calculators):
+ * Moves ONLY when the green handle (dot) is directly clicked and dragged left/right.
+ * Clicking elsewhere on the slider track does NOT change the amount.
+ */
+function DragOnlySlider({
+  min,
+  max,
+  step,
+  value,
+  onChange,
+  ariaLabel,
+  className = "",
+}: {
+  min: number;
+  max: number;
+  step: number;
+  value: number;
+  onChange: (val: number) => void;
+  ariaLabel?: string;
+  className?: string;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const percentage = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const thumb = e.currentTarget;
+    try {
+      thumb.setPointerCapture(e.pointerId);
+    } catch {}
+
+    setIsDragging(true);
+
+    const updateFromClientX = (clientX: number) => {
+      if (!trackRef.current) return;
+      const rect = trackRef.current.getBoundingClientRect();
+      if (rect.width <= 0) return;
+
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const rawVal = min + ratio * (max - min);
+      const stepped = Math.round((rawVal - min) / step) * step + min;
+      const precision = step < 1 ? 2 : 0;
+      const clamped = Math.max(min, Math.min(max, Number(stepped.toFixed(precision))));
+      onChange(clamped);
+    };
+
+    const onPointerMove = (moveEvent: PointerEvent) => {
+      moveEvent.preventDefault();
+      updateFromClientX(moveEvent.clientX);
+    };
+
+    const onPointerUp = (upEvent: PointerEvent) => {
+      setIsDragging(false);
+      try {
+        thumb.releasePointerCapture(upEvent.pointerId);
+      } catch {}
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+
+    window.addEventListener("pointermove", onPointerMove, { passive: false });
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    let nextVal = value;
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      nextVal = Math.min(max, value + step);
+      e.preventDefault();
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      nextVal = Math.max(min, value - step);
+      e.preventDefault();
+    }
+    if (nextVal !== value) {
+      const precision = step < 1 ? 2 : 0;
+      onChange(Number(nextVal.toFixed(precision)));
+    }
+  };
+
+  return (
+    <div className={`relative w-full py-1.5 select-none touch-none ${className}`}>
+      {/* Track: pointer-events-none ensures clicking track will NOT change value */}
+      <div
+        ref={trackRef}
+        className="relative h-2 w-full rounded-full bg-slate-800/90 overflow-hidden pointer-events-none ring-1 ring-white/10"
+      >
+        <div
+          className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 via-brand-mint to-[#86efac] rounded-full shadow-[0_0_12px_rgba(117,232,122,0.6)] transition-all duration-75"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+
+      {/* Handle: Only this green dot element has pointer-events-auto */}
+      <div
+        role="slider"
+        aria-label={ariaLabel}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        tabIndex={0}
+        onPointerDown={handlePointerDown}
+        onKeyDown={handleKeyDown}
+        className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full cursor-grab active:cursor-grabbing pointer-events-auto flex items-center justify-center transition-transform focus:outline-none focus:ring-2 focus:ring-brand-mint focus:ring-offset-2 focus:ring-offset-slate-900 ${
+          isDragging ? "scale-125 cursor-grabbing z-20" : "hover:scale-110 z-10"
+        }`}
+        style={{ left: `${percentage}%` }}
+      >
+        {isDragging && (
+          <div className="absolute inset-0 rounded-full bg-brand-mint/60 animate-ping pointer-events-none" />
+        )}
+        <div className="w-full h-full rounded-full bg-gradient-to-tr from-emerald-500 via-brand-mint to-[#9effa3] p-0.5 shadow-[0_0_14px_rgba(117,232,122,0.85)] border border-white">
+          <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center">
+            <div className="w-1.5 h-1.5 rounded-full bg-brand-mint shadow-[0_0_6px_#75e87a]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Modernized Input Slider Group:
+ * Responsive typography, input meter, min/max guides, and DragOnlySlider.
+ */
+const InputSliderGroup = ({
+  label,
+  value,
+  setter,
+  min,
+  max,
+  step,
+  prefix = "₹",
+  suffix = "",
+  minLabel,
+  maxLabel,
+  icon: Icon,
+}: {
+  label: string;
+  value: number;
+  setter: (val: number) => void;
+  min: number;
+  max: number;
+  step: number;
+  prefix?: string;
+  suffix?: string;
+  minLabel: string;
+  maxLabel: string;
+  icon?: any;
+}) => {
   const [textValue, setTextValue] = useState<string | null>(null);
 
-  // Keep display string in sync when value changes from outside (e.g. slider)
-  const isPercent = suffix.includes("%");
   const displayValue = textValue !== null 
     ? textValue 
     : (value !== undefined ? (prefix === "₹" ? Number(value).toLocaleString('en-IN') : String(value)) : '');
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-end">
-        <label className="font-medium text-sm text-slate-700">{label}</label>
-        <div className="relative flex items-center">
-          {prefix && <span className="absolute left-3 font-medium text-gray-500">{prefix}</span>}
+    <div className="bg-slate-800/40 hover:bg-slate-800/60 transition-colors rounded-xl sm:rounded-2xl p-2.5 sm:p-3 border border-white/5 space-y-1">
+      <div className="flex justify-between items-center gap-2">
+        <label className="text-[11px] sm:text-xs font-semibold text-slate-300 flex items-center gap-1.5 truncate">
+          {Icon && <Icon size={13} className="text-brand-mint shrink-0" />}
+          <span className="truncate">{label}</span>
+        </label>
+        <div className="relative flex items-center shrink-0">
+          {prefix && <span className="absolute left-2 text-[11px] sm:text-xs font-bold text-brand-mint">{prefix}</span>}
           <input 
             type="text" 
             suppressHydrationWarning
@@ -40,26 +207,27 @@ const InputSlider = ({ label, value, setter, min, max, step, prefix = "₹", suf
               const val = Number(cleaned);
               if (!isNaN(val)) setter(val);
             }}
-            className={`text-xl font-bold text-brand-deep bg-white ${prefix ? 'pl-7' : 'pl-3'} ${suffix ? 'pr-8' : 'pr-3'} py-1.5 rounded-md shadow-sm border border-gray-200 w-36 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all`}
+            className={`text-xs sm:text-sm font-black text-white bg-slate-950/80 ${prefix ? 'pl-4 sm:pl-5' : 'pl-2'} ${suffix ? 'pr-6 sm:pr-7' : 'pr-2'} py-0.5 sm:py-1 rounded-lg border border-emerald-500/20 w-24 sm:w-28 text-right focus:outline-none focus:border-brand-mint transition-all`}
           />
-          {suffix && <span className="absolute right-3 font-medium text-gray-500">{suffix}</span>}
+          {suffix && <span className="absolute right-2 text-[10px] sm:text-xs font-semibold text-slate-400">{suffix}</span>}
         </div>
       </div>
-      <div className="relative py-1">
-        <input 
-          type="range" 
-          min={min} 
-          max={max} 
-          step={step} 
-          value={value} 
-          onTouchStart={() => setIsInteracting(true)}
-          onTouchEnd={() => setIsInteracting(false)}
-          onChange={(e) => {
-            setTextValue(null);
-            setter(Number(e.target.value));
-          }} 
-          className="w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint touch-pan-y" 
-        />
+      
+      <DragOnlySlider
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(v) => {
+          setTextValue(null);
+          setter(v);
+        }}
+        ariaLabel={label}
+      />
+      
+      <div className="flex justify-between text-[9px] sm:text-[10px] text-slate-400 font-medium px-0.5">
+        <span>{minLabel}</span>
+        <span>{maxLabel}</span>
       </div>
     </div>
   );
@@ -130,49 +298,118 @@ export default function FinancialHealthView() {
 
 
   return (
-    <div className="grid lg:grid-cols-12 gap-8 items-start">
+    <div className="grid lg:grid-cols-12 gap-5 sm:gap-8 items-start">
       
-      {/* Left Col: Inputs */}
-      <div className="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
-        <h3 className="font-bold text-lg text-slate-800 border-b border-slate-100 pb-3">Financial Profile</h3>
+      {/* Left Col: Modernized Financial Profile & Loan Inputs with Drag-Only Sliders */}
+      <div className="lg:col-span-5 bg-gradient-to-b from-slate-900 via-slate-900 to-[#0e221d] text-white p-3.5 sm:p-5 rounded-3xl shadow-xl border border-white/10 space-y-3 sm:space-y-4 backdrop-blur-md">
         
-        <InputSlider label="Net Monthly Income" value={income} setter={setIncome} min={30000} max={1000000} step={5000} />
-        <InputSlider label="Existing EMIs" value={existingEmis} setter={setExistingEmis} min={0} max={500000} step={1000} />
-        <InputSlider label="Monthly Expenses" value={expenses} setter={setExpenses} min={10000} max={500000} step={5000} />
-        
-        <h3 className="font-bold text-lg text-slate-800 border-b border-slate-100 pb-3 mt-8">Loan Requirement</h3>
-        <InputSlider label="Desired Loan Amount" value={desiredLoan} setter={setDesiredLoan} min={1000000} max={50000000} step={100000} />
-        <InputSlider label="Expected Rate of Interest (ROI)" value={interestRate} setter={setInterestRate} min={6.5} max={16} step={0.05} prefix="" suffix="%" />
-        
-        <div className="space-y-4">
-          <div className="flex justify-between items-end">
-            <label className="font-medium text-sm text-slate-700">Preferred Tenure (Years)</label>
-            <div className="relative flex items-center">
-              <input 
-                type="number" 
-                value={tenure}
-                onChange={(e) => setTenure(Number(e.target.value))}
-                className="text-xl font-bold text-brand-deep bg-white pl-3 pr-14 py-1.5 rounded-md shadow-sm border border-gray-200 w-32 text-right focus:outline-none focus:ring-2 focus:ring-brand-mint transition-all"
-              />
-              <span className="absolute right-3 font-medium text-gray-500">Yrs</span>
-            </div>
+        {/* Section 1: Financial Profile */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-2">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-brand-mint shadow-[0_0_8px_#75e87a]" />
+            <h3 className="font-extrabold text-xs sm:text-sm text-white tracking-wide uppercase">Financial Profile</h3>
           </div>
-          <input type="range" min={5} max={30} step={1} value={tenure} onChange={(e) => setTenure(Number(e.target.value))} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-mint" />
+          <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Monthly Cashflow</span>
+        </div>
+        
+        <div className="space-y-2 sm:space-y-2.5">
+          <InputSliderGroup 
+            label="Net Monthly Income" 
+            value={income} 
+            setter={setIncome} 
+            min={30000} 
+            max={1000000} 
+            step={5000} 
+            minLabel="₹30K" 
+            maxLabel="₹10L" 
+            icon={IndianRupee} 
+          />
+          <InputSliderGroup 
+            label="Existing EMIs" 
+            value={existingEmis} 
+            setter={setExistingEmis} 
+            min={0} 
+            max={500000} 
+            step={1000} 
+            minLabel="₹0" 
+            maxLabel="₹5L" 
+            icon={Coins} 
+          />
+          <InputSliderGroup 
+            label="Monthly Expenses" 
+            value={expenses} 
+            setter={setExpenses} 
+            min={10000} 
+            max={500000} 
+            step={5000} 
+            minLabel="₹10K" 
+            maxLabel="₹5L" 
+            icon={CreditCard} 
+          />
+        </div>
+        
+        {/* Section 2: Loan Requirement */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-2 pt-2 sm:pt-3">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-brand-mint shadow-[0_0_8px_#75e87a]" />
+            <h3 className="font-extrabold text-xs sm:text-sm text-white tracking-wide uppercase">Loan Requirement</h3>
+          </div>
+          <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Target Terms</span>
+        </div>
+
+        <div className="space-y-2 sm:space-y-2.5">
+          <InputSliderGroup 
+            label="Desired Loan Amount" 
+            value={desiredLoan} 
+            setter={setDesiredLoan} 
+            min={1000000} 
+            max={50000000} 
+            step={100000} 
+            minLabel="₹10L" 
+            maxLabel="₹5Cr" 
+            icon={Home} 
+          />
+          <InputSliderGroup 
+            label="Expected ROI" 
+            value={interestRate} 
+            setter={setInterestRate} 
+            min={6.5} 
+            max={16} 
+            step={0.05} 
+            prefix="" 
+            suffix="%" 
+            minLabel="6.5%" 
+            maxLabel="16%" 
+            icon={Percent} 
+          />
+          <InputSliderGroup 
+            label="Preferred Tenure" 
+            value={tenure} 
+            setter={setTenure} 
+            min={5} 
+            max={30} 
+            step={1} 
+            prefix="" 
+            suffix="Yrs" 
+            minLabel="5 Yrs" 
+            maxLabel="30 Yrs" 
+            icon={Clock} 
+          />
         </div>
       </div>
 
       {/* Right Col: Affordability Dashboard */}
-      <div className="lg:col-span-7 space-y-6">
+      <div className="lg:col-span-7 space-y-4 sm:space-y-6">
         
         {/* Status Card with Animated Glow, Expressive Face Avatar, and Gauge */}
-        <div className={`p-6 sm:p-7 rounded-3xl border ${healthBorder} ${healthBg} shadow-sm relative overflow-hidden transition-all duration-500`}>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 relative z-10">
-            <div className="flex items-start sm:items-center gap-4">
+        <div className={`p-4 sm:p-7 rounded-3xl border ${healthBorder} ${healthBg} shadow-sm relative overflow-hidden transition-all duration-500`}>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-5 relative z-10">
+            <div className="flex items-start sm:items-center gap-3 sm:gap-4">
               
               {/* Expressive Animated Avatar Character (Realistic 3D Depth) */}
               <div className="relative shrink-0">
                 <div 
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2 shadow-xl transition-all duration-500 overflow-hidden ${
+                  className={`w-14 h-14 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2 shadow-xl transition-all duration-500 overflow-hidden ${
                     healthStatus === "Comfortable" 
                       ? "bg-gradient-to-b from-amber-50 via-emerald-100 to-emerald-200 border-emerald-400 shadow-emerald-500/25" 
                       : healthStatus === "Stretched"
@@ -387,98 +624,98 @@ export default function FinancialHealthView() {
         </div>
 
         {/* Affordability Spectrum with Active Zone Highlight */}
-        <div className="bg-white p-6 sm:p-7 rounded-3xl shadow-sm border border-slate-200">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-white p-4 sm:p-7 rounded-3xl shadow-sm border border-slate-200">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
             <div>
-              <h3 className="font-extrabold text-lg text-slate-900">Your Affordability Range</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Calculated in real-time across institutional lending limits</p>
+              <h3 className="font-extrabold text-sm sm:text-lg text-slate-900">Your Affordability Range</h3>
+              <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5">Calculated in real-time across institutional lending limits</p>
             </div>
-            <span className="text-xs font-bold text-brand-mint bg-brand-mint/10 px-3 py-1 rounded-full border border-brand-mint/20">
+            <span className="text-[10px] sm:text-xs font-bold text-brand-mint bg-brand-mint/10 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-brand-mint/20">
               Live FOIR Analysis
             </span>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {/* 1. Comfortable */}
-            <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-5 ${
+            <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-3.5 sm:p-5 ${
               healthStatus === "Comfortable" 
                 ? "border-emerald-400 bg-emerald-50/80 shadow-md shadow-emerald-500/10 ring-2 ring-emerald-400/30 scale-[1.01]" 
                 : "border-slate-100 bg-slate-50/50 hover:bg-slate-50 opacity-90"
             }`}>
               {healthStatus === "Comfortable" && (
-                <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-bl-xl shadow-xs">
+                <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2.5 sm:px-3 py-0.5 rounded-bl-xl shadow-xs">
                   Active Zone
                 </div>
               )}
               <div className="flex justify-between items-center relative z-10">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                    <h4 className="font-bold text-emerald-950 text-base">Comfortable Zone</h4>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-500"></span>
+                    <h4 className="font-bold text-emerald-950 text-xs sm:text-base">Comfortable Zone</h4>
                   </div>
-                  <p className="text-xs text-emerald-700 font-medium mt-1">Safe repayment buffer (Up to 70% FOIR)</p>
+                  <p className="text-[10px] sm:text-xs text-emerald-700 font-medium mt-0.5 sm:mt-1">Safe repayment buffer (Up to 70% FOIR)</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight">
+                  <p className="text-base sm:text-2xl font-black text-emerald-800 tracking-tight">
                     ₹{Math.round(comfortableLoan).toLocaleString('en-IN')}
                   </p>
-                  <p className="text-xs text-emerald-600 font-semibold mt-0.5">Up to ₹{Math.round(comfortableEmi).toLocaleString('en-IN')}/mo EMI</p>
+                  <p className="text-[10px] sm:text-xs text-emerald-600 font-semibold mt-0.5">Up to ₹{Math.round(comfortableEmi).toLocaleString('en-IN')}/mo EMI</p>
                 </div>
               </div>
             </div>
 
             {/* 2. Stretched */}
-            <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-5 ${
+            <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-3.5 sm:p-5 ${
               healthStatus === "Stretched" 
                 ? "border-amber-400 bg-amber-50/80 shadow-md shadow-amber-500/10 ring-2 ring-amber-400/30 scale-[1.01]" 
                 : "border-slate-100 bg-slate-50/50 hover:bg-slate-50 opacity-90"
             }`}>
               {healthStatus === "Stretched" && (
-                <div className="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-bl-xl shadow-xs">
+                <div className="absolute top-0 right-0 bg-amber-500 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2.5 sm:px-3 py-0.5 rounded-bl-xl shadow-xs">
                   Active Zone
                 </div>
               )}
               <div className="flex justify-between items-center relative z-10">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                    <h4 className="font-bold text-amber-950 text-base">Stretched Zone</h4>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-amber-500"></span>
+                    <h4 className="font-bold text-amber-950 text-xs sm:text-base">Stretched Zone</h4>
                   </div>
-                  <p className="text-xs text-amber-700 font-medium mt-1">High approval chance, tighter budget (70% - 80% FOIR)</p>
+                  <p className="text-[10px] sm:text-xs text-amber-700 font-medium mt-0.5 sm:mt-1">High approval chance, tighter budget (70% - 80% FOIR)</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl sm:text-2xl font-black text-amber-800 tracking-tight">
+                  <p className="text-base sm:text-2xl font-black text-amber-800 tracking-tight">
                     ₹{Math.round(stretchedLoan).toLocaleString('en-IN')}
                   </p>
-                  <p className="text-xs text-amber-600 font-semibold mt-0.5">Up to ₹{Math.round(stretchedEmi).toLocaleString('en-IN')}/mo EMI</p>
+                  <p className="text-[10px] sm:text-xs text-amber-600 font-semibold mt-0.5">Up to ₹{Math.round(stretchedEmi).toLocaleString('en-IN')}/mo EMI</p>
                 </div>
               </div>
             </div>
 
             {/* 3. Max Limit */}
-            <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-5 ${
+            <div className={`relative overflow-hidden rounded-2xl border transition-all duration-300 p-3.5 sm:p-5 ${
               healthStatus === "Critical" 
                 ? "border-rose-400 bg-rose-50/80 shadow-md shadow-rose-500/10 ring-2 ring-rose-400/30 scale-[1.01]" 
                 : "border-slate-100 bg-slate-50/50 hover:bg-slate-50 opacity-90"
             }`}>
               {healthStatus === "Critical" && (
-                <div className="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-black uppercase tracking-wider px-3 py-0.5 rounded-bl-xl shadow-xs">
+                <div className="absolute top-0 right-0 bg-rose-500 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2.5 sm:px-3 py-0.5 rounded-bl-xl shadow-xs">
                   Active Zone
                 </div>
               )}
               <div className="flex justify-between items-center relative z-10">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                    <h4 className="font-bold text-rose-950 text-base">Critical Zone (Absolute Limit)</h4>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-rose-500"></span>
+                    <h4 className="font-bold text-rose-950 text-xs sm:text-base">Critical Zone (Absolute Limit)</h4>
                   </div>
-                  <p className="text-xs text-rose-700 font-medium mt-1">Exceeds standard limits (&gt; 80% FOIR) - requires co-borrower</p>
+                  <p className="text-[10px] sm:text-xs text-rose-700 font-medium mt-0.5 sm:mt-1">Exceeds standard limits (&gt; 80% FOIR) - requires co-borrower</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl sm:text-2xl font-black text-rose-800 tracking-tight">
+                  <p className="text-base sm:text-2xl font-black text-rose-800 tracking-tight">
                     ₹{Math.round(maxLoan).toLocaleString('en-IN')}
                   </p>
-                  <p className="text-xs text-rose-600 font-semibold mt-0.5">Max ₹{Math.round(maxEmi).toLocaleString('en-IN')}/mo EMI</p>
+                  <p className="text-[10px] sm:text-xs text-rose-600 font-semibold mt-0.5">Max ₹{Math.round(maxEmi).toLocaleString('en-IN')}/mo EMI</p>
                 </div>
               </div>
             </div>
@@ -486,36 +723,36 @@ export default function FinancialHealthView() {
         </div>
 
         {/* Dynamic Cashflow Breakdown with Fluid Percentages */}
-        <div className="bg-white p-6 sm:p-7 rounded-3xl shadow-sm border border-slate-200">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white p-4 sm:p-7 rounded-3xl shadow-sm border border-slate-200">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
             <div>
-              <h3 className="font-extrabold text-lg text-slate-900">Post-Loan Monthly Cashflow</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Visual breakdown of where your monthly income goes</p>
+              <h3 className="font-extrabold text-sm sm:text-lg text-slate-900">Post-Loan Monthly Cashflow</h3>
+              <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5">Visual breakdown of where your monthly income goes</p>
             </div>
             <div className="text-right">
-              <span className="text-xs text-slate-400">Total Income: </span>
-              <span className="text-xs font-bold text-slate-900">₹{income.toLocaleString('en-IN')}</span>
+              <span className="text-[10px] sm:text-xs text-slate-400">Total Income: </span>
+              <span className="text-[10px] sm:text-xs font-bold text-slate-900">₹{income.toLocaleString('en-IN')}</span>
             </div>
           </div>
           
           {/* Animated Multi-segment Bar */}
-          <div className="flex h-9 w-full rounded-2xl overflow-hidden p-1 bg-slate-100 border border-slate-200/80 gap-1 transition-all">
+          <div className="flex h-7 sm:h-9 w-full rounded-xl sm:rounded-2xl overflow-hidden p-1 bg-slate-100 border border-slate-200/80 gap-1 transition-all">
             <div 
-              className="bg-slate-400 rounded-xl transition-all duration-500 flex items-center justify-center text-[10px] font-bold text-white shadow-xs overflow-hidden" 
+              className="bg-slate-400 rounded-lg sm:rounded-xl transition-all duration-500 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-white shadow-xs overflow-hidden" 
               style={{ width: `${Math.min(100, (existingEmis / income) * 100)}%` }}
               title={`Existing EMIs: ₹${existingEmis.toLocaleString('en-IN')}`}
             >
               {(existingEmis / income) > 0.08 && `${Math.round((existingEmis / income) * 100)}%`}
             </div>
             <div 
-              className="bg-amber-400 rounded-xl transition-all duration-500 flex items-center justify-center text-[10px] font-bold text-amber-950 shadow-xs overflow-hidden" 
+              className="bg-amber-400 rounded-lg sm:rounded-xl transition-all duration-500 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-amber-950 shadow-xs overflow-hidden" 
               style={{ width: `${Math.min(100, (expenses / income) * 100)}%` }}
               title={`Expenses: ₹${expenses.toLocaleString('en-IN')}`}
             >
               {(expenses / income) > 0.08 && `${Math.round((expenses / income) * 100)}%`}
             </div>
             <div 
-              className="bg-emerald-500 rounded-xl transition-all duration-500 flex items-center justify-center text-[10px] font-bold text-white shadow-xs overflow-hidden" 
+              className="bg-emerald-500 rounded-lg sm:rounded-xl transition-all duration-500 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-white shadow-xs overflow-hidden" 
               style={{ width: `${Math.min(100, (desiredEmi / income) * 100)}%` }}
               title={`New EMI: ₹${Math.round(desiredEmi).toLocaleString('en-IN')}`}
             >
@@ -523,7 +760,7 @@ export default function FinancialHealthView() {
             </div>
             {leftoverCash > 0 && (
               <div 
-                className="bg-brand-mint/40 rounded-xl transition-all duration-500 flex items-center justify-center text-[10px] font-bold text-emerald-900 shadow-xs overflow-hidden" 
+                className="bg-brand-mint/40 rounded-lg sm:rounded-xl transition-all duration-500 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-emerald-900 shadow-xs overflow-hidden" 
                 style={{ width: `${Math.min(100, (leftoverCash / income) * 100)}%` }}
                 title={`Leftover Surplus: ₹${Math.round(leftoverCash).toLocaleString('en-IN')}`}
               >
@@ -532,33 +769,33 @@ export default function FinancialHealthView() {
             )}
           </div>
           
-          <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="w-3.5 h-3.5 rounded-md bg-slate-400 shrink-0"></div>
+          <div className="mt-4 sm:mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs">
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-md bg-slate-400 shrink-0"></div>
               <div>
-                <p className="text-[10px] text-slate-400 font-medium">Existing EMIs</p>
-                <p className="font-bold text-slate-800">₹{existingEmis.toLocaleString('en-IN')}</p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium">Existing EMIs</p>
+                <p className="text-[11px] sm:text-xs font-bold text-slate-800">₹{existingEmis.toLocaleString('en-IN')}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="w-3.5 h-3.5 rounded-md bg-amber-400 shrink-0"></div>
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-md bg-amber-400 shrink-0"></div>
               <div>
-                <p className="text-[10px] text-slate-400 font-medium">Monthly Living</p>
-                <p className="font-bold text-slate-800">₹{expenses.toLocaleString('en-IN')}</p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium">Monthly Living</p>
+                <p className="text-[11px] sm:text-xs font-bold text-slate-800">₹{expenses.toLocaleString('en-IN')}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="w-3.5 h-3.5 rounded-md bg-emerald-500 shrink-0"></div>
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-md bg-emerald-500 shrink-0"></div>
               <div>
-                <p className="text-[10px] text-slate-400 font-medium">New Loan EMI</p>
-                <p className="font-bold text-slate-800">₹{Math.round(desiredEmi).toLocaleString('en-IN')}</p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium">New Loan EMI</p>
+                <p className="text-[11px] sm:text-xs font-bold text-slate-800">₹{Math.round(desiredEmi).toLocaleString('en-IN')}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-100">
-              <div className="w-3.5 h-3.5 rounded-md bg-brand-mint/40 border border-emerald-300 shrink-0"></div>
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-md bg-brand-mint/40 border border-emerald-300 shrink-0"></div>
               <div>
-                <p className="text-[10px] text-slate-400 font-medium">Leftover Savings</p>
-                <p className={`font-bold ${leftoverCash < 0 ? 'text-rose-600' : 'text-emerald-700'}`}>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium">Leftover Savings</p>
+                <p className={`text-[11px] sm:text-xs font-bold ${leftoverCash < 0 ? 'text-rose-600' : 'text-emerald-700'}`}>
                   ₹{Math.round(leftoverCash).toLocaleString('en-IN')}
                 </p>
               </div>

@@ -1296,7 +1296,7 @@ export function StampDutyCalculator() {
   ]);
 
   useEffect(() => {
-    fetch("/api/admin/stamp-duty")
+    fetch("/api/admin/stamp-duty", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.states && Array.isArray(data.states) && data.states.length > 0) {
