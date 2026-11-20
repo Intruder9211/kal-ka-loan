@@ -229,6 +229,8 @@ export default function FAQ() {
                   <button
                     type="button"
                     onClick={() => toggleAccordion(faq.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`mobile-faq-answer-${faq.id}`}
                     className="w-full p-4 flex items-center justify-between text-left gap-3"
                   >
                     <span className="font-bold text-xs sm:text-sm text-stone-900 leading-snug">
@@ -247,7 +249,10 @@ export default function FAQ() {
                   </button>
 
                   {isOpen && (
-                    <div className="px-4 pb-4 pt-1 text-xs text-stone-600 leading-relaxed border-t border-stone-100 font-medium">
+                    <div 
+                      id={`mobile-faq-answer-${faq.id}`}
+                      className="px-4 pb-4 pt-1 text-xs text-stone-600 leading-relaxed border-t border-stone-100 font-medium"
+                    >
                       {faq.a}
                     </div>
                   )}
@@ -357,22 +362,27 @@ export default function FAQ() {
                   <h3 className="text-lg font-black text-brand-deep tracking-tight">
                     {currentCategoryData.label} FAQs
                   </h3>
-                  <p className="text-xs text-stone-400">
+                  <p className="text-xs text-stone-500 font-medium">
                     Showing all {activeFaqs.length} questions for {currentCategoryData.label}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5">
-                {CATEGORIES.map((_, i) => (
+              <div className="flex items-center gap-1.5" role="tablist" aria-label="FAQ category selector">
+                {CATEGORIES.map((cat, i) => (
                   <button
                     key={i}
                     type="button"
                     onClick={() => setActiveCategoryIndex(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === activeCategoryIndex ? "w-6 bg-brand-mint" : "w-1.5 bg-stone-200 hover:bg-stone-300"
+                    aria-label={`Show ${cat.label} FAQs`}
+                    aria-selected={i === activeCategoryIndex}
+                    role="tab"
+                    className={`h-2 rounded-full transition-all duration-300 min-h-[24px] min-w-[24px] flex items-center justify-center ${
+                      i === activeCategoryIndex ? "w-7 bg-brand-mint" : "w-2 bg-stone-200 hover:bg-stone-300"
                     }`}
-                  />
+                  >
+                    <span className="sr-only">Show {cat.label} FAQs</span>
+                  </button>
                 ))}
               </div>
             </div>
@@ -400,6 +410,8 @@ export default function FAQ() {
                     <button
                       type="button"
                       onClick={() => toggleAccordion(faq.id)}
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-answer-${faq.id}`}
                       className="w-full p-4.5 flex items-center justify-between text-left gap-4 group"
                     >
                       <span className="font-bold text-sm sm:text-base text-stone-900 group-hover:text-emerald-900 transition-colors leading-snug">
@@ -418,6 +430,7 @@ export default function FAQ() {
                     </button>
 
                     <div
+                      id={`faq-answer-${faq.id}`}
                       className={`transition-all duration-300 ease-in-out overflow-hidden ${
                         isOpen
                           ? "max-h-[500px] px-4.5 pb-4.5 pt-1 text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-100 opacity-100 font-medium"

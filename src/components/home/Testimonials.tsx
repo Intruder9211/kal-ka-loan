@@ -133,7 +133,7 @@ export default function Testimonials() {
                   <div className="text-[11px] text-emerald-700 font-semibold truncate mt-0.5">
                     {review.context}
                   </div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">
+                  <div className="text-[11px] text-slate-500 mt-0.5">
                     {review.city}
                   </div>
                 </div>

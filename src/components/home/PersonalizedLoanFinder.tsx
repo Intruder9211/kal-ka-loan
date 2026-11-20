@@ -34,7 +34,7 @@ export default function PersonalizedLoanFinder() {
   return (
     <div className="relative rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col h-full border border-white/50 bg-white/85 backdrop-blur-xl">
       <div className="bg-brand-deep/90 backdrop-blur-md px-6 py-5 border-b border-white/10">
-        <h3 className="text-xl font-bold text-white mb-1">Personalized Loan Finder</h3>
+        <h2 className="text-xl font-bold text-white mb-1">Personalized Loan Finder</h2>
         <p className="text-sm text-brand-mint font-medium">Find your perfect match in 60 seconds</p>
       </div>
 
@@ -49,12 +49,14 @@ export default function PersonalizedLoanFinder() {
       <div className="p-6 flex-1 flex flex-col">
         {step === 1 && (
           <div className="space-y-4 animate-fade-in flex-1">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">What do you need?</h4>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">What do you need?</h3>
             
             <div className="space-y-3">
-              <label className="block text-sm font-medium text-gray-700">Loan Type</label>
+              <label htmlFor="finder-loan-type" className="block text-sm font-medium text-gray-700">Loan Type</label>
               <div className="relative">
                 <button 
+                  id="finder-loan-type"
+                  aria-label="Select Loan Type"
                   type="button"
                   onClick={() => setDropdownOpen(prev => prev === 'loanType' ? null : 'loanType')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-mint focus:border-brand-mint outline-none transition-all flex justify-between items-center"
@@ -88,12 +90,14 @@ export default function PersonalizedLoanFinder() {
             </div>
 
             <div className="space-y-3">
-              <label className="block text-sm font-medium text-gray-700">Loan Amount (₹)</label>
+              <label htmlFor="finder-amount" className="block text-sm font-medium text-gray-700">Loan Amount (₹)</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <IndianRupee size={18} className="text-gray-400" />
                 </div>
                 <input 
+                  id="finder-amount"
+                  aria-label="Loan Amount in Rupees"
                   type="number" 
                   className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-mint focus:border-brand-mint outline-none transition-all"
                   value={formData.amount}
@@ -107,10 +111,10 @@ export default function PersonalizedLoanFinder() {
 
         {step === 2 && (
           <div className="space-y-4 animate-fade-in flex-1">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Your Financial Profile</h4>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Financial Profile</h3>
             
             <div className="space-y-3">
-              <label className="block text-sm font-medium text-gray-700">Employment Type</label>
+              <span className="block text-sm font-medium text-gray-700">Employment Type</span>
               <div className="grid grid-cols-2 gap-3">
                 <button 
                   type="button"
@@ -138,12 +142,14 @@ export default function PersonalizedLoanFinder() {
             </div>
 
             <div className="space-y-3 pt-2">
-              <label className="block text-sm font-medium text-gray-700">Monthly Net Income (₹)</label>
+              <label htmlFor="finder-income" className="block text-sm font-medium text-gray-700">Monthly Net Income (₹)</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <IndianRupee size={18} className="text-gray-400" />
                 </div>
                 <input 
+                  id="finder-income"
+                  aria-label="Monthly Net Income in Rupees"
                   type="number" 
                   className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-mint focus:border-brand-mint outline-none transition-all"
                   value={formData.income}
@@ -157,15 +163,17 @@ export default function PersonalizedLoanFinder() {
 
         {step === 3 && (
           <div className="space-y-4 animate-fade-in flex-1">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Final Details</h4>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Final Details</h3>
             
             <div className="space-y-3">
-              <label className="block text-sm font-medium text-gray-700">Preferred Tenure (Years)</label>
+              <label htmlFor="finder-tenure" className="block text-sm font-medium text-gray-700">Preferred Tenure (Years)</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
                   <Calendar size={18} className="text-gray-400" />
                 </div>
                 <button 
+                  id="finder-tenure"
+                  aria-label="Select Preferred Tenure in Years"
                   type="button"
                   onClick={() => setDropdownOpen(prev => prev === 'tenure' ? null : 'tenure')}
                   className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-mint focus:border-brand-mint outline-none transition-all flex justify-between items-center"
@@ -199,12 +207,14 @@ export default function PersonalizedLoanFinder() {
             </div>
 
             <div className="space-y-3 pt-2">
-              <label className="block text-sm font-medium text-gray-700">Existing Monthly EMIs (₹)</label>
+              <label htmlFor="finder-existing-emi" className="block text-sm font-medium text-gray-700">Existing Monthly EMIs (₹)</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <Calculator size={18} className="text-gray-400" />
                 </div>
                 <input 
+                  id="finder-existing-emi"
+                  aria-label="Existing Monthly EMIs in Rupees"
                   type="number" 
                   className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-mint focus:border-brand-mint outline-none transition-all"
                   value={formData.existingEmi}
@@ -222,7 +232,7 @@ export default function PersonalizedLoanFinder() {
             <div className="w-16 h-16 bg-brand-mint/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Calculator size={32} className="text-brand-mint" />
             </div>
-            <h4 className="text-2xl font-bold text-gray-900">Ready to Compare?</h4>
+            <h3 className="text-2xl font-bold text-gray-900">Ready to Compare?</h3>
             <p className="text-gray-600 text-sm max-w-xs mx-auto">
               We'll analyze your profile against 30+ lenders to find the most suitable options for you.
             </p>

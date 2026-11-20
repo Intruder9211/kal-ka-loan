@@ -102,6 +102,8 @@ export default function Chatbot() {
 
       {/* Chat Window */}
       <div 
+        role="dialog"
+        aria-label="Money Viora Chat Assistant"
         className={cn(
           "fixed bottom-0 md:bottom-8 right-0 md:right-8 z-[9000] w-full md:w-[380px] h-[85vh] md:h-[600px] bg-white md:rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-500 ease-out origin-bottom-right border border-gray-200",
           isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-0 opacity-0 translate-y-20 pointer-events-none"
@@ -120,6 +122,7 @@ export default function Chatbot() {
           </div>
           <button 
             onClick={() => setIsOpen(false)}
+            aria-label="Close Chat Window"
             className="p-2 hover:bg-white/10 rounded-full transition-colors"
           >
             <X size={20} />
@@ -159,6 +162,8 @@ export default function Chatbot() {
           <form onSubmit={handleSend} className="flex gap-2 relative">
             <input 
               type="text" 
+              id="chatbot-message-input"
+              aria-label="Ask about loans or calculate EMI"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about loans or calculate EMI..." 
@@ -167,6 +172,7 @@ export default function Chatbot() {
             <button 
               type="submit"
               disabled={!input.trim() || isLoading}
+              aria-label="Send chat message"
               className="absolute right-1 top-1 bottom-1 w-10 bg-brand-deep text-brand-mint rounded-full flex items-center justify-center disabled:opacity-50 hover:bg-brand-deep/90 transition-colors"
             >
               {isLoading ? (

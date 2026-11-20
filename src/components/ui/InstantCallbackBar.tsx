@@ -60,6 +60,7 @@ export default function InstantCallbackBar() {
         <div className="bg-brand-deep/95 text-white backdrop-blur-md border border-brand-mint/30 rounded-full p-1.5 pr-4 shadow-xl flex items-center gap-3">
           <a
             href="tel:+917303061282"
+            aria-label="Give Missed Call at +91 7303061282"
             className="w-9 h-9 rounded-full bg-brand-mint text-brand-deep flex items-center justify-center font-bold hover:scale-105 active:scale-95 transition-transform"
             title="Give Missed Call"
           >
@@ -67,13 +68,14 @@ export default function InstantCallbackBar() {
           </a>
           <div className="text-left hidden sm:block">
             <p className="text-[10px] text-brand-mint font-bold uppercase tracking-wider">Missed Call Service</p>
-            <a href="tel:+917303061282" className="text-xs font-extrabold hover:text-brand-mint transition-colors">
+            <a href="tel:+917303061282" aria-label="Call +91 7303061282" className="text-xs font-extrabold hover:text-brand-mint transition-colors">
               +91 73030 61282
             </a>
           </div>
           <span className="hidden sm:inline-block w-px h-6 bg-white/20"></span>
           <button
             onClick={() => setModalOpen(true)}
+            aria-label="Book Doorstep Visit"
             className="text-xs font-bold text-white hover:text-brand-mint flex items-center gap-1.5 transition-colors"
           >
             <Calendar size={14} className="text-brand-mint" />
@@ -84,7 +86,12 @@ export default function InstantCallbackBar() {
 
       {/* Doorstep Visit Booking Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4">
+        <div 
+          role="dialog" 
+          aria-modal="true" 
+          aria-labelledby="doorstep-modal-title"
+          className="fixed inset-0 z-[10001] flex items-center justify-center p-4"
+        >
           <div
             className="absolute inset-0 bg-brand-deep/80 backdrop-blur-sm"
             onClick={() => {
@@ -99,6 +106,7 @@ export default function InstantCallbackBar() {
                 setModalOpen(false);
                 setSubmitted(false);
               }}
+              aria-label="Close doorstep booking modal"
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center"
             >
               <X size={16} />
@@ -109,7 +117,7 @@ export default function InstantCallbackBar() {
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3 shadow-inner">
                   <CheckCircle2 size={36} />
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-1">Doorstep Visit Confirmed!</h3>
+                <h3 id="doorstep-modal-title" className="text-2xl font-black text-slate-900 mb-1">Doorstep Visit Confirmed!</h3>
                 <p className="text-xs text-slate-600 mb-5 leading-relaxed">
                   Our certified loan advisor will visit your address as requested. Confirmation has also been dispatched.
                 </p>
@@ -151,7 +159,7 @@ export default function InstantCallbackBar() {
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-mint/15 text-brand-mint text-xs font-bold uppercase tracking-wider mb-2">
                     <MapPin size={13} /> At Your Home / Office
                   </div>
-                  <h3 className="text-2xl font-extrabold text-slate-900">Book Doorstep Loan Expert</h3>
+                  <h3 id="doorstep-modal-title" className="text-2xl font-extrabold text-slate-900">Book Doorstep Loan Expert</h3>
                   <p className="text-xs text-slate-500 mt-1">
                     Skip bank queues. Our certified advisor will come to you with loan comparison sheets and collect documents.
                   </p>
@@ -159,64 +167,76 @@ export default function InstantCallbackBar() {
 
                 <form onSubmit={handleDoorstepSubmit} className="space-y-3.5">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Your Name</label>
+                    <label htmlFor="doorstep-name" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Your Name</label>
                     <input
                       required
+                      id="doorstep-name"
                       name="name"
                       type="text"
                       placeholder="e.g. Rahul Sharma"
+                      aria-label="Your Name"
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Mobile No.</label>
+                      <label htmlFor="doorstep-mobile" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Mobile No.</label>
                       <input
                         required
+                        id="doorstep-mobile"
                         name="mobile"
                         type="tel"
                         pattern="[0-9]{10}"
                         placeholder="10-digit number"
+                        aria-label="Mobile Number"
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Email Address</label>
+                      <label htmlFor="doorstep-email" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Email Address</label>
                       <input
+                        id="doorstep-email"
                         name="email"
                         type="email"
                         placeholder="name@email.com"
+                        aria-label="Email Address"
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">City / Locality</label>
+                    <label htmlFor="doorstep-city" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">City / Locality</label>
                     <input
                       required
+                      id="doorstep-city"
                       name="city"
                       type="text"
                       placeholder="e.g. Noida Sec 62, Delhi NCR"
+                      aria-label="City or Locality"
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Preferred Date</label>
+                      <label htmlFor="doorstep-date" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Preferred Date</label>
                       <input
                         required
+                        id="doorstep-date"
                         name="date"
                         type="date"
+                        aria-label="Preferred Date"
                         className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Time Slot</label>
+                      <label htmlFor="doorstep-time" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Time Slot</label>
                       <select
+                        id="doorstep-time"
                         name="time"
+                        aria-label="Time Slot"
                         className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none bg-white"
                       >
                         <option value="10:00 AM - 01:00 PM">Morning (10 AM - 1 PM)</option>
@@ -227,11 +247,13 @@ export default function InstantCallbackBar() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Expected Loan Amount</label>
+                    <label htmlFor="doorstep-loan-amount" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">Expected Loan Amount</label>
                     <input
+                      id="doorstep-loan-amount"
                       name="loanAmount"
                       type="number"
                       placeholder="e.g. 5000000"
+                      aria-label="Expected Loan Amount"
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-brand-mint outline-none"
                     />
                   </div>

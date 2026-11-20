@@ -389,10 +389,10 @@ html.skip-loader #moneyviora-site-loader { display: none !important; }
 
 @keyframes orbShimmerSweep {
   0% {
-    left: -150%;
+    transform: translateX(-150%) skewX(-25deg);
   }
   100% {
-    left: 200%;
+    transform: translateX(350%) skewX(-25deg);
   }
 }
 
@@ -480,7 +480,7 @@ html.skip-loader #moneyviora-site-loader { display: none !important; }
   content: "";
   position: absolute;
   top: 0;
-  left: -150%;
+  left: 0;
   width: 50%;
   height: 100%;
   background: linear-gradient(
@@ -489,7 +489,8 @@ html.skip-loader #moneyviora-site-loader { display: none !important; }
     rgba(255, 255, 255, 0.4) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  transform: skewX(-25deg);
+  transform: translateX(-150%) skewX(-25deg);
+  will-change: transform;
   z-index: 2;
   pointer-events: none;
 }

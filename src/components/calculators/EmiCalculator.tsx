@@ -645,13 +645,15 @@ export default function EmiCalculator() {
             {/* Slider 1: Loan Amount */}
             <div className="bg-slate-900/40 rounded-xl p-2 sm:p-2.5 border border-white/5">
               <div className="flex justify-between items-center mb-0.5">
-                <label className="text-xs font-semibold text-slate-300 flex items-center gap-1">
+                <label htmlFor="mobile-emi-principal" className="text-xs font-semibold text-slate-300 flex items-center gap-1 cursor-pointer">
                   <Coins size={12} className="text-brand-mint" />
                   Loan Amount
                 </label>
                 <div className="relative flex items-center">
                   <span className="absolute left-2 text-xs font-semibold text-slate-400">₹</span>
                   <input
+                    id="mobile-emi-principal"
+                    aria-label="Loan Amount in Rupees"
                     type="text"
                     value={principal ? principal.toLocaleString("en-IN") : ""}
                     onChange={(e) => {
@@ -699,12 +701,14 @@ export default function EmiCalculator() {
             {/* Slider 2: Interest Rate */}
             <div className="bg-slate-900/40 rounded-xl p-2 sm:p-2.5 border border-white/5">
               <div className="flex justify-between items-center mb-0.5">
-                <label className="text-xs font-semibold text-slate-300 flex items-center gap-1">
+                <label htmlFor="mobile-emi-rate" className="text-xs font-semibold text-slate-300 flex items-center gap-1 cursor-pointer">
                   <Percent size={12} className="text-brand-mint" />
                   Interest Rate (p.a.)
                 </label>
                 <div className="relative flex items-center">
                   <input
+                    id="mobile-emi-rate"
+                    aria-label="Interest Rate per annum"
                     type="number"
                     step="0.05"
                     value={rate}
@@ -751,12 +755,14 @@ export default function EmiCalculator() {
             {/* Slider 3: Loan Tenure */}
             <div className="bg-slate-900/40 rounded-xl p-2 sm:p-2.5 border border-white/5">
               <div className="flex justify-between items-center mb-0.5">
-                <label className="text-xs font-semibold text-slate-300 flex items-center gap-1">
+                <label htmlFor="mobile-emi-tenure" className="text-xs font-semibold text-slate-300 flex items-center gap-1 cursor-pointer">
                   <Clock size={12} className="text-brand-mint" />
                   Loan Tenure
                 </label>
                 <div className="relative flex items-center">
                   <input
+                    id="mobile-emi-tenure"
+                    aria-label="Loan Tenure in years"
                     type="number"
                     value={tenureYears}
                     onChange={(e) => setTenureYears(Number(e.target.value))}
@@ -845,13 +851,15 @@ export default function EmiCalculator() {
             {/* Slider 1: Loan Amount */}
             <div className="bg-slate-900/50 rounded-2xl p-5 border border-white/5 space-y-3">
               <div className="flex justify-between items-center">
-                <label className="font-semibold text-sm text-slate-200 flex items-center gap-2">
+                <label htmlFor="desktop-emi-principal" className="font-semibold text-sm text-slate-200 flex items-center gap-2 cursor-pointer">
                   <Coins size={16} className="text-brand-mint" />
                   Loan Amount
                 </label>
                 <div className="relative flex items-center">
                   <span className="absolute left-3 font-semibold text-slate-400">₹</span>
                   <input
+                    id="desktop-emi-principal"
+                    aria-label="Loan Amount in Rupees"
                     type="text"
                     value={principal ? principal.toLocaleString("en-IN") : ""}
                     onChange={(e) => {
@@ -898,12 +906,14 @@ export default function EmiCalculator() {
             {/* Slider 2: Interest Rate */}
             <div className="bg-slate-900/50 rounded-2xl p-5 border border-white/5 space-y-3">
               <div className="flex justify-between items-center">
-                <label className="font-semibold text-sm text-slate-200 flex items-center gap-2">
+                <label htmlFor="desktop-emi-rate" className="font-semibold text-sm text-slate-200 flex items-center gap-2 cursor-pointer">
                   <Percent size={16} className="text-brand-mint" />
                   Interest Rate (p.a.)
                 </label>
                 <div className="relative flex items-center">
                   <input
+                    id="desktop-emi-rate"
+                    aria-label="Interest Rate per annum"
                     type="number"
                     step="0.05"
                     value={rate}
@@ -949,12 +959,14 @@ export default function EmiCalculator() {
             {/* Slider 3: Loan Tenure */}
             <div className="bg-slate-900/50 rounded-2xl p-5 border border-white/5 space-y-3">
               <div className="flex justify-between items-center">
-                <label className="font-semibold text-sm text-slate-200 flex items-center gap-2">
+                <label htmlFor="desktop-emi-tenure" className="font-semibold text-sm text-slate-200 flex items-center gap-2 cursor-pointer">
                   <Clock size={16} className="text-brand-mint" />
                   Loan Tenure
                 </label>
                 <div className="relative flex items-center">
                   <input
+                    id="desktop-emi-tenure"
+                    aria-label="Loan Tenure in years"
                     type="number"
                     value={tenureYears}
                     onChange={(e) => setTenureYears(Number(e.target.value))}

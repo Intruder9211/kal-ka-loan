@@ -23,17 +23,21 @@ export default function FinalCTA() {
           <div className="flex gap-4 justify-center">
             <a 
               href="tel:+917303061282"
+              aria-label="Call loan specialist at +91 7303061282"
               className="btn-interactive w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 border border-white/20"
             >
               <Phone size={24} />
+              <span className="sr-only">Call +91 7303061282</span>
             </a>
             <a 
               href="https://wa.me/917303061282"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Chat with loan advisor on WhatsApp"
               className="btn-interactive w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-[#25D366] hover:bg-white/20 border border-white/20"
             >
               <MessageCircle size={24} />
+              <span className="sr-only">Chat on WhatsApp</span>
             </a>
           </div>
         </div>

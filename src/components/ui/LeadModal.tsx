@@ -45,7 +45,12 @@ export default function LeadModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+    <div 
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Eligibility Application Modal"
+    >
       <div 
         className="absolute inset-0 bg-brand-deep/80 backdrop-blur-sm transition-opacity"
         onClick={closeModal}
@@ -54,6 +59,7 @@ export default function LeadModal() {
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-up z-10">
         <button 
           onClick={closeModal}
+          aria-label="Close application form"
           className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-500 transition-colors"
         >
           <X size={18} />

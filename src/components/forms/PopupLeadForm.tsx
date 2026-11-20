@@ -136,19 +136,19 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
         {/* Name & Mobile */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Full Name</label>
+            <label htmlFor="lead-name" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">Full Name</label>
             <div className="relative">
               <User size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required name="name" type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Amit Kumar" />
+              <input id="lead-name" aria-label="Full Name" required name="name" type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Amit Kumar" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">
+            <label htmlFor="lead-mobile" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">
               {residentType === "NRI" ? "Overseas Mobile" : "Mobile No."}
             </label>
             <div className="relative flex">
               {residentType === "NRI" ? (
-                <select name="countryCode" defaultValue="+971" className="w-20 pl-2 pr-1 py-2.5 rounded-l-lg border border-r-0 border-gray-300 bg-slate-50 text-xs font-semibold text-slate-700 focus:outline-none">
+                <select id="lead-country-code" aria-label="Country Code" name="countryCode" defaultValue="+971" className="w-20 pl-2 pr-1 py-2.5 rounded-l-lg border border-r-0 border-gray-300 bg-slate-50 text-xs font-semibold text-slate-700 focus:outline-none">
                   <option value="+971">🇦🇪 +971</option>
                   <option value="+1">🇺🇸 +1</option>
                   <option value="+44">🇬🇧 +44</option>
@@ -162,6 +162,8 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
                 </span>
               )}
               <input 
+                id="lead-mobile"
+                aria-label={residentType === "NRI" ? "Overseas Mobile Number" : "Mobile Number"}
                 required 
                 name="mobile" 
                 type="tel" 
@@ -174,20 +176,20 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
 
         {/* Email */}
         <div>
-          <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Email Address</label>
+          <label htmlFor="lead-email" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">Email Address</label>
           <div className="relative">
             <Mail size={16} className="absolute left-3 top-3 text-gray-400" />
-            <input required name="email" type="email" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="amit@example.com" />
+            <input id="lead-email" aria-label="Email Address" required name="email" type="email" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="amit@example.com" />
           </div>
         </div>
 
         {/* Employment & Income */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Employment</label>
+            <label htmlFor="lead-employment" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">Employment</label>
             <div className="relative">
               <Briefcase size={16} className="absolute left-3 top-3 text-gray-400" />
-              <select required name="employment" defaultValue="" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 bg-white appearance-none">
+              <select id="lead-employment" aria-label="Employment Type" required name="employment" defaultValue="" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 bg-white appearance-none">
                 <option value="" disabled>Select Type</option>
                 <option value="salaried">Salaried</option>
                 <option value="self_employed">Self Employed</option>
@@ -195,10 +197,10 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Net Monthly Inc.</label>
+            <label htmlFor="lead-income" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">Net Monthly Inc.</label>
             <div className="relative">
               <IndianRupee size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required name="monthlyIncome" type="number" min="15000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 50000" />
+              <input id="lead-income" aria-label="Net Monthly Income in Rupees" required name="monthlyIncome" type="number" min="15000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 50000" />
             </div>
           </div>
         </div>
@@ -206,17 +208,17 @@ export default function PopupLeadForm({ onClose }: { onClose?: () => void }) {
         {/* Loan Amount & City */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Loan Amount</label>
+            <label htmlFor="lead-loan-amount" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">Loan Amount</label>
             <div className="relative">
               <Building size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required name="loanAmount" type="number" min="500000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 2500000" />
+              <input id="lead-loan-amount" aria-label="Loan Amount in Rupees" required name="loanAmount" type="number" min="500000" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. 2500000" />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">City</label>
+            <label htmlFor="lead-city" className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide cursor-pointer">City</label>
             <div className="relative">
               <MapPin size={16} className="absolute left-3 top-3 text-gray-400" />
-              <input required name="city" type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Delhi" />
+              <input id="lead-city" aria-label="Current City" required name="city" type="text" className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-mint outline-none text-sm text-gray-900 placeholder-gray-400" placeholder="e.g. Delhi" />
             </div>
           </div>
         </div>

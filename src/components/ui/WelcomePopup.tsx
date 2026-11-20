@@ -60,6 +60,8 @@ export default function WelcomePopup() {
       }`}
       role="dialog"
       aria-modal="true"
+      aria-labelledby="welcome-popup-title"
+      aria-describedby="welcome-popup-desc"
     >
       {/* Backdrop */}
       <div 
@@ -94,10 +96,10 @@ export default function WelcomePopup() {
             Special Limited-Time Offer
           </div>
 
-          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
+          <h3 id="welcome-popup-title" className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
             Get Home Loans Starting at <span className="text-brand-mint underline decoration-brand-mint/50 underline-offset-4">8.30%*</span>
           </h3>
-          <p className="text-slate-300 text-sm mt-2 leading-relaxed max-w-md">
+          <p id="welcome-popup-desc" className="text-slate-300 text-sm mt-2 leading-relaxed max-w-md">
             Compare 30+ top banks, check zero-cost pre-approval, and save up to ₹5 Lakhs on interest with Money Viora.
           </p>
         </div>
