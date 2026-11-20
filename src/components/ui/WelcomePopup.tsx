@@ -12,54 +12,33 @@ export default function WelcomePopup() {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
-    // Check if already shown in this browser session/storage
+    // Clear any previously saved storage flag so the popup is always visible on every site refresh
     try {
-      const alreadyShown = localStorage.getItem(STORAGE_KEY);
-      if (alreadyShown === "true") {
-        return;
-      }
+      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem(STORAGE_KEY);
     } catch {
-      // Ignore localStorage errors (e.g. private browsing mode)
+      // Ignore storage errors
     }
 
-    // Trigger popup smoothly after initial site loader has completed or after short delay
-    const triggerPopup = () => {
-      // Delay slightly for smooth entrance after page paints
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 1200);
-      return timer;
-    };
+    // Trigger popup smoothly after initial site load or after short delay
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 800);
 
-    let timer: NodeJS.Timeout;
-
-    // Listen for SiteLoader completion event, or fallback to direct timeout
     const handleInitialLoadComplete = () => {
-      timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 500);
+      setIsOpen(true);
     };
 
     window.addEventListener("initial_load_complete", handleInitialLoadComplete);
-    
-    // Fallback if site loader already finished or not active
-    const fallbackTimer = triggerPopup();
 
     return () => {
       window.removeEventListener("initial_load_complete", handleInitialLoadComplete);
       clearTimeout(timer);
-      clearTimeout(fallbackTimer);
     };
   }, []);
 
   const closePopup = () => {
     setIsClosing(true);
-    try {
-      localStorage.setItem(STORAGE_KEY, "true");
-    } catch {
-      // Ignore storage errors
-    }
-
     setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
