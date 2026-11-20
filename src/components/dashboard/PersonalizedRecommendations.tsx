@@ -37,82 +37,82 @@ export default function PersonalizedRecommendations() {
   ];
 
   return (
-    <div className="space-y-6 mt-12">
+    <div className="space-y-6 mt-8 sm:mt-12 w-full max-w-full overflow-hidden">
       <div className="flex items-center gap-3">
-        <div className="bg-brand-mint/20 p-2 rounded-lg">
+        <div className="bg-brand-mint/20 p-2 rounded-xl shrink-0">
           <Sparkles className="h-6 w-6 text-brand-mint" />
         </div>
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900">Personalized Loan Matches</h2>
-          <p className="text-slate-500">Based on your profile, here are the best options you are eligible for.</p>
+        <div className="min-w-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 truncate">Personalized Loan Matches</h2>
+          <p className="text-xs sm:text-sm text-slate-500">Based on your profile, here are the best options you are eligible for.</p>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 w-full">
         {recommendations.map((rec) => (
           <div 
             key={rec.id} 
-            className={`relative rounded-2xl border ${rec.isTopMatch ? 'border-brand-mint bg-white shadow-lg shadow-brand-mint/5' : 'border-slate-200 bg-white shadow-sm'} overflow-hidden transition-all hover:shadow-md`}
+            className={`relative rounded-3xl border ${rec.isTopMatch ? 'border-brand-mint bg-white shadow-lg shadow-brand-mint/5' : 'border-slate-200 bg-white shadow-sm'} overflow-hidden transition-all hover:shadow-md min-w-0 w-full`}
           >
             {rec.isTopMatch && (
-              <div className="absolute top-0 right-0 bg-brand-mint text-brand-deep text-xs font-bold px-3 py-1 rounded-bl-lg z-10 flex items-center gap-1">
+              <div className="absolute top-0 right-0 bg-brand-mint text-brand-deep text-[11px] font-black px-3 py-1 rounded-bl-xl z-10 flex items-center gap-1 shadow-xs">
                 <Sparkles size={12} /> TOP MATCH
               </div>
             )}
             
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               {/* Header */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-12 h-12 rounded-full ${rec.bankColor} text-white flex items-center justify-center font-bold text-xl`}>
+              <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
+                <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl ${rec.bankColor} text-white flex items-center justify-center font-bold text-lg sm:text-xl shrink-0 shadow-xs`}>
                   {rec.bankLogo}
                 </div>
-                <div>
-                  <h3 className="font-bold text-lg text-slate-900">{rec.bankName} Home Loan</h3>
-                  <p className="text-sm text-brand-mint font-medium">{rec.matchReason}</p>
+                <div className="min-w-0">
+                  <h3 className="font-extrabold text-base sm:text-lg text-slate-900 truncate">{rec.bankName} Home Loan</h3>
+                  <p className="text-xs sm:text-sm text-brand-deep font-medium line-clamp-1">{rec.matchReason}</p>
                 </div>
               </div>
 
               {/* Core Metrics */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                  <p className="text-xs text-slate-500 font-medium mb-1">Eligible Amount</p>
-                  <p className="text-xl font-extrabold text-slate-900 flex items-center">
-                    <IndianRupee size={18} className="text-slate-400 mr-1" />
-                    {rec.eligibleAmount.toLocaleString('en-IN')}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-5 sm:mb-6">
+                <div className="bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-100 min-w-0">
+                  <p className="text-[11px] text-slate-500 font-semibold mb-0.5 truncate">Eligible Amount</p>
+                  <p className="text-lg sm:text-xl font-black text-slate-900 flex items-center truncate">
+                    <IndianRupee size={16} className="text-slate-400 mr-0.5 shrink-0" />
+                    <span className="truncate">{rec.eligibleAmount.toLocaleString('en-IN')}</span>
                   </p>
                 </div>
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                  <p className="text-xs text-slate-500 font-medium mb-1">Estimated EMI</p>
-                  <p className="text-xl font-extrabold text-slate-900 flex items-center">
-                    <IndianRupee size={18} className="text-slate-400 mr-1" />
-                    {rec.estimatedEmi.toLocaleString('en-IN')}
+                <div className="bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-100 min-w-0">
+                  <p className="text-[11px] text-slate-500 font-semibold mb-0.5 truncate">Estimated EMI</p>
+                  <p className="text-lg sm:text-xl font-black text-slate-900 flex items-center truncate">
+                    <IndianRupee size={16} className="text-slate-400 mr-0.5 shrink-0" />
+                    <span className="truncate">{rec.estimatedEmi.toLocaleString('en-IN')}</span>
                   </p>
                 </div>
               </div>
 
               {/* Details List */}
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-                  <span className="text-sm text-slate-500 flex items-center gap-2"><Percent size={16} /> Interest Rate</span>
-                  <span className="font-semibold text-slate-800">{rec.interestRange}</span>
+              <div className="space-y-2.5 mb-5 sm:mb-6 text-xs sm:text-sm">
+                <div className="flex justify-between items-center pb-2.5 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 flex items-center gap-1.5 shrink-0"><Percent size={14} /> Interest Rate</span>
+                  <span className="font-bold text-slate-800 text-right">{rec.interestRange}</span>
                 </div>
-                <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-                  <span className="text-sm text-slate-500 flex items-center gap-2"><Clock size={16} /> Max Tenure</span>
-                  <span className="font-semibold text-slate-800">{rec.tenure}</span>
+                <div className="flex justify-between items-center pb-2.5 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 flex items-center gap-1.5 shrink-0"><Clock size={14} /> Max Tenure</span>
+                  <span className="font-bold text-slate-800 text-right">{rec.tenure}</span>
                 </div>
-                <div className="flex justify-between items-center pb-3 border-b border-slate-100">
-                  <span className="text-sm text-slate-500 flex items-center gap-2"><Building size={16} /> Processing Fee</span>
-                  <span className="font-semibold text-slate-800">{rec.processingFee}</span>
+                <div className="flex justify-between items-center pb-2.5 border-b border-slate-100 gap-2">
+                  <span className="text-slate-500 flex items-center gap-1.5 shrink-0"><Building size={14} /> Processing Fee</span>
+                  <span className="font-bold text-slate-800 text-right">{rec.processingFee}</span>
                 </div>
               </div>
 
               {/* Documents */}
-              <div className="mb-6">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Required Documents</p>
-                <div className="flex flex-wrap gap-2">
+              <div className="mb-5 sm:mb-6">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Required Documents</p>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {rec.requiredDocs.map((doc, idx) => (
-                    <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-medium border border-blue-100">
-                      <FileText size={12} /> {doc}
+                    <span key={idx} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-100">
+                      <FileText size={12} className="shrink-0" /> <span>{doc}</span>
                     </span>
                   ))}
                 </div>
@@ -120,10 +120,11 @@ export default function PersonalizedRecommendations() {
 
               {/* CTA */}
               <Link 
-                href="/dashboard/apply" 
-                className="w-full btn-interactive flex items-center justify-center gap-2 bg-brand-deep text-white font-bold py-3 rounded-lg hover:bg-opacity-90 transition-colors"
+                href="/dashboard/applications/new" 
+                className="w-full flex items-center justify-center gap-2 bg-brand-deep hover:bg-slate-800 text-white font-extrabold py-3 px-4 rounded-xl transition-all shadow-xs active:scale-95 text-xs sm:text-sm cursor-pointer"
               >
-                Proceed with this Loan <ChevronRight size={18} />
+                <span>Proceed with this Loan</span>
+                <ChevronRight size={16} />
               </Link>
             </div>
           </div>

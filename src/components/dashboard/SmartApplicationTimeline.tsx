@@ -122,10 +122,10 @@ export default function SmartApplicationTimeline() {
   const selectedStage = timelineStages.find(s => s.id === selectedStageId) || currentStage;
 
   return (
-    <div className="rounded-3xl border border-slate-200/90 bg-white shadow-xs overflow-hidden flex flex-col h-full hover:border-brand-mint/50 hover:shadow-md transition-all duration-300">
+    <div className="rounded-3xl border border-slate-200/90 bg-white shadow-xs overflow-hidden flex flex-col h-full hover:border-brand-mint/50 hover:shadow-md transition-all duration-300 w-full max-w-full">
       
       {/* Card Header with Graph / Steps Toggle */}
-      <div className="border-b border-slate-100 bg-white px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="border-b border-slate-100 bg-white px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -163,86 +163,88 @@ export default function SmartApplicationTimeline() {
         </div>
       </div>
 
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+      <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between">
         
         {viewMode === "graph" ? (
           <div className="space-y-6">
             
             {/* Top Interactive Metric Bar */}
-            <div className="grid grid-cols-3 gap-2.5 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100">
-              <div>
-                <p className="text-[10px] uppercase font-bold text-slate-400">Current Velocity</p>
-                <p className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1 mt-0.5">
-                  <Activity size={13} className="text-brand-mint" /> Fast-Track
+            <div className="grid grid-cols-3 gap-2 sm:gap-2.5 bg-slate-50/80 p-3 sm:p-3.5 rounded-2xl border border-slate-100">
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 truncate">Current Velocity</p>
+                <p className="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-1 mt-0.5 truncate">
+                  <Activity size={13} className="text-brand-mint shrink-0" /> <span className="truncate">Fast-Track</span>
                 </p>
               </div>
-              <div>
-                <p className="text-[10px] uppercase font-bold text-slate-400">Active Stage</p>
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 truncate">Active Stage</p>
                 <p className="text-xs sm:text-sm font-black text-amber-600 truncate mt-0.5">
                   Stage 04: Docs
                 </p>
               </div>
-              <div>
-                <p className="text-[10px] uppercase font-bold text-slate-400">Est. Disbursal</p>
-                <p className="text-xs sm:text-sm font-black text-emerald-700 mt-0.5">
+              <div className="min-w-0">
+                <p className="text-[9px] sm:text-[10px] uppercase font-bold text-slate-400 truncate">Est. Disbursal</p>
+                <p className="text-xs sm:text-sm font-black text-emerald-700 mt-0.5 truncate">
                   Within 72 Hrs
                 </p>
               </div>
             </div>
 
-            {/* Visual SVG Timeline Graph Track */}
-            <div className="relative pt-4 pb-2">
-              
-              {/* Background Connecting Graph Line */}
-              <div className="absolute top-[2.4rem] left-4 right-4 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-emerald-500 via-brand-mint to-emerald-400 transition-all duration-700 rounded-full"
-                  style={{ width: `${currentStage.completionPct}%` }}
-                />
-              </div>
+            {/* Visual SVG Timeline Graph Track with horizontal overflow protection */}
+            <div className="overflow-x-auto pb-2 -mx-1 px-1 scrollbar-none w-full">
+              <div className="min-w-[440px] sm:min-w-0 relative pt-4 pb-2">
+                
+                {/* Background Connecting Graph Line */}
+                <div className="absolute top-[2.4rem] left-4 right-4 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-emerald-500 via-brand-mint to-emerald-400 transition-all duration-700 rounded-full"
+                    style={{ width: `${currentStage.completionPct}%` }}
+                  />
+                </div>
 
-              {/* Graphical Nodes */}
-              <div className="relative z-10 flex items-center justify-between">
-                {timelineStages.map((stage) => {
-                  const isSelected = stage.id === selectedStageId;
-                  const isPast = stage.status === "completed";
-                  const isCurrent = stage.status === "current";
+                {/* Graphical Nodes */}
+                <div className="relative z-10 flex items-center justify-between">
+                  {timelineStages.map((stage) => {
+                    const isSelected = stage.id === selectedStageId;
+                    const isPast = stage.status === "completed";
+                    const isCurrent = stage.status === "current";
 
-                  let nodeBorder = "border-slate-200 bg-white text-slate-400";
-                  if (isPast) nodeBorder = "border-emerald-500 bg-emerald-500 text-white shadow-xs";
-                  if (isCurrent) nodeBorder = "border-brand-mint bg-white text-brand-mint ring-4 ring-brand-mint/20 shadow-md";
+                    let nodeBorder = "border-slate-200 bg-white text-slate-400";
+                    if (isPast) nodeBorder = "border-emerald-500 bg-emerald-500 text-white shadow-xs";
+                    if (isCurrent) nodeBorder = "border-brand-mint bg-white text-brand-mint ring-4 ring-brand-mint/20 shadow-md";
 
-                  return (
-                    <button
-                      key={stage.id}
-                      type="button"
-                      onClick={() => setSelectedStageId(stage.id)}
-                      className="group flex flex-col items-center focus:outline-none transition-transform hover:scale-105"
-                      aria-label={`View stage ${stage.title}`}
-                    >
-                      <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 flex items-center justify-center text-xs font-black transition-all ${nodeBorder} ${isSelected ? "scale-115 ring-2 ring-slate-900" : ""}`}>
-                        {isPast ? (
-                          <CheckCircle2 size={15} />
-                        ) : isCurrent ? (
-                          <span className="w-2.5 h-2.5 rounded-full bg-brand-mint animate-ping" />
-                        ) : (
-                          <span>0{stage.id}</span>
-                        )}
-                      </div>
-                      <span className={`text-[9px] sm:text-[10px] font-bold mt-2 truncate max-w-[48px] sm:max-w-[70px] text-center ${isCurrent ? "text-emerald-700 font-extrabold" : isPast ? "text-slate-700" : "text-slate-400"}`}>
-                        {stage.shortLabel}
-                      </span>
-                    </button>
-                  );
-                })}
+                    return (
+                      <button
+                        key={stage.id}
+                        type="button"
+                        onClick={() => setSelectedStageId(stage.id)}
+                        className="group flex flex-col items-center focus:outline-none transition-transform hover:scale-105 cursor-pointer"
+                        aria-label={`View stage ${stage.title}`}
+                      >
+                        <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 flex items-center justify-center text-xs font-black transition-all ${nodeBorder} ${isSelected ? "scale-115 ring-2 ring-slate-900" : ""}`}>
+                          {isPast ? (
+                            <CheckCircle2 size={15} />
+                          ) : isCurrent ? (
+                            <span className="w-2.5 h-2.5 rounded-full bg-brand-mint animate-ping" />
+                          ) : (
+                            <span>0{stage.id}</span>
+                          )}
+                        </div>
+                        <span className={`text-[9px] sm:text-[10px] font-bold mt-2 truncate max-w-[54px] sm:max-w-[70px] text-center ${isCurrent ? "text-emerald-700 font-extrabold" : isPast ? "text-slate-700" : "text-slate-400"}`}>
+                          {stage.shortLabel}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
             {/* Selected Stage Detail Insight Box */}
             <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white relative overflow-hidden shadow-sm">
               <div className="flex items-start justify-between gap-3 relative z-10">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-white/10 text-brand-mint border border-white/10">
                       Stage 0{selectedStage.id} of 07
                     </span>
@@ -250,10 +252,10 @@ export default function SmartApplicationTimeline() {
                       Duration: {selectedStage.duration}
                     </span>
                   </div>
-                  <h4 className="font-extrabold text-sm sm:text-base text-white">
+                  <h4 className="font-extrabold text-sm sm:text-base text-white break-words">
                     {selectedStage.title}
                   </h4>
-                  <p className="text-xs text-slate-300 mt-1 leading-relaxed font-medium">
+                  <p className="text-xs text-slate-300 mt-1 leading-relaxed font-medium break-words">
                     {selectedStage.description}
                   </p>
                 </div>
@@ -264,13 +266,14 @@ export default function SmartApplicationTimeline() {
               </div>
 
               {selectedStage.action && selectedStage.actionLink && (
-                <div className="mt-3.5 pt-3 border-t border-white/10 flex items-center justify-between">
+                <div className="mt-3.5 pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                   <span className="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
-                    <AlertCircle size={14} /> Action Required to Advance
+                    <AlertCircle size={14} className="shrink-0" />
+                    <span>Action Required to Advance</span>
                   </span>
                   <Link 
                     href={selectedStage.actionLink}
-                    className="inline-flex items-center gap-1.5 bg-brand-mint text-brand-deep font-extrabold text-xs px-3.5 py-1.5 rounded-lg hover:bg-white transition-colors"
+                    className="inline-flex items-center justify-center gap-1.5 bg-brand-mint text-brand-deep font-extrabold text-xs px-3.5 py-2 rounded-xl hover:bg-white transition-colors w-full sm:w-auto"
                   >
                     <span>{selectedStage.action}</span>
                     <ChevronRight size={14} />

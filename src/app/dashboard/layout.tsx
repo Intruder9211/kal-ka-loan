@@ -191,42 +191,42 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   )
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-slate-50 flex w-full max-w-full overflow-x-hidden">
       {/* Desktop Sidebar with Sleek Border */}
       <aside className="w-68 bg-white border-r border-slate-200/80 hidden md:block shrink-0 shadow-xs">
         {sidebarContent}
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden">
         
         {/* Top Header Bar */}
-        <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 md:px-8 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
-          <div className="flex items-center gap-3">
+        <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-3 sm:px-6 md:px-8 py-3 flex items-center justify-between sticky top-0 z-30 shadow-2xs w-full max-w-full">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <MobileSidebar theme="light">{sidebarContent}</MobileSidebar>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h1 className="text-lg md:text-xl font-black text-slate-900 tracking-tight">
+                <h1 className="text-base sm:text-lg md:text-xl font-black text-slate-900 tracking-tight truncate">
                   Client Portal
                 </h1>
-                <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-brand-mint/15 text-brand-deep px-2 py-0.5 rounded-full border border-brand-mint/30">
+                <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-brand-mint/15 text-brand-deep px-2 py-0.5 rounded-full border border-brand-mint/30 shrink-0">
                   Verified Borrower
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <Link
               href="/dashboard/notifications"
-              className="w-9 h-9 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 flex items-center justify-center text-slate-600 relative transition-colors"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 flex items-center justify-center text-slate-600 relative transition-colors"
               aria-label="Notifications"
             >
               <Bell size={16} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500" />
             </Link>
 
-            <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200">
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
               <div className="text-right hidden sm:block">
                 <p className="text-xs font-extrabold text-slate-900 truncate max-w-[150px]">
                   {session.user?.name || "Customer"}
@@ -236,7 +236,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
                 </p>
               </div>
 
-              <div className="h-9 w-9 rounded-xl bg-brand-deep text-brand-mint flex items-center justify-center font-black text-sm shadow-xs border border-white/10 shrink-0">
+              <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-brand-deep text-brand-mint flex items-center justify-center font-black text-xs sm:text-sm shadow-xs border border-white/10 shrink-0">
                 {session.user?.name?.charAt(0) || "C"}
               </div>
             </div>
@@ -244,7 +244,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
         </header>
 
         {/* Children Viewport Container */}
-        <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
+        <div className="flex-1 p-3.5 sm:p-6 md:p-8 overflow-y-auto overflow-x-hidden w-full max-w-full">
           {children}
         </div>
       </main>

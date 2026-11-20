@@ -98,10 +98,10 @@ export default function LoanReadinessScore() {
   const tier = getScoreTier(currentScore);
 
   return (
-    <div className="rounded-3xl border border-slate-200/90 bg-white shadow-xs overflow-hidden flex flex-col h-full hover:border-brand-mint/50 hover:shadow-md transition-all duration-300">
+    <div className="rounded-3xl border border-slate-200/90 bg-white shadow-xs overflow-hidden flex flex-col h-full hover:border-brand-mint/50 hover:shadow-md transition-all duration-300 w-full max-w-full">
       
       {/* Header with Run Check Button */}
-      <div className="border-b border-slate-100 bg-white px-5 sm:px-6 py-4 flex items-center justify-between gap-3">
+      <div className="border-b border-slate-100 bg-white px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <ShieldCheck size={18} className="text-brand-mint" />
@@ -116,20 +116,20 @@ export default function LoanReadinessScore() {
           type="button"
           onClick={handleRunAudit}
           disabled={isAuditing}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 transition-all active:scale-95 cursor-pointer disabled:opacity-50 self-start sm:self-auto"
         >
           <RefreshCw size={13} className={isAuditing ? "animate-spin text-brand-mint" : "text-slate-500"} />
           <span>{isAuditing ? "Auditing..." : "Re-Check Score"}</span>
         </button>
       </div>
 
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-5">
+      <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-5">
         
         {/* Score Gauge & Tier Banner */}
-        <div className="bg-slate-50/80 p-4 sm:p-5 rounded-2xl border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="bg-slate-50/80 p-4 sm:p-5 rounded-2xl border border-slate-100 flex flex-col sm:flex-row items-center sm:items-stretch justify-between gap-4">
           
           {/* Circular Visual Gauge */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 min-w-0">
             <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                 {/* Background circle */}
@@ -157,18 +157,18 @@ export default function LoanReadinessScore() {
               </div>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <span className={`inline-flex items-center gap-1 text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${tier.bg} ${tier.color} ${tier.border} mb-1`}>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                {tier.label}
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                <span className="truncate">{tier.label}</span>
               </span>
-              <p className="text-xs text-slate-600 font-medium leading-relaxed max-w-xs">
+              <p className="text-xs text-slate-600 font-medium leading-relaxed max-w-xs break-words">
                 Your profile qualifies for instant digital sanctions at Tier-1 partner banks.
               </p>
             </div>
           </div>
 
-          <div className="text-left sm:text-right border-t sm:border-t-0 sm:border-l border-slate-200 pt-3 sm:pt-0 sm:pl-4 w-full sm:w-auto">
+          <div className="text-left sm:text-right border-t sm:border-t-0 sm:border-l border-slate-200 pt-3 sm:pt-0 sm:pl-4 w-full sm:w-auto shrink-0 flex flex-col justify-center">
             <span className="text-[10px] uppercase font-bold text-slate-400 block">Sanction Potential</span>
             <span className="font-black text-base sm:text-lg text-emerald-700">Up to ₹1.25 Cr</span>
             <span className="text-[10px] text-slate-500 block font-medium">At 7.25% p.a. starting</span>
@@ -186,13 +186,13 @@ export default function LoanReadinessScore() {
             {criteria.map((item) => (
               <div 
                 key={item.id} 
-                className={`p-3 rounded-2xl border transition-all flex items-start justify-between gap-3 ${
+                className={`p-3 rounded-2xl border transition-all flex items-start justify-between gap-2.5 ${
                   item.status === "passed"
                     ? "bg-slate-50/60 border-slate-100 hover:bg-white"
                     : "bg-amber-50/40 border-amber-200/80 shadow-2xs"
                 }`}
               >
-                <div className="flex items-start gap-2.5 min-w-0">
+                <div className="flex items-start gap-2.5 min-w-0 flex-1">
                   {item.status === "passed" ? (
                     <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
                       <CheckCircle2 size={13} />
@@ -203,16 +203,16 @@ export default function LoanReadinessScore() {
                     </div>
                   )}
 
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <h4 className="text-xs font-bold text-slate-800 truncate">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <h4 className="text-xs font-bold text-slate-800 break-words">
                         {item.label}
                       </h4>
                       <span className="text-[9px] uppercase font-semibold text-slate-400 bg-white px-1.5 py-0.2 rounded border border-slate-100 shrink-0">
                         {item.category}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1 font-medium">
+                    <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1 font-medium break-words">
                       {item.insight}
                     </p>
                   </div>
@@ -221,7 +221,7 @@ export default function LoanReadinessScore() {
                 {item.actionText && item.actionLink && (
                   <Link 
                     href={item.actionLink}
-                    className="shrink-0 text-[11px] font-bold text-brand-deep bg-brand-mint/20 hover:bg-brand-mint hover:text-white px-2.5 py-1 rounded-lg transition-colors border border-brand-mint/30"
+                    className="shrink-0 text-[11px] font-bold text-brand-deep bg-brand-mint/20 hover:bg-brand-mint hover:text-white px-2.5 py-1 rounded-lg transition-colors border border-brand-mint/30 whitespace-nowrap self-center"
                   >
                     {item.actionText}
                   </Link>
@@ -232,14 +232,14 @@ export default function LoanReadinessScore() {
         </div>
 
         {/* Pro Tip Box */}
-        <div className="p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-200/60 flex items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-emerald-900 font-medium">
+        <div className="p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-200/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2 text-emerald-900 font-medium min-w-0">
             <Sparkles size={16} className="text-emerald-700 shrink-0" />
-            <span>Complete remaining 2 checks to bump score to <strong className="font-black text-emerald-800">95%</strong> and unlock ₹15L extra sanction.</span>
+            <span className="break-words">Complete remaining 2 checks to bump score to <strong className="font-black text-emerald-800">95%</strong> and unlock ₹15L extra sanction.</span>
           </div>
           <Link
             href="/dashboard/documents"
-            className="shrink-0 font-extrabold text-emerald-800 hover:text-emerald-950 inline-flex items-center gap-0.5"
+            className="shrink-0 font-extrabold text-emerald-800 hover:text-emerald-950 inline-flex items-center gap-0.5 self-start sm:self-auto"
           >
             <span>Fix Now</span>
             <ChevronRight size={14} />
